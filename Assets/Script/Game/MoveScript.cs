@@ -2,39 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveScript : MonoBehaviour {
+public class MoveScript : MonoBehaviour
+{
 
-    public bool trigger;
-    private Vector2 startPos;
-    private Vector3 inputPos;
 
-    private Collider collider;
-     
-    [SerializeField]
-    float speedX = 0;
-    [SerializeField]
-    float speedY = 0;
+    public float speedX = 0;
+    public float speedY = 0;
+    Vector2 startPos;
+    bool isMove = true;
+    private GameObject go;
+    bool count = true;
 
-	// Use this for initialization
-	void Start () {
-        trigger = false;
-        collider = this.gameObject.GetComponent<Collider>();
-	}
+    // Use this for initialization
+    void Start()
+    {
+        go = GameObject.Find("GameObject");
+        GameObject parts = GameObject.Find("parts");
+       
+
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (trigger == true)
-        {
 
-            if (Input.GetMouseButtonUp(1))
+        if (isMove)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                this.startPos = Input.mousePosition;
+            }
+            else if (Input.GetMouseButtonUp(0))
             {
                 Vector2 endPos = Input.mousePosition;
 
-                float swipeLengthX = endPos.x - startPos.x;
-                float swipeLengthY = endPos.y - startPos.y;
-                this.speedX = swipeLengthX / 250.0f;
-                this.speedY = swipeLengthY / 250.0f;
+                float swipeLengthX = endPos.x - this.startPos.x;
+                float swipeLengthY = endPos.y - this.startPos.y;
+                this.speedX = swipeLengthX / 500.0f;
+                this.speedY = swipeLengthY / 500.0f;
             }
 
 
@@ -43,28 +48,25 @@ public class MoveScript : MonoBehaviour {
             this.speedY *= 0.98f;
 
         }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            Ray tapPosition = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            
-            if (collider.Raycast(tapPosition, out hit, 10F))
-            {
-                Debug.Log(hit.collider.gameObject.name);
-                Debug.Log("aaaa");
-                if (hit.collider.gameObject.name == this.gameObject.name)
-                {
-                    OnClickObject();
-                }
-            }           
-        }
-
     }
 
-        public void OnClickObject()
+    public void OnTriggerEnter(Collider c)
     {
-        trigger = !trigger;
+        if(c.gameObject.tag == "Waku")
+        {
+            Debug.Log("check");
+            if (count)
+            {
+                Invoke("stop", 2.0f);
+                count = false;
+            }
+        }
+    }
+    public void stop()
+    {
+        go.GetComponent<P_Generator>().pGenerate();
+        isMove = false;
     }
 
 }
+
