@@ -2,23 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Audio : MonoBehaviour {
+public class GameController : MonoBehaviour {
 
-    public AudioClip bgmSound;
-    public AudioSource audioSource;
+    [SerializeField]
+    GameObject partsPrefab;
 
-	// Use this for initialization
-	void Start () {
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    [SerializeField]
+    Sprite[] partsSprite;
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            audioSource.PlayOneShot(bgmSound);
-        }
-		
-	}
+    private int num;
+
+
+    private void Start()
+    {
+        num = 0;
+
+        GameObject.Find("parts").GetComponent<SpriteRenderer>().sprite = partsSprite[num];
+    }
+
+
+    public void Generate()
+    {
+        Debug.Log("確認");
+        num++;
+        GameObject mouth = Instantiate(partsPrefab) as GameObject;
+        mouth.GetComponent<SpriteRenderer>().sprite = partsSprite[num];
+ //       mouth.transform.localPosition = new Vector3(0, 0, 0);
+
+    }
+
 }

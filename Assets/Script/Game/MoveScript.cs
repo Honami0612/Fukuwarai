@@ -8,17 +8,21 @@ public class MoveScript : MonoBehaviour
 
     public float speedX = 0;
     public float speedY = 0;
-    Vector2 startPos;
-    bool isMove = true;
-    private GameObject go;
-    bool count = true;
+    public Vector2 startPos;
+    public bool isMove = true;
+    private GameController gameController;
+    public bool count = true;
+
+    private int a = 0;
 
     // Use this for initialization
     void Start()
     {
-        go = GameObject.Find("GameObject");
-        GameObject parts = GameObject.Find("parts");
-       
+        gameController = GameObject.Find("GameController").GetComponent<GameController>();
+ //       startPos = new Vector3(0, 0, 0);
+   //     speedX = 0;
+     //   speedY = 0;
+       // count = true;
 
     }
 
@@ -57,15 +61,21 @@ public class MoveScript : MonoBehaviour
             Debug.Log("check");
             if (count)
             {
-                Invoke("stop", 2.0f);
                 count = false;
+                StartCoroutine(Stop());
+              
+               
             }
         }
     }
-    public void stop()
+
+    IEnumerator Stop()
     {
-        go.GetComponent<P_Generator>().pGenerate();
+        yield return new WaitForSeconds(2.0f);
         isMove = false;
+        gameController.Generate();
+        this.gameObject.GetComponent<MoveScript>().enabled = false;
+        
     }
 
 }
