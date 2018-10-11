@@ -15,6 +15,8 @@ public class MoveScript : MonoBehaviour
 
     private int a = 0;
 
+	Collider Waku_ObjectCollider;
+
     // Use this for initialization
     void Start()
     {
@@ -23,6 +25,7 @@ public class MoveScript : MonoBehaviour
    //     speedX = 0;
      //   speedY = 0;
        // count = true;
+
 
     }
 
@@ -58,7 +61,7 @@ public class MoveScript : MonoBehaviour
     {
         if(c.gameObject.tag == "Waku")
         {
-            Debug.Log("check");
+			Debug.Log ("check");
             if (count)
             {
                 count = false;
@@ -66,6 +69,7 @@ public class MoveScript : MonoBehaviour
               
                
             }
+
         }
     }
 
@@ -77,6 +81,14 @@ public class MoveScript : MonoBehaviour
         this.gameObject.GetComponent<MoveScript>().enabled = false;
         
     }
+
+	void OnTriggerExit(Collider c)
+	{
+		if (c.tag == "Waku")
+		{
+			Waku_ObjectCollider.isTrigger = false;
+		}
+	}
 
 }
 
