@@ -51,7 +51,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Script\Game\GameController.cs" />
      <Compile Include="Assets\Script\Game\MoveScript.cs" />
      <Compile Include="Assets\Script\Game\P_Generator.cs" />
  <Reference Include="UnityEngine.UI">

@@ -13,12 +13,15 @@ public class MoveScript : MonoBehaviour
     private GameObject go;
     bool count = true;
 
+	Collider Waku_ObjectCollider;
+
     // Use this for initialization
     void Start()
     {
-        go = GameObject.Find("GameObject");
+        go = GameObject.Find("GameObject");//名前変えたほうがいいよ
         GameObject parts = GameObject.Find("parts");
        
+		Waku_ObjectCollider = GetComponent<Collider> ();
 
     }
 
@@ -54,12 +57,13 @@ public class MoveScript : MonoBehaviour
     {
         if(c.gameObject.tag == "Waku")
         {
-            Debug.Log("check");
+			Debug.Log ("check");
             if (count)
             {
                 Invoke("stop", 2.0f);
                 count = false;
             }
+
         }
     }
     public void stop()
@@ -67,6 +71,14 @@ public class MoveScript : MonoBehaviour
         go.GetComponent<P_Generator>().pGenerate();
         isMove = false;
     }
+
+	void OnTriggerExit(Collider c)
+	{
+		if (c.tag == "Waku")
+		{
+			Waku_ObjectCollider.isTrigger = false;
+		}
+	}
 
 }
 
