@@ -20,6 +20,7 @@ public class MoveScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+		Waku_ObjectCollider = this.gameObject.GetComponent<BoxCollider> ();
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
  //       startPos = new Vector3(0, 0, 0);
    //     speedX = 0;
