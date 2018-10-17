@@ -15,13 +15,19 @@ public class MoveScript : MonoBehaviour
 
     private int a = 0;
 
+	private Rigidbody rb;
+
 	Collider Waku_ObjectCollider;
+
+
 
     // Use this for initialization
     void Start()
     {
 		Waku_ObjectCollider = this.gameObject.GetComponent<BoxCollider> ();
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
+		rb = gameObject.GetComponent<Rigidbody> ();
+	
  //       startPos = new Vector3(0, 0, 0);
    //     speedX = 0;
      //   speedY = 0;
@@ -48,6 +54,8 @@ public class MoveScript : MonoBehaviour
                 float swipeLengthY = endPos.y - this.startPos.y;
                 this.speedX = swipeLengthX / 500.0f;
                 this.speedY = swipeLengthY / 500.0f;
+
+			
             }
 
 
@@ -75,11 +83,14 @@ public class MoveScript : MonoBehaviour
     }
 
     IEnumerator Stop()
-    {
-        yield return new WaitForSeconds(2.0f);
-        isMove = false;
-        gameController.Generate();
-        this.gameObject.GetComponent<MoveScript>().enabled = false;
+	{
+		yield return new WaitForSeconds (1.0f);
+		isMove = false;
+		gameController.Generate ();
+		this.gameObject.GetComponent<MoveScript> ().enabled = false;
+
+		Invoke ("PosStop",1.2f);
+		Invoke ("Triggerfalse", 3.0f);
         
     }
 
@@ -90,6 +101,30 @@ public class MoveScript : MonoBehaviour
 			Waku_ObjectCollider.isTrigger = false;
 		}
 	}
+	void PosStop()
+	{
+		
+		GameObject[] Parts = GameObject.FindGameObjectsWithTag ("Parts");
+		//GameObject[] Parts2 = GameObject.FindGameObject("Parts(clone)");
+		foreach (GameObject parts in Parts
+		) 
+		{
+			Debug.Log ("PosStop");
+			rb.isKinematic = true;
+		}
+	}
 
+
+
+	void Triggerfalse()
+	{
+		GameObject[] Parts = GameObject.FindGameObjectsWithTag ("Parts");
+		//GameObject[] Parts2 = GameObject.FindGameObjectsWithTag ("Parts(clone)");
+		foreach (GameObject parts in Parts) 
+		{
+			Debug.Log ("Triggerfalse");
+			rb.isKinematic = false;
+		}
+
+	}
 }
-

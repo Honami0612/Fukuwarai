@@ -27,8 +27,8 @@ public class GameController : MonoBehaviour {
         num++;
         GameObject mouth = Instantiate(partsPrefab) as GameObject;
         mouth.GetComponent<SpriteRenderer>().sprite = partsSprite[num];
- //       mouth.transform.localPosition = new Vector3(0, 0, 0);
-
+ //       mouth.transform.localPosition = new Vector3(0, 0, 0);	
     }
+
 
 }
