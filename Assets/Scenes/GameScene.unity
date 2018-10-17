@@ -552,6 +552,8 @@ MonoBehaviour:
   - {fileID: 21300002, guid: 7b76f8f6afd2afc4f920ab6df57a4625, type: 3}
   - {fileID: 21300000, guid: f499d1c413800ca4594a3134f606cbc0, type: 3}
   - {fileID: 21300000, guid: 3fe91cf9c3863f5499dc93f6f29053af, type: 3}
+  parts:
+  - {fileID: 1113215411}
 --- !u!4 &1039522530
 Transform:
   m_ObjectHideFlags: 0
@@ -650,6 +652,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!1 &1113215411 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1188054418242552, guid: 26a17b83bad0c884ab428746488b6aab,
+    type: 2}
+  m_PrefabInternal: {fileID: 576623043}
 --- !u!1 &1248731109
 GameObject:
   m_ObjectHideFlags: 0
