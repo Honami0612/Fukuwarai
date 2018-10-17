@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
@@ -10,8 +11,15 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     Sprite[] partsSprite;
 
-    private int num;
+	[SerializeField]
+	List<GameObject> parts = new List<GameObject>();
 
+    [SerializeField]
+    Text timerText;
+
+    private int num;
+    float time = 5.0f;
+	private bool a = false;
 
     private void Start()
     {
@@ -20,15 +28,74 @@ public class GameController : MonoBehaviour {
         GameObject.Find("parts").GetComponent<SpriteRenderer>().sprite = partsSprite[num];
     }
 
+	void Update(){
+
+        this.time -= Time.deltaTime;
+
+        if (this.time < 0)
+        {
+            this.timerText.text = "そこまで！！";
+            if (num < partsSprite.Length)
+            {
+                Generate();
+            }
+        }
+        else
+        {
+            this.timerText.text = this.time.ToString("F0");
+        }
+    
+
+        if (a==true){
+			a = false;
+			Invoke ("PosStop",1.2f);
+		}
+	}
 
     public void Generate()
     {
         Debug.Log("確認");
+
+        parts[num].GetComponent<MoveScript>().enabled = false;
+
         num++;
-        GameObject mouth = Instantiate(partsPrefab) as GameObject;
-        mouth.GetComponent<SpriteRenderer>().sprite = partsSprite[num];
+        if (num < partsSprite.Length)
+        {
+            parts.Add(Instantiate(partsPrefab) as GameObject);
+            parts[num].name = partsPrefab.name;
+            parts[num].GetComponent<SpriteRenderer>().sprite = partsSprite[num];
+            this.time = 5.0f;
+        }
  //       mouth.transform.localPosition = new Vector3(0, 0, 0);	
     }
 
+	void PosStop()
+	{
+		
+//		GameObject[] Parts = GameObject.FindGameObjectsWithTag ("Parts");
+		//GameObject[] Parts = GameObject.Find("parts");
+		for(int j=0;j<parts.Count;j++)
+		{
+			Debug.Log ("PosStop");
+			parts[j].GetComponent<Rigidbody>().isKinematic = true;
+		}
+		Triggerfalse ();
+	}
+		
+	void Triggerfalse()
+	{
+		//GameObject[] Parts = GameObject.FindGameObjectsWithTag ("Parts");
+		//GameObject[] Parts = GameObject.Find("parts");
+		for(int i=0;i<parts.Count;i++){
+			Debug.Log ("Triggerfalse");
+			parts[i].GetComponent<Rigidbody> ().isKinematic = false;
+		}
+	}
 
+
+
+	public bool A{
+		get { return a;}
+		set { a = value; }
+	}
 }
