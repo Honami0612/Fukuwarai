@@ -55,6 +55,9 @@
   <ItemGroup>
      <Compile Include="Assets\Script\Game\GameController.cs" />
      <Compile Include="Assets\Script\Game\MoveScript.cs" />
+ <Reference Include="UnityEditor.StandardEvents">
+ <HintPath>C:/Users/飯田　帆南/Desktop/古市研/Fukuwarai/NewFukwarai/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/飯田　帆南/Desktop/古市研/Fukuwarai/NewFukwarai/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
@@ -63,9 +66,6 @@
  </Reference>
  <Reference Include="Unity.TextMeshPro">
  <HintPath>C:/Users/飯田　帆南/Desktop/古市研/Fukuwarai/NewFukwarai/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.StandardEvents">
- <HintPath>C:/Users/飯田　帆南/Desktop/古市研/Fukuwarai/NewFukwarai/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
