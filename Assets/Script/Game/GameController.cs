@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
@@ -12,9 +13,13 @@ public class GameController : MonoBehaviour {
 
 	[SerializeField]
 	List<GameObject> parts = new List<GameObject>();
-    private int num;
 
-	private bool a = false;
+    [SerializeField]
+    Text timerText;
+
+    private int num;
+    float time = 5.0f;
+	private bool posmanagement = false;
 
     private void Start()
     {
@@ -24,8 +29,25 @@ public class GameController : MonoBehaviour {
     }
 
 	void Update(){
-		if(a==true){
-			a = false;
+
+        this.time -= Time.deltaTime;
+
+        if (this.time < 0)
+        {
+            this.timerText.text = "そこまで！！";
+            if (num < partsSprite.Length)
+            {
+                Generate();
+            }
+        }
+        else
+        {
+            this.timerText.text = this.time.ToString("F0");
+        }
+    
+
+		if (posmanagement==true){
+			posmanagement = false;
 			Invoke ("PosStop",1.2f);
 		}
 	}
@@ -33,20 +55,24 @@ public class GameController : MonoBehaviour {
     public void Generate()
     {
         Debug.Log("確認");
+
+        parts[num].GetComponent<MoveScript>().enabled = false;
+
         num++;
-		parts.Add (Instantiate (partsPrefab) as GameObject);
-		parts[num].name = partsPrefab.name;
-		parts[num].GetComponent<SpriteRenderer>().sprite = partsSprite[num];
-
-
+        if (num < partsSprite.Length)
+        {
+            parts.Add(Instantiate(partsPrefab) as GameObject);
+            parts[num].name = partsPrefab.name;
+            parts[num].GetComponent<SpriteRenderer>().sprite = partsSprite[num];
+            this.time = 5.0f;
+        }
  //       mouth.transform.localPosition = new Vector3(0, 0, 0);	
     }
 
 	void PosStop()
 	{
 		
-//		GameObject[] Parts = GameObject.FindGameObjectsWithTag ("Parts");
-		//GameObject[] Parts = GameObject.Find("parts");
+	
 		for(int j=0;j<parts.Count;j++)
 		{
 			Debug.Log ("PosStop");
@@ -57,16 +83,17 @@ public class GameController : MonoBehaviour {
 		
 	void Triggerfalse()
 	{
-		//GameObject[] Parts = GameObject.FindGameObjectsWithTag ("Parts");
-		//GameObject[] Parts = GameObject.Find("parts");
+		
 		for(int i=0;i<parts.Count;i++){
 			Debug.Log ("Triggerfalse");
 			parts[i].GetComponent<Rigidbody> ().isKinematic = false;
 		}
 	}
 
-	public bool A{
-		get { return a;}
-		set { a = value; }
+
+
+	public bool management{
+		get { return posmanagement;}
+		set { posmanagement = value; }
 	}
 }

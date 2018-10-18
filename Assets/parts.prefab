@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114949175616312258}
   m_Layer: 0
   m_Name: parts
-  m_TagString: Parts
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,6 +86,8 @@ MonoBehaviour:
   startPos: {x: 0, y: 0}
   isMove: 1
   count: 1
+  position: 1
+  mouseposition: {x: 0, y: 0, z: 0}
 --- !u!212 &212118019878691956
 SpriteRenderer:
   m_ObjectHideFlags: 1

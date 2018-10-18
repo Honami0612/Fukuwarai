@@ -19,6 +19,10 @@ public class MoveScript : MonoBehaviour
 
 	Collider Waku_ObjectCollider;
 
+    public  bool position = true;
+
+    public Vector3 mouseposition;
+
 
 
     // Use this for initialization
@@ -40,6 +44,39 @@ public class MoveScript : MonoBehaviour
     void Update()
     {
 
+        if (position == true)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                Debug.Log("1");
+                mouseposition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                if (mouseposition.x > 6.5f){
+
+                    this.gameObject.transform.localPosition = new Vector3(mouseposition.x, mouseposition.y, 0);
+                    position = false;
+
+                }
+                if (mouseposition.x < -6.5f)
+                {
+                    this.gameObject.transform.localPosition = new Vector3(mouseposition.x, mouseposition.y, 0);
+                    position = false;
+                }
+                if (mouseposition.y > 7.5f)
+                {
+                    this.gameObject.transform.localPosition = new Vector3(mouseposition.x, mouseposition.y, 0);
+                    position = false;
+                }
+                if (mouseposition.y < -7.5f)
+                {
+                    this.gameObject.transform.localPosition = new Vector3(mouseposition.x, mouseposition.y, 0);
+                    position = false;
+                }
+            }
+        }
+
+
+
         if (isMove)
         {
             if (Input.GetMouseButtonDown(0))
@@ -47,8 +84,7 @@ public class MoveScript : MonoBehaviour
                 this.startPos = Input.mousePosition;
             }
             else if (Input.GetMouseButtonUp(0))
-            {
-				Debug.Log ("aaaaaaaaaaaaaaa");
+            { 
                 Vector2 endPos = Input.mousePosition;
 
                 float swipeLengthX = endPos.x - this.startPos.x;
@@ -56,7 +92,7 @@ public class MoveScript : MonoBehaviour
                 this.speedX = swipeLengthX / 500.0f;
                 this.speedY = swipeLengthY / 500.0f;
 
-				gameController.A = true;
+				gameController.management = true;
 			
             }
 
@@ -90,10 +126,9 @@ public class MoveScript : MonoBehaviour
 		yield return new WaitForSeconds (1.0f);
 		isMove = false;
 		gameController.Generate ();
+        this.gameObject.tag = "Parts";
 		this.gameObject.GetComponent<MoveScript> ().enabled = false;
 
-//		Invoke ("PosStop",1.2f);
-//		Invoke ("Triggerfalse", 3.0f);
         
     }
 
@@ -104,29 +139,4 @@ public class MoveScript : MonoBehaviour
 			Waku_ObjectCollider.isTrigger = false;
 		}
 	}
-/*	void PosStop()
-	{
-		
-		GameObject[] Parts = GameObject.FindGameObjectsWithTag ("Parts");
-		//GameObject[] Parts = GameObject.Find("parts");
-		foreach (GameObject parts in Parts) 
-		{
-			Debug.Log ("PosStop");
-			rb.isKinematic = true;
-		}
-	}
-
-
-
-	void Triggerfalse()
-	{
-		GameObject[] Parts = GameObject.FindGameObjectsWithTag ("Parts");
-		//GameObject[] Parts = GameObject.Find("parts");
-		foreach (GameObject parts in Parts) 
-		{
-			Debug.Log ("Triggerfalse");
-			rb.isKinematic = false;
-		}
-
-	}*/
 }
