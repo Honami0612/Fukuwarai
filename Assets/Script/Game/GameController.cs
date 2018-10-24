@@ -31,17 +31,14 @@ public class GameController : MonoBehaviour {
         GameObject.Find("parts").GetComponent<Animator>().runtimeAnimatorController = partsAnimation[num];
     }
 
-	void Update(){
+	void Update() { 
 
         this.time -= Time.deltaTime;
 
         if (this.time < 0)
         {
             this.timerText.text = "そこまで！！";
-            if (num < partsSprite.Length)
-            {
-                Generate();
-            }
+            Generate();
         }
         else
         {
@@ -67,8 +64,20 @@ public class GameController : MonoBehaviour {
             parts.Add(Instantiate(partsPrefab) as GameObject);
             parts[num].name = partsPrefab.name;
             parts[num].GetComponent<SpriteRenderer>().sprite = partsSprite[num];
-            parts[num].GetComponent<Animator>().runtimeAnimatorController = partsAnimation[num];
+            if(partsAnimation[num] != null)
+            {
+                parts[num].GetComponent<Animator>().runtimeAnimatorController = partsAnimation[num];
+            }
+            else
+            {
+                //アニメーションの処理
+            }
+
             this.time = 5.0f;
+        }
+        else
+        {
+            //ゲーム終了の処理
         }
  //       mouth.transform.localPosition = new Vector3(0, 0, 0);	
     }

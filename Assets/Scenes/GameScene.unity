@@ -605,6 +605,11 @@ Prefab:
       propertyPath: m_Size.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 95294277006280218, guid: 26a17b83bad0c884ab428746488b6aab,
+        type: 2}
+      propertyPath: m_UpdateMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26a17b83bad0c884ab428746488b6aab, type: 2}
   m_IsPrefabAsset: 0
@@ -700,7 +705,7 @@ MonoBehaviour:
   partsPrefab: {fileID: 1188054418242552, guid: 26a17b83bad0c884ab428746488b6aab,
     type: 2}
   partsSprite:
-  - {fileID: 21300000, guid: ae55345d5d429984aaf8dfcbeb65d8a5, type: 3}
+  - {fileID: 21300000, guid: c04e1f06dd819ae49af3c9b7d68cfc32, type: 3}
   - {fileID: 21300002, guid: c04e1f06dd819ae49af3c9b7d68cfc32, type: 3}
   - {fileID: 21300000, guid: 7b76f8f6afd2afc4f920ab6df57a4625, type: 3}
   - {fileID: 21300002, guid: 7b76f8f6afd2afc4f920ab6df57a4625, type: 3}
@@ -711,6 +716,13 @@ MonoBehaviour:
   parts:
   - {fileID: 1113215411}
   partsAnimation:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 9100000, guid: 801dce1b60dd9384097e1ff3d35508ff, type: 2}
   timerText: {fileID: 2080695606}
 --- !u!4 &1039522530
