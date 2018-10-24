@@ -79,7 +79,6 @@ public class GameController : MonoBehaviour {
         {
             //ゲーム終了の処理
         }
- //       mouth.transform.localPosition = new Vector3(0, 0, 0);	
     }
 
 	void PosStop()
