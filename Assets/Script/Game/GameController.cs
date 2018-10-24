@@ -13,6 +13,8 @@ public class GameController : MonoBehaviour {
 
 	[SerializeField]
 	List<GameObject> parts = new List<GameObject>();
+    [SerializeField]
+    List<RuntimeAnimatorController> partsAnimation = new List<RuntimeAnimatorController>();
 
     [SerializeField]
     Text timerText;
@@ -26,6 +28,7 @@ public class GameController : MonoBehaviour {
         num = 0;
 
         GameObject.Find("parts").GetComponent<SpriteRenderer>().sprite = partsSprite[num];
+        GameObject.Find("parts").GetComponent<Animator>().runtimeAnimatorController = partsAnimation[num];
     }
 
 	void Update(){
@@ -64,6 +67,7 @@ public class GameController : MonoBehaviour {
             parts.Add(Instantiate(partsPrefab) as GameObject);
             parts[num].name = partsPrefab.name;
             parts[num].GetComponent<SpriteRenderer>().sprite = partsSprite[num];
+            parts[num].GetComponent<Animator>().runtimeAnimatorController = partsAnimation[num];
             this.time = 5.0f;
         }
  //       mouth.transform.localPosition = new Vector3(0, 0, 0);	
