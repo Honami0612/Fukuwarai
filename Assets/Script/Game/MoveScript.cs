@@ -128,7 +128,7 @@ public class MoveScript : MonoBehaviour
 		gameController.Generate ();
         this.gameObject.tag = "Parts";
 		this.gameObject.GetComponent<MoveScript> ().enabled = false;
-
+        //yield break;
         
     }
 

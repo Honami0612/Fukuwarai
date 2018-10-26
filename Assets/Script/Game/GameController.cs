@@ -23,12 +23,18 @@ public class GameController : MonoBehaviour {
     float time = 5.0f;
 	private bool posmanagement = false;
 
+    //private float scal = 0.2f;
+    //private bool scalTrigger = true;
+
+    
+
     private void Start()
     {
         num = 0;
 
         GameObject.Find("parts").GetComponent<SpriteRenderer>().sprite = partsSprite[num];
         GameObject.Find("parts").GetComponent<Animator>().runtimeAnimatorController = partsAnimation[num];
+        //StartCoroutine(PartsMove());
     }
 
 	void Update() { 
@@ -37,7 +43,6 @@ public class GameController : MonoBehaviour {
 
         if (this.time < 0)
         {
-            this.timerText.text = "そこまで！！";
             Generate();
         }
         else
@@ -62,7 +67,7 @@ public class GameController : MonoBehaviour {
         if (num < partsSprite.Length)
         {
             parts.Add(Instantiate(partsPrefab) as GameObject);
-            parts[num].name = partsPrefab.name;
+            parts[num].name = partsSprite[num].name;
             parts[num].GetComponent<SpriteRenderer>().sprite = partsSprite[num];
             if(partsAnimation[num] != null)
             {
@@ -71,6 +76,8 @@ public class GameController : MonoBehaviour {
             else
             {
                 //アニメーションの処理
+                
+                
             }
 
             this.time = 5.0f;
@@ -81,7 +88,40 @@ public class GameController : MonoBehaviour {
         }
     }
 
-	void PosStop()
+   /* IEnumerator PartsMove()
+    {
+        if (scalTrigger == true)
+        {
+            for (int i = 0; i < parts.Count; i++)
+            {
+                parts[i].transform.localScale += new Vector3(scal, scal, scal);
+               
+            }
+            if (parts[0].transform.localScale.x > 2.0f)
+            {
+                scalTrigger = false;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < parts.Count; i++)
+            {
+                parts[i].transform.localScale -= new Vector3(scal, scal, scal);
+            }
+            if (parts[0].transform.localScale.x < 1.5f)
+            {
+                scalTrigger = true;
+            }
+        }
+
+        
+        yield return new WaitForSeconds(0.1f);
+        yield return StartCoroutine(PartsMove());
+    }
+        
+    */
+
+    void PosStop()
 	{
 		
 	

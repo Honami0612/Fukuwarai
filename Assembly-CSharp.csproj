@@ -64,6 +64,7 @@
     <Compile Include="Assets\Script\Game\GameController.cs" />
     <Compile Include="Assets\Script\Game\MoveScript.cs" />
     <Compile Include="Assets\Script\Game\SoundScript.cs" />
+    <Compile Include="Assets\Script\Game\TokutenScript.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/sai_s/Documents/ドキュメント/ゼミナール/福笑い/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
