@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour {
     Text timerText;
 
     private int num;
-    float time = 5.0f;
+    float time = 10.0f;
 	private bool posmanagement = false;
 
     private void Start()
@@ -73,7 +73,7 @@ public class GameController : MonoBehaviour {
                 //アニメーションの処理
             }
 
-            this.time = 5.0f;
+            this.time = 10.0f;
         }
         else
         {
