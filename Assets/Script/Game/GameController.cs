@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
@@ -20,17 +21,32 @@ public class GameController : MonoBehaviour {
     Text timerText;
 
     private int num;
-    float time = 5.0f;
+    float time = 10.0f;
 	private bool posmanagement = false;
+
+    [SerializeField]
+    GameObject screenshotPrefab;
+    GameObject screenshot;
+
 
     //private float scal = 0.2f;
     //private bool scalTrigger = true;
 
-    
+
 
     private void Start()
     {
         num = 0;
+
+        
+        if (GameObject.Find("ScreenShot(Clone)")==null)
+        {
+            screenshot = Instantiate(screenshotPrefab);
+        }
+        else
+        {
+            screenshot = GameObject.Find("ScreenShot(Clone)"); 
+        }
 
         GameObject.Find("parts").GetComponent<SpriteRenderer>().sprite = partsSprite[num];
         GameObject.Find("parts").GetComponent<Animator>().runtimeAnimatorController = partsAnimation[num];
@@ -73,18 +89,13 @@ public class GameController : MonoBehaviour {
             {
                 parts[num].GetComponent<Animator>().runtimeAnimatorController = partsAnimation[num];
             }
-            else
-            {
-                //アニメーションの処理
-                
-                
-            }
-
-            this.time = 5.0f;
+            
+            this.time = 10.0f;
         }
         else
         {
-            //ゲーム終了の処理
+            screenshot.GetComponent<Screenshot>().Screen();
+            SceneManager.LoadScene("GameFinish");
         }
     }
 
