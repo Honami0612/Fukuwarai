@@ -5,17 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class LoadScenestart : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-	public void onClick(){
-		SceneManager.LoadScene ("GameScene");
+   void Update(){
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Scene");
+            SceneManager.LoadScene("GameScene");
+        }
 	}
 }

@@ -485,7 +485,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 1, g: 0.42300236, b: 0.07075471, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -627,7 +627,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f8972d54daaab2c448d1334e7bf10250, type: 3}
   - {fileID: 21300000, guid: b339c97eee6a632458d53a2287bf497f, type: 3}
   - {fileID: 21300000, guid: 4e1db3fbb4d52024187bdd9b6db0b570, type: 3}
-  - {fileID: 21300000, guid: 3fe91cf9c3863f5499dc93f6f29053af, type: 3}
+  - {fileID: 21300000, guid: 76a896b4d6fca384b9d3ff17bf66baa5, type: 3}
   - {fileID: 21300000, guid: 965732471e6660f46afc2650a46b5fe0, type: 3}
   parts:
   - {fileID: 1113215411}
@@ -638,9 +638,16 @@ MonoBehaviour:
   - {fileID: 9100000, guid: d46b1305296e0094bb74de566330754f, type: 2}
   - {fileID: 9100000, guid: e59065d2fa42e474684f74066024ff43, type: 2}
   - {fileID: 9100000, guid: 4b95ffebc664a1f458b0fdcd77e07240, type: 2}
-  - {fileID: 0}
+  - {fileID: 9100000, guid: c1f3c70aad7ae4647907d14b3a430c1a, type: 2}
   - {fileID: 9100000, guid: 4bb747338b258344bba410dadb9867c4, type: 2}
   timerText: {fileID: 2080695606}
+  logPanel: {fileID: 0}
+  superSizePanel: {fileID: 0}
+  superSizeSlider: {fileID: 0}
+  superSizeText: {fileID: 0}
+  waitTime: 5
+  screenshotPrefab: {fileID: 1436359888211240, guid: 8f6c6cb28affd724f841944c519e84c4,
+    type: 2}
 --- !u!4 &1039522530
 Transform:
   m_ObjectHideFlags: 0
@@ -942,15 +949,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 76a896b4d6fca384b9d3ff17bf66baa5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.08, y: 1.39}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!54 &1113215417
