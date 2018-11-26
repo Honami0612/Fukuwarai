@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
+using System.IO;
 
 public class GameController : MonoBehaviour {
 
@@ -19,6 +21,21 @@ public class GameController : MonoBehaviour {
 
     [SerializeField]
     Text timerText;
+
+	[SerializeField]
+	private GameObject logPanel;//ログパネル
+	[SerializeField]
+	private GameObject superSizePanel;//解像度パネル
+	[SerializeField]
+	private Slider superSizeSlider;//解像度レベルスライダー
+	[SerializeField]
+	private Text superSizeText;//解像度レベルテキスト
+	[SerializeField]
+	private float waitTime=5f;//スクリーンショットを撮ってからの待ち時間
+
+
+	private string saveFilePath="/Prijects/ScreenShot";//データの保存先ファイルパス
+	private string saveFileName="/screenshot.PNG";//保存ファイル名
 
     private int num;
     float time = 10.0f;
@@ -51,6 +68,9 @@ public class GameController : MonoBehaviour {
         GameObject.Find("parts").GetComponent<SpriteRenderer>().sprite = partsSprite[num];
         GameObject.Find("parts").GetComponent<Animator>().runtimeAnimatorController = partsAnimation[num];
         //StartCoroutine(PartsMove());
+		if (!Directory.Exists (Application.dataPath + saveFilePath)) {
+			saveFilePath = "";
+		}//指定したフォルダがないときはAssetフォルダに保存
     }
 
 	void Update() { 
@@ -94,43 +114,27 @@ public class GameController : MonoBehaviour {
         }
         else
         {
-            screenshot.GetComponent<Screenshot>().Screen();
-            SceneManager.LoadScene("GameFinish");
+			//ScreenCapture.CaptureScreenshot (Application.dataPath + "/savedata.PNG");
+			//StartCoroutine ("ScreenShot");
+			StartCoroutine ("timestop");
         }
     }
 
-   /* IEnumerator PartsMove()
-    {
-        if (scalTrigger == true)
-        {
-            for (int i = 0; i < parts.Count; i++)
-            {
-                parts[i].transform.localScale += new Vector3(scal, scal, scal);
-               
-            }
-            if (parts[0].transform.localScale.x > 2.0f)
-            {
-                scalTrigger = false;
-            }
-        }
-        else
-        {
-            for (int i = 0; i < parts.Count; i++)
-            {
-                parts[i].transform.localScale -= new Vector3(scal, scal, scal);
-            }
-            if (parts[0].transform.localScale.x < 1.5f)
-            {
-                scalTrigger = true;
-            }
-        }
+  
+	IEnumerator timestop(){
+		screenshot.GetComponent<Screenshot>().Screen();
+		yield return new WaitForSeconds (3);
+		SceneManager.LoadScene ("GameFinish");
+	}
 
-        
-        yield return new WaitForSeconds(0.1f);
-        yield return StartCoroutine(PartsMove());
-    }
-        
-    */
+	/*IEnumerator ScreenShot(){
+		ScreenCapture.CaptureScreenshot (Application.dataPath + saveFilePath + saveFileName, (int)superSizeSlider.value);
+		yield return new WaitForSeconds (0.1f);
+		logPanel.transform.GetChild (0).GetComponent<Text> ().text = "スクリーンショットを撮りました\n" + Application.dataPath + saveFilePath + saveFileName + "に保存されました";
+		logPanel.SetActive (true);
+		yield return new WaitForSeconds (waitTime);
+	
+	}*/
 
     void PosStop()
 	{

@@ -641,6 +641,11 @@ MonoBehaviour:
   - {fileID: 9100000, guid: c1f3c70aad7ae4647907d14b3a430c1a, type: 2}
   - {fileID: 9100000, guid: 4bb747338b258344bba410dadb9867c4, type: 2}
   timerText: {fileID: 2080695606}
+  logPanel: {fileID: 0}
+  superSizePanel: {fileID: 0}
+  superSizeSlider: {fileID: 0}
+  superSizeText: {fileID: 0}
+  waitTime: 5
   screenshotPrefab: {fileID: 1436359888211240, guid: 8f6c6cb28affd724f841944c519e84c4,
     type: 2}
 --- !u!4 &1039522530
