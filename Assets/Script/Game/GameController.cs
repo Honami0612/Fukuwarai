@@ -22,20 +22,11 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     Text timerText;
 
-	[SerializeField]
-	private GameObject logPanel;//ログパネル
-	[SerializeField]
-	private GameObject superSizePanel;//解像度パネル
-	[SerializeField]
-	private Slider superSizeSlider;//解像度レベルスライダー
-	[SerializeField]
-	private Text superSizeText;//解像度レベルテキスト
-	[SerializeField]
-	private float waitTime=5f;//スクリーンショットを撮ってからの待ち時間
 
-
-	private string saveFilePath="/Prijects/ScreenShot";//データの保存先ファイルパス
+	private string saveFilePath="/ScreenShot";//データの保存先ファイルパス
 	private string saveFileName="/screenshot.PNG";//保存ファイル名
+	int screenshotnumber=0;
+	//int save = PlayerPrefs.GetInt();
 
     private int num;
     float time = 10.0f;
@@ -44,11 +35,6 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     GameObject screenshotPrefab;
     GameObject screenshot;
-
-
-    //private float scal = 0.2f;
-    //private bool scalTrigger = true;
-
 
 
     private void Start()
@@ -68,9 +54,7 @@ public class GameController : MonoBehaviour {
         GameObject.Find("parts").GetComponent<SpriteRenderer>().sprite = partsSprite[num];
         GameObject.Find("parts").GetComponent<Animator>().runtimeAnimatorController = partsAnimation[num];
         //StartCoroutine(PartsMove());
-		if (!Directory.Exists (Application.dataPath + saveFilePath)) {
-			saveFilePath = "";
-		}//指定したフォルダがないときはAssetフォルダに保存
+
     }
 
 	void Update() { 
@@ -114,24 +98,37 @@ public class GameController : MonoBehaviour {
         }
         else
         {
-			//ScreenCapture.CaptureScreenshot (Application.dataPath + "/savedata.PNG");
-			//StartCoroutine ("ScreenShot");
+			Screen();
 			StartCoroutine ("timestop");
         }
     }
 
   
 	IEnumerator timestop(){
-		screenshot.GetComponent<Screenshot>().Screen();
 		yield return new WaitForSeconds (3);
 		SceneManager.LoadScene ("GameFinish");
 	}
 
+	public void Screen()
+	{
+		Debug.Log ("screenshot");
+		if(num == partsSprite.Length)
+		{
+			ScreenCapture.CaptureScreenshot(Application.dataPath+saveFilePath+"/savedata"+screenshotnumber+".PNG",2);
+			screenshotnumber++;
+			Debug.Log ("screenshotnumber:"+screenshotnumber);
+			//PlayerPrefs.SetInt (,screenshotnumber);
+		}
+	}
+	void Awake()
+	{
+		DontDestroyOnLoad(screenshot.gameObject);
+		Debug.Log ("gameobject:"+screenshot.gameObject);
+	}
+
 	/*IEnumerator ScreenShot(){
-		ScreenCapture.CaptureScreenshot (Application.dataPath + saveFilePath + saveFileName, (int)superSizeSlider.value);
-		yield return new WaitForSeconds (0.1f);
-		logPanel.transform.GetChild (0).GetComponent<Text> ().text = "スクリーンショットを撮りました\n" + Application.dataPath + saveFilePath + saveFileName + "に保存されました";
-		logPanel.SetActive (true);
+		ScreenCapture.CaptureScreenshot (Application.dataPath + saveFilePath + saveFileName,2);
+
 		yield return new WaitForSeconds (waitTime);
 	
 	}*/
