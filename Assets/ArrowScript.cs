@@ -56,13 +56,13 @@ public class ArrowScript : MonoBehaviour
         this.physics = this.GetComponent<Rigidbody>();
         this.mainCamera = Camera.main;
         this.mainCameraTransform = this.mainCamera.transform;
-        arrowPos.SetActive(false);
     }
 
     private void Start()
     {
-        direction = this.gameObject.GetComponentInChildren<LineRenderer>();
-        arrowPos = this.gameObject.GetComponentInChildren<GameObject>();
+        direction = this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>();
+        arrowPos = this.gameObject.transform.GetChild(1).gameObject;
+        arrowPos.SetActive(false);
     }
 
     /// <summary>
@@ -134,5 +134,6 @@ public class ArrowScript : MonoBehaviour
     {
         // 瞬間的に力を加えてはじく
         this.physics.AddForce(force, ForceMode.Impulse);
+        this.gameObject.GetComponent<ArrowScript>().enabled = false;
     }
 }
