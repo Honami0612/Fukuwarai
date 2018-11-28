@@ -53,13 +53,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Script\Collection\collection.cs" />
+     <Compile Include="Assets\Script\Finish\GameFinish.cs" />
      <Compile Include="Assets\Script\Game\GameController.cs" />
      <Compile Include="Assets\Script\Game\MoveScript.cs" />
      <Compile Include="Assets\Script\Game\Screenshot.cs" />
      <Compile Include="Assets\Script\Game\SoundScript.cs" />
-     <Compile Include="Assets\Script\GameFinsh\GameFinish.cs" />
-     <Compile Include="Assets\Script\GameStart\collection.cs" />
-     <Compile Include="Assets\Script\GameStart\LoadScenestart.cs" />
+     <Compile Include="Assets\Script\Start\LoadScenestart.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/飯田　帆南/Desktop/古市研/Fukuwarai/NewFukwarai/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>

@@ -23,9 +23,9 @@ public class GameController : MonoBehaviour {
     Text timerText;
 
 
-	private string saveFilePath="/ScreenShot";//データの保存先ファイルパス
+	/*private string saveFilePath="/ScreenShot";//データの保存先ファイルパス
 	private string saveFileName="/screenshot.PNG";//保存ファイル名
-	int screenshotnumber=0;
+	int screenshotnumber=0;*/
 	//int save = PlayerPrefs.GetInt();
 
     private int num;
@@ -36,10 +36,14 @@ public class GameController : MonoBehaviour {
     GameObject screenshotPrefab;
     GameObject screenshot;
 
+	//private Screenshot s;
+
+
 
     private void Start()
     {
         num = 0;
+		//s = GetComponent<Screenshot>();
 
         
         if (GameObject.Find("ScreenShot(Clone)")==null)
@@ -98,7 +102,10 @@ public class GameController : MonoBehaviour {
         }
         else
         {
-			Screen();
+			Debug.Log ("###");
+			//Screenshot s = GetComponent<Screenshot>();
+			//s.Screen();
+			screenshot.GetComponent<Screenshot>().Screen();
 			StartCoroutine ("timestop");
         }
     }
@@ -106,10 +113,10 @@ public class GameController : MonoBehaviour {
   
 	IEnumerator timestop(){
 		yield return new WaitForSeconds (3);
-		SceneManager.LoadScene ("GameFinish");
+		SceneManager.LoadScene ("Finish");
 	}
 
-	public void Screen()
+/*	public void Screen()
 	{
 		Debug.Log ("screenshot");
 		if(num == partsSprite.Length)
@@ -124,14 +131,8 @@ public class GameController : MonoBehaviour {
 	{
 		DontDestroyOnLoad(screenshot.gameObject);
 		Debug.Log ("gameobject:"+screenshot.gameObject);
-	}
-
-	/*IEnumerator ScreenShot(){
-		ScreenCapture.CaptureScreenshot (Application.dataPath + saveFilePath + saveFileName,2);
-
-		yield return new WaitForSeconds (waitTime);
-	
 	}*/
+
 
     void PosStop()
 	{

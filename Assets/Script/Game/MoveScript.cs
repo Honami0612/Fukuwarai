@@ -22,21 +22,18 @@ public class MoveScript : MonoBehaviour
 
     public Vector3 mouseposition;
 
-	//public float maxVelocity = 0.001f; //最大速度
-	//private float maxSqrVelocity; //最大速度の2乗
 
 
 
 
 
-    // Use this for initialization
+   
     void Start()
     {
 		Waku_ObjectCollider = this.gameObject.GetComponent<BoxCollider> ();
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
 		rb = gameObject.GetComponent<Rigidbody> ();
 
-		//maxSqrVelocity = maxVelocity * maxVelocity; //最大速度の2乗を求めておく
 	
  //       startPos = new Vector3(0, 0, 0);
    //     speedX = 0;
@@ -49,12 +46,7 @@ public class MoveScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		/*if (rb.velocity.sqrMagnitude > maxSqrVelocity)
-		{
-			Debug.Log ("speed");
-			rb.velocity = rb.velocity.normalized * maxVelocity; //物理オブジェクトの速度をmaxVelocityで指定した最大速度にする
-		}*/
-
+		
         if (position == true)
         {
             if (Input.GetMouseButtonDown(1))
