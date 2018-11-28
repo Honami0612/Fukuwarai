@@ -59,6 +59,12 @@ public class ArrowScript : MonoBehaviour
         arrowPos.SetActive(false);
     }
 
+    private void Start()
+    {
+        direction = this.gameObject.GetComponentInChildren<LineRenderer>();
+        arrowPos = this.gameObject.GetComponentInChildren<GameObject>();
+    }
+
     /// <summary>
     /// マウス座標をワールド座標に変換して取得
     /// </summary>
@@ -99,7 +105,7 @@ public class ArrowScript : MonoBehaviour
         arrowPos.transform.position = this.gameObject.transform.localPosition;
         arrowPos.transform.rotation = Quaternion.FromToRotation(Vector3.down, this.currentForce);
         arrowPos.transform.localScale = new Vector3(0.2f, dist, 0.2f);
-        //arrowPos.localRotation = Quaternion.Euler(arrowPos.localRotation.x, 0, arrowPos.localRotation.z);
+
 
         if (this.currentForce.magnitude > MaxMagnitude * MaxMagnitude)
         {
