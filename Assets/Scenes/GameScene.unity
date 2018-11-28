@@ -241,6 +241,32 @@ Prefab:
       propertyPath: m_Name
       value: arrow
       objectReference: {fileID: 0}
+    - target: {fileID: 212941161633992266, guid: 26a17b83bad0c884ab428746488b6aab,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 16e1e28091d4b4bfda9f80871fe5cce5,
+        type: 3}
+    - target: {fileID: 212941161633992266, guid: 26a17b83bad0c884ab428746488b6aab,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 8.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 212941161633992266, guid: 26a17b83bad0c884ab428746488b6aab,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 8.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 212941161633992266, guid: 26a17b83bad0c884ab428746488b6aab,
+        type: 2}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 95216847017148338, guid: 26a17b83bad0c884ab428746488b6aab,
+        type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: f5cb44360b82249b782aab1fcf552f57, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26a17b83bad0c884ab428746488b6aab, type: 2}
   m_IsPrefabAsset: 0
@@ -684,36 +710,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa9e8d4cf192a141b51b560d43df2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partsPrefab: {fileID: 1188054418242552, guid: 26a17b83bad0c884ab428746488b6aab,
+  partsPrefab: {fileID: 1281356226744240, guid: 26a17b83bad0c884ab428746488b6aab,
     type: 2}
   partsSprite:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 16e1e28091d4b4bfda9f80871fe5cce5, type: 3}
+  - {fileID: 21300000, guid: 16e1e28091d4b4bfda9f80871fe5cce5, type: 3}
+  - {fileID: 21300000, guid: 16e1e28091d4b4bfda9f80871fe5cce5, type: 3}
+  - {fileID: 21300000, guid: 16e1e28091d4b4bfda9f80871fe5cce5, type: 3}
+  - {fileID: 21300000, guid: 16e1e28091d4b4bfda9f80871fe5cce5, type: 3}
+  - {fileID: 21300000, guid: 16e1e28091d4b4bfda9f80871fe5cce5, type: 3}
+  - {fileID: 21300000, guid: 16e1e28091d4b4bfda9f80871fe5cce5, type: 3}
+  - {fileID: 21300000, guid: 16e1e28091d4b4bfda9f80871fe5cce5, type: 3}
   parts:
   - {fileID: 1113215411}
   partsAnimation:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 9100000, guid: f5cb44360b82249b782aab1fcf552f57, type: 2}
+  - {fileID: 9100000, guid: f5cb44360b82249b782aab1fcf552f57, type: 2}
+  - {fileID: 9100000, guid: f5cb44360b82249b782aab1fcf552f57, type: 2}
+  - {fileID: 9100000, guid: f5cb44360b82249b782aab1fcf552f57, type: 2}
+  - {fileID: 9100000, guid: f5cb44360b82249b782aab1fcf552f57, type: 2}
+  - {fileID: 9100000, guid: f5cb44360b82249b782aab1fcf552f57, type: 2}
+  - {fileID: 9100000, guid: f5cb44360b82249b782aab1fcf552f57, type: 2}
+  - {fileID: 9100000, guid: f5cb44360b82249b782aab1fcf552f57, type: 2}
   timerText: {fileID: 2080695606}
   logPanel: {fileID: 0}
   superSizePanel: {fileID: 0}
   superSizeSlider: {fileID: 0}
   superSizeText: {fileID: 0}
   waitTime: 5
-  screenshotPrefab: {fileID: 1436359888211240, guid: 8f6c6cb28affd724f841944c519e84c4,
-    type: 2}
+  screenshotPrefab: {fileID: 0}
 --- !u!4 &1039522530
 Transform:
   m_ObjectHideFlags: 0
