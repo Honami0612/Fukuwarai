@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ArrowScript.cs" />
+    <Compile Include="Assets\MouseController.cs" />
     <Compile Include="Assets\Script\Game\GameController.cs" />
     <Compile Include="Assets\Script\Game\MoveScript.cs" />
     <Compile Include="Assets\Script\Game\Screenshot.cs" />
