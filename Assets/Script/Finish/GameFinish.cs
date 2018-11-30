@@ -16,7 +16,7 @@ public class GameFinish : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0))
         {
-            SceneManager.LoadScene("GameStart");
+            SceneManager.LoadScene("Start");
         }
 		
 	}

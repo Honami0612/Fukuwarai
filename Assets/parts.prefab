@@ -89,7 +89,7 @@ Transform:
   m_GameObject: {fileID: 1092640270057724}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.06, y: 1.2, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4504511812181358}
   m_RootOrder: 1
@@ -143,7 +143,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 94fbb9ba68d50b94cb2a8bff48925c02, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 1745f80cd8e7649e5b2cb5704086b6be, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -238,7 +238,7 @@ Animator:
   m_GameObject: {fileID: 1281356226744240}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0f1fa60287641714b95163770a0a4df7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1281356226744240}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98e8776c19b204879aabb93ded0cb39c, type: 3}
+  m_Script: {fileID: 11500000, guid: db89c9f723df2a740a8cfcef63719a0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {fileID: 0}
@@ -497,7 +497,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7e7402267950c499494ba36040f98b18, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 17ab94d66f41c5449b35fe38b2616c76, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -551,6 +551,6 @@ SpriteRenderer:
   m_Size: {x: 1.08, y: 1.39}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0

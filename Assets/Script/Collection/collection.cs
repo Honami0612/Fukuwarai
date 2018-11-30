@@ -1,22 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System;
+using System.IO;
 
 
 public class collection : MonoBehaviour {
 
-	Sprite[] sprites;//スプライト画像格納用の配列
-	int i;
+	public GameObject CollectionPrefab;
+	private List<GameObject> Collection = new List<GameObject>();
+
+	int i,n,m,num;
+
+	public Transform canvasObject;
 
 	// Use this for initialization
 	void Start () {
-		sprites = Resources.LoadAll<Sprite>("/ScreenShot");//フォルダごとまとめて読み込み
-		GameObject obj=new GameObject();//空のオブジェクト作成
-		for (i = 0; i < sprites.Length; i++) {
-			GameObject go = Instantiate (obj, new Vector3 (i, 0, 0), Quaternion.identity)as GameObject;//空のオブジェクト生成、横に並べる
-		//	go.AddComponent<SpriteRenderer> ().sprite = Sprite [i];//生成したオブジェクトはTransformのみなのでSpriteRnderをスクリプトから追加、スプライトに配列画像を代入
+		StreamReader sr = new StreamReader (Application.dataPath+"/Resources/ScreenShotnumber.csv");
+		while (sr.Peek () > -1) {
+			string line = sr.ReadLine ();
+			num=int.Parse(line);
 		}
-		Destroy (obj);
+
+		for (i = 0; i < num; i++) {
+			Texture2D texture = Resources.Load ("Sprite/ScreenShot/savedata" + i)as Texture2D;
+
+			Collection.Add (Instantiate (CollectionPrefab, new Vector2 (200.0f*i/*横*/, 500.0f/*縦*/), Quaternion.Euler (0, 0, 0))as GameObject);
+			Collection [i].transform.SetParent (canvasObject);
+			Collection [i].GetComponent<Image> ().sprite = Sprite.Create (texture, new Rect (0, 0, 512, 256), Vector2.zero);
+		}
+
+
 	}
 	
 }

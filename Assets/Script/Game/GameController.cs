@@ -22,12 +22,6 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     Text timerText;
 
-
-	/*private string saveFilePath="/ScreenShot";//データの保存先ファイルパス
-	private string saveFileName="/screenshot.PNG";//保存ファイル名
-	int screenshotnumber=0;*/
-	//int save = PlayerPrefs.GetInt();
-
     private int num;
     float time = 10.0f;
 	private bool posmanagement = false;
@@ -36,15 +30,13 @@ public class GameController : MonoBehaviour {
     GameObject screenshotPrefab;
     GameObject screenshot;
 
-	//private Screenshot s;
+
 
 
 
     private void Start()
     {
         num = 0;
-		//s = GetComponent<Screenshot>();
-
         
         if (GameObject.Find("ScreenShot(Clone)")==null)
         {
@@ -103,10 +95,9 @@ public class GameController : MonoBehaviour {
         else
         {
 			Debug.Log ("###");
-			//Screenshot s = GetComponent<Screenshot>();
-			//s.Screen();
-			screenshot.GetComponent<Screenshot>().Screen();
+			screenshot.GetComponent<Screenshot> ().Screen ();
 			StartCoroutine ("timestop");
+
         }
     }
 
@@ -115,23 +106,6 @@ public class GameController : MonoBehaviour {
 		yield return new WaitForSeconds (3);
 		SceneManager.LoadScene ("Finish");
 	}
-
-/*	public void Screen()
-	{
-		Debug.Log ("screenshot");
-		if(num == partsSprite.Length)
-		{
-			ScreenCapture.CaptureScreenshot(Application.dataPath+saveFilePath+"/savedata"+screenshotnumber+".PNG",2);
-			screenshotnumber++;
-			Debug.Log ("screenshotnumber:"+screenshotnumber);
-			//PlayerPrefs.SetInt (,screenshotnumber);
-		}
-	}
-	void Awake()
-	{
-		DontDestroyOnLoad(screenshot.gameObject);
-		Debug.Log ("gameobject:"+screenshot.gameObject);
-	}*/
 
 
     void PosStop()
