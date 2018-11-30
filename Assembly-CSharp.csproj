@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\MouseController.cs" />
      <Compile Include="Assets\Script\Collection\collection.cs" />
      <Compile Include="Assets\Script\Finish\GameFinish.cs" />
      <Compile Include="Assets\Script\Game\ArrowScript.cs" />
