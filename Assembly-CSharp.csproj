@@ -69,6 +69,7 @@
     <Compile Include="Assets\Script\GameFinsh\GameFinish.cs" />
     <Compile Include="Assets\Script\GameStart\collection.cs" />
     <Compile Include="Assets\Script\GameStart\LoadScenestart.cs" />
+    <Compile Include="Assets\Script\MouseController.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>/Users/toya/Project/NewFukwarai/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
