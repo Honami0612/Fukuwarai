@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 223114370296299384}
   - component: {fileID: 114012163045755282}
   - component: {fileID: 114073891021465886}
-  - component: {fileID: 114866185079170280}
+  - component: {fileID: 114212676922784772}
   m_Layer: 5
   m_Name: ScreenShot
   m_TagString: Untagged
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &114866185079170280
+--- !u!114 &114212676922784772
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,7 +78,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b5d4b0717c96f45affdda4596507a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partsSprite: []
 --- !u!223 &223114370296299384
 Canvas:
   m_ObjectHideFlags: 1

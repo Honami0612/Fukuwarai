@@ -5,6 +5,8 @@ using UnityEngine;
 public class MoveScript : MonoBehaviour
 {
 
+    private GameObject arrowArea;
+
     public float speedX = 0;
     public float speedY = 0;
     public Vector2 startPos;
@@ -25,14 +27,13 @@ public class MoveScript : MonoBehaviour
 	//public float maxVelocity = 0.001f; //最大速度
 	//private float maxSqrVelocity; //最大速度の2乗
 
-
-
-
-
     // Use this for initialization
     void Start()
     {
-		Waku_ObjectCollider = this.gameObject.GetComponent<BoxCollider> ();
+        arrowArea = GameObject.Find("arrowArea");
+        arrowArea.GetComponent<MouseController>().ResetData();
+        arrowArea.GetComponent<MouseController>().SetParts(this.gameObject.GetComponent<MoveScript>());
+        Waku_ObjectCollider = this.gameObject.GetComponent<BoxCollider> ();
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
 		rb = gameObject.GetComponent<Rigidbody> ();
 
@@ -88,41 +89,47 @@ public class MoveScript : MonoBehaviour
 
 
 
-        if (isMove)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                this.startPos = Input.mousePosition;
-            }
-            else if (Input.GetMouseButtonUp(0))
-            { 
-                Vector2 endPos = Input.mousePosition;
+   //     if (isMove)
+   //     {
+   //         if (Input.GetMouseButtonDown(0))
+   //         {
+   //             this.startPos = Input.mousePosition;
+   //         }
+   //         else if (Input.GetMouseButtonUp(0))
+   //         { 
+   //             Vector2 endPos = Input.mousePosition;
 
-                float swipeLengthX = endPos.x - this.startPos.x;
-                float swipeLengthY = endPos.y - this.startPos.y;
-                this.speedX = swipeLengthX / 500.0f;
-                this.speedY = swipeLengthY / 500.0f;
-				/*if (this.speedX >1) {
-					this.speedX = 1;
+   //             float swipeLengthX = endPos.x - this.startPos.x;
+   //             float swipeLengthY = endPos.y - this.startPos.y;
+   //             this.speedX = swipeLengthX / 500.0f;
+   //             this.speedY = swipeLengthY / 500.0f;
+			//	/*if (this.speedX >1) {
+			//		this.speedX = 1;
 
-				} else if (this.speedY >1) {
-					this.speedY = 1;
-				}*/
-				gameController.management = true;
+			//	} else if (this.speedY >1) {
+			//		this.speedY = 1;
+			//	}*/
+			//	gameController.management = true;
 			
-            }
+   //         }
 
 
-            transform.Translate(this.speedX, this.speedY, 0);
-            this.speedX *= 0.98f;
-            this.speedY *= 0.98f;
+   //         transform.Translate(this.speedX, this.speedY, 0);
+   //         this.speedX *= 0.98f;
+   //         this.speedY *= 0.98f;
 
-			//Debug.Log (this.speedX);
-			//Debug.Log (this.speedY);
+			////Debug.Log (this.speedX);
+			////Debug.Log (this.speedY);
 
 
 
-        }
+        //}
+    }
+
+    public void Flip(Vector3 force)
+    {
+        // 瞬間的に力を加えてはじく
+        this.rb.AddForce(force, ForceMode.Impulse);
     }
 
     public void OnTriggerEnter(Collider c)
@@ -132,6 +139,7 @@ public class MoveScript : MonoBehaviour
 			Debug.Log ("check");
             if (count)
             {
+                gameController.management = true;
                 count = false;
                 StartCoroutine(Stop());
               

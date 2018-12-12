@@ -56,6 +56,12 @@ public class ArrowScript : MonoBehaviour
         this.physics = this.GetComponent<Rigidbody>();
         this.mainCamera = Camera.main;
         this.mainCameraTransform = this.mainCamera.transform;
+    }
+
+    private void Start()
+    {
+        direction = this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>();
+        arrowPos = this.gameObject.transform.GetChild(1).gameObject;
         arrowPos.SetActive(false);
     }
 
@@ -99,7 +105,7 @@ public class ArrowScript : MonoBehaviour
         arrowPos.transform.position = this.gameObject.transform.localPosition;
         arrowPos.transform.rotation = Quaternion.FromToRotation(Vector3.down, this.currentForce);
         arrowPos.transform.localScale = new Vector3(0.2f, dist, 0.2f);
-        //arrowPos.localRotation = Quaternion.Euler(arrowPos.localRotation.x, 0, arrowPos.localRotation.z);
+
 
         if (this.currentForce.magnitude > MaxMagnitude * MaxMagnitude)
         {
@@ -128,5 +134,6 @@ public class ArrowScript : MonoBehaviour
     {
         // 瞬間的に力を加えてはじく
         this.physics.AddForce(force, ForceMode.Impulse);
+        this.gameObject.GetComponent<ArrowScript>().enabled = false;
     }
 }
