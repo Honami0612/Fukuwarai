@@ -19,10 +19,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4080016845127214}
+  - component: {fileID: 114410679870673364}
   - component: {fileID: 65791543834753198}
   - component: {fileID: 54232636557254888}
   - component: {fileID: 212920099785446240}
-  - component: {fileID: 114267844335691156}
   - component: {fileID: 95743575224296834}
   - component: {fileID: 82396775312243786}
   - component: {fileID: 96837003457467238}
@@ -40,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1355904873136626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -10, z: 0}
+  m_LocalPosition: {x: 0, y: -11.51, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -177,7 +177,7 @@ Animator:
   m_GameObject: {fileID: 1355904873136626}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f5cb44360b82249b782aab1fcf552f57, type: 2}
+  m_Controller: {fileID: 9100000, guid: 09b8bd776d1d87d4fb3f7da0255ae5bd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -278,7 +278,7 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &114267844335691156
+--- !u!114 &114410679870673364
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -336,7 +336,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 8.82, y: 8.4}
+  m_Size: {x: 0.6, y: 1.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

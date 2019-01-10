@@ -47,9 +47,9 @@ public class GameController : MonoBehaviour {
             screenshot = GameObject.Find("ScreenShot(Clone)"); 
         }
 
-        GameObject.Find("parts").GetComponent<SpriteRenderer>().sprite = partsSprite[num];
-        GameObject.Find("parts").GetComponent<Animator>().runtimeAnimatorController = partsAnimation[num];
-        //StartCoroutine(PartsMove());
+      //  GameObject.Find("partsPrefab").GetComponent<SpriteRenderer>().sprite = partsSprite[num];
+       // GameObject.Find("partsPrefab").GetComponent<Animator>().runtimeAnimatorController = partsAnimation[num];
+       
 
     }
 
