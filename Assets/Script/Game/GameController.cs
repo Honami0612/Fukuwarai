@@ -100,7 +100,7 @@ public class GameController : MonoBehaviour {
         else
         {
 			Debug.Log ("###");
-			//screenshot.GetComponent<Screenshot> ().Screen ();
+			screenshot.GetComponent<Screenshot> ().Screen ();
 			StartCoroutine ("timestop");
 
         }
