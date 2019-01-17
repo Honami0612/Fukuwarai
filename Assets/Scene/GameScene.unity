@@ -796,7 +796,7 @@ MonoBehaviour:
   - {fileID: 9100000, guid: 9e9abbd161ad7439e9dd178ebbc7350b, type: 2}
   - {fileID: 9100000, guid: 3d921e3e5f9c946e6b1d5b9e53cf625b, type: 2}
   timerText: {fileID: 2080695606}
-  screenshotPrefab: {fileID: 1436359888211240, guid: 3cb79c66793dd8e4a8b6d88317565fa3,
+  screenshotPrefab: {fileID: 1436359888211240, guid: f191d8e19bb834aa8a012ea59f8d08a2,
     type: 2}
 --- !u!4 &1039522530
 Transform:
