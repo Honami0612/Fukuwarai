@@ -80,9 +80,14 @@ public class GameController : MonoBehaviour {
         parts[num].GetComponent<MoveScript>().enabled = false;
 
         num++;
+
         if (num < partsSprite.Length)
         {
             parts.Add(Instantiate(partsPrefab) as GameObject);
+            parts[num].SetActive(true);
+            parts[num].transform.localPosition = new Vector3(0, -11.4f, 0);
+            parts[num].transform.localScale = new Vector3(1.5f, 1.5f, 1f);
+            parts[num].transform.localRotation = Quaternion.Euler(0, 0, 0);
             parts[num].name = partsSprite[num].name;
             parts[num].GetComponent<SpriteRenderer>().sprite = partsSprite[num];
             if(partsAnimation[num] != null)
