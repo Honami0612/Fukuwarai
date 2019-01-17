@@ -22,7 +22,7 @@ public class MouseController : MonoBehaviour {
     {
         this.mainCamera = Camera.main;
         this.mainCameraTransform = this.mainCamera.transform;
-        arrowPos.SetActive(false);
+       // arrowPos.SetActive(false);
     }
 
     private Vector3 GetMousePosition()
@@ -39,7 +39,7 @@ public class MouseController : MonoBehaviour {
     public void OnMouseDown()
     {
         this.dragStart = this.GetMousePosition();
-        arrowPos.SetActive(true);
+        //arrowPos.SetActive(true);
     }
 
     public void OnMouseDrag()
@@ -50,7 +50,7 @@ public class MouseController : MonoBehaviour {
         dist = Vector3.Distance(position, this.dragStart); //ここを変えれば大きさの割合が変わる
         arrowPos.transform.position = this.gameObject.transform.localPosition;
         arrowPos.transform.rotation = Quaternion.FromToRotation(Vector3.down, this.currentForce);
-        arrowPos.transform.localScale = new Vector3(0.2f, dist, 0.2f);
+        arrowPos.transform.localScale = new Vector3(0.1f, dist, 0.1f);
 
 
         if (this.currentForce.magnitude > MaxMagnitude * MaxMagnitude)
@@ -67,6 +67,9 @@ public class MouseController : MonoBehaviour {
 
     public void ResetData()
     {
+        arrowPos.SetActive(true);
+        arrowPos.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        arrowPos.transform.rotation = Quaternion.Euler(0,0,0);
         currentForce = Vector3.zero;
         dragStart = Vector3.zero;
         dist = 0.0f;
