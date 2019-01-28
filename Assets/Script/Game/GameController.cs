@@ -123,6 +123,7 @@ public class GameController : MonoBehaviour {
 			parts[j].GetComponent<Rigidbody>().isKinematic = true;
 		}
 		Triggerfalse ();
+
 	}
 		
 	void Triggerfalse()
@@ -130,6 +131,7 @@ public class GameController : MonoBehaviour {
 		
 		for(int i=0;i<parts.Count;i++){
 			Debug.Log ("Triggerfalse");
+
 			parts[i].GetComponent<Rigidbody> ().isKinematic = false;
 		}
 	}

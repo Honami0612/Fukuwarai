@@ -19,10 +19,13 @@ public class LoadScenestart : MonoBehaviour {
 		switch (number) {
 		case 0:
 			SceneManager.LoadScene ("GameScene");
+			Debug.Log ("0");
 			break;
-		case 1:
+		case 2:
 			SceneManager.LoadScene ("Collection");
+			Debug.Log ("1");
 			break;
+
 		}
 	}
 }
