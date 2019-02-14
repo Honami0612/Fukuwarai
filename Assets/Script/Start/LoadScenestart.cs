@@ -6,14 +6,6 @@ using UnityEngine.SceneManagement;
 public class LoadScenestart : MonoBehaviour {
 
 
- /*  void Update(){
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("Scene");
-            SceneManager.LoadScene("GameScene");
-        }
-	}*/
 
 	public void OnClick(int number){
 		switch (number) {

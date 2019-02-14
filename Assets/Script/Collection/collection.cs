@@ -15,6 +15,7 @@ public class collection : MonoBehaviour {
 
 	public Transform canvasObject;
 
+
 	// Use this for initialization
 	void Start () {
 		StreamReader sr = new StreamReader (Application.dataPath+"/Resources/ScreenShotnumber.csv");
@@ -33,5 +34,10 @@ public class collection : MonoBehaviour {
 
 
 	}
-	
+
+	void Update(){
+
+	}
+
+
 }

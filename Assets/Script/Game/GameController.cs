@@ -5,8 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 using System.IO;
+//using UnityEngine.Networking;
 
 public class GameController : MonoBehaviour {
+
+	//public GameObject a;
 
     [SerializeField]
     GameObject partsPrefab;
@@ -14,15 +17,12 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     Sprite[] partsSprite;
 
-	[SerializeField]
-	List<GameObject> parts = new List<GameObject>();
-    [SerializeField]
-    List<RuntimeAnimatorController> partsAnimation = new List<RuntimeAnimatorController>();
-
     [SerializeField]
     Text timerText;
 
+	//[SyncVar]
     private int num;
+
     float time = 10.0f;
 	private bool posmanagement = false;
 
@@ -30,14 +30,22 @@ public class GameController : MonoBehaviour {
     GameObject screenshotPrefab;
     GameObject screenshot;
 
+	[SerializeField]
+	GameObject[] kao;
 
+	public GameObject[] partsLoad;
+	[SerializeField]
+	List<GameObject> parts = new List<GameObject>();
 
-
+	string[] folder={"ojisan","man","apple"};
 
     private void Start()
     {
         num = 0;
-        
+		int faceselectnumber = FaceSelect.Select ();
+		Debug.Log (faceselectnumber);
+		Instantiate (kao[faceselectnumber]);//顔生成
+
         if (GameObject.Find("ScreenShot(Clone)")==null)
         {
             screenshot = Instantiate(screenshotPrefab);
@@ -46,77 +54,69 @@ public class GameController : MonoBehaviour {
         {
             screenshot = GameObject.Find("ScreenShot(Clone)"); 
         }
-
-      //  GameObject.Find("partsPrefab").GetComponent<SpriteRenderer>().sprite = partsSprite[num];
-       // GameObject.Find("partsPrefab").GetComponent<Animator>().runtimeAnimatorController = partsAnimation[num];
        
+        partsLoad = Resources.LoadAll <GameObject> ("game/"+folder[faceselectnumber]); //呼び出し一括
+
+		parts.Add(Instantiate(partsLoad[0])); //パーツ生成
+		parts[0].SetActive(true);
+		parts[0].transform.localPosition = new Vector3(0, -11.4f, 0);
+		parts[0].transform.localScale = new Vector3(1.5f, 1.5f, 1f);
+		parts[0].transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+		this.time=10.0f;
+
 
     }
 
 	void Update() { 
 
-        this.time -= Time.deltaTime;
+		//if (isLocalPlayer) {
+			this.time -= Time.deltaTime;
 
-        if (this.time < 0)
-        {
-            Generate();
-        }
-        else
-        {
-            this.timerText.text = this.time.ToString("F0");
-        }
-    
+			if (this.time < 0) {
+				Generate ();
+			} else {
+				this.timerText.text = this.time.ToString ("F0");
+			}
+	//	} 
 
-		if (posmanagement==true){
-			posmanagement = false;
-			Invoke ("PosStop",1.2f);
+			if (posmanagement == true) {
+				posmanagement = false;
+				Invoke ("PosStop", 1.2f);
+			}
 		}
-	}
+	
 
     public void Generate()
-    {
-        Debug.Log("確認");
+	{
+		Debug.Log ("確認");
 
-        parts[num].GetComponent<MoveScript>().enabled = false;
+		num++;
 
-        num++;
+		if (num < partsLoad.Length) {
+			parts.Add (Instantiate (partsLoad [num]));　//パーツ生成
+			parts [num].SetActive (true);
+			parts [num].transform.localPosition = new Vector3 (0, -11.4f, 0);
+			parts [num].transform.localScale = new Vector3 (1.5f, 1.5f, 1f);
+			parts [num].transform.localRotation = Quaternion.Euler (0, 0, 0);
 
-        if (num < partsSprite.Length)
-        {
-            parts.Add(Instantiate(partsPrefab) as GameObject);
-            parts[num].SetActive(true);
-            parts[num].transform.localPosition = new Vector3(0, -11.4f, 0);
-            parts[num].transform.localScale = new Vector3(1.5f, 1.5f, 1f);
-            parts[num].transform.localRotation = Quaternion.Euler(0, 0, 0);
-            parts[num].name = partsSprite[num].name;
-            parts[num].GetComponent<SpriteRenderer>().sprite = partsSprite[num];
-            if(partsAnimation[num] != null)
-            {
-                parts[num].GetComponent<Animator>().runtimeAnimatorController = partsAnimation[num];
-            }
-            
-            this.time = 10.0f;
-        }
-        else
-        {
+		
+			this.time = 10.0f;
+		} else {
 			Debug.Log ("###");
 			screenshot.GetComponent<Screenshot> ().Screen ();
 			StartCoroutine ("timestop");
 
-        }
-    }
-
-  
+		}
+	}
+		
 	IEnumerator timestop(){
 		yield return new WaitForSeconds (3);
 		SceneManager.LoadScene ("Finish");
 	}
 
-
     void PosStop()
 	{
-		
-	
 		for(int j=0;j<parts.Count;j++)
 		{
 			Debug.Log ("PosStop");
@@ -125,7 +125,7 @@ public class GameController : MonoBehaviour {
 		Triggerfalse ();
 
 	}
-		
+
 	void Triggerfalse()
 	{
 		
@@ -137,9 +137,8 @@ public class GameController : MonoBehaviour {
 	}
 
 
-
-	public bool management{
-		get { return posmanagement;}
+	public bool management {
+		get { return posmanagement; }
 		set { posmanagement = value; }
 	}
 }
