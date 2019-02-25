@@ -37,12 +37,12 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	List<GameObject> parts = new List<GameObject>();
 
-	string[] folder={"ojisan","man","apple"};
+	string[] folder={"1ojisan","2man","3apple","4moon"};
 
     private void Start()
     {
         num = 0;
-		int faceselectnumber = FaceSelect.Select ();
+		int faceselectnumber = FaceSelect.SelectNumber - 1;
 		Debug.Log (faceselectnumber);
 		Instantiate (kao[faceselectnumber]);//顔生成
 
@@ -55,7 +55,8 @@ public class GameController : MonoBehaviour {
             screenshot = GameObject.Find("ScreenShot(Clone)"); 
         }
        
-        partsLoad = Resources.LoadAll <GameObject> ("game/"+folder[faceselectnumber]); //呼び出し一括
+        partsLoad = Resources.LoadAll <GameObject> ("Game/"+folder[faceselectnumber]); //呼び出し一括
+
 
 		parts.Add(Instantiate(partsLoad[0])); //パーツ生成
 		parts[0].SetActive(true);
@@ -100,7 +101,6 @@ public class GameController : MonoBehaviour {
 			parts [num].transform.localScale = new Vector3 (1.5f, 1.5f, 1f);
 			parts [num].transform.localRotation = Quaternion.Euler (0, 0, 0);
 
-		
 			this.time = 10.0f;
 		} else {
 			Debug.Log ("###");

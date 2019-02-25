@@ -56,6 +56,7 @@
      <Compile Include="Assets\Script\Collection\collection.cs" />
      <Compile Include="Assets\Script\Collection\Touch.cs" />
      <Compile Include="Assets\Script\Finish\GameFinish.cs" />
+     <Compile Include="Assets\Script\Finish\sendcollection.cs" />
      <Compile Include="Assets\Script\Game\GameController.cs" />
      <Compile Include="Assets\Script\Game\MoveScript.cs" />
      <Compile Include="Assets\Script\Game\PlayerScript.cs" />

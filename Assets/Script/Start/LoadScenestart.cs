@@ -10,7 +10,7 @@ public class LoadScenestart : MonoBehaviour {
 	public void OnClick(int number){
 		switch (number) {
 		case 0:
-			SceneManager.LoadScene ("GameScene");
+			SceneManager.LoadScene ("Select");
 			Debug.Log ("0");
 			break;
 		case 2:
