@@ -37,7 +37,7 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	List<GameObject> parts = new List<GameObject>();
 
-	string[] folder={"1ojisan","2man","3apple","4moon"};
+	string[] folder={"1ojisan","2man","3apple","4moon","5rabbit"};
 
     private void Start()
     {
