@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System;//Exception
 using System.IO;//System.IO.FileInfo,System.IO.StreamRender,System.IO.StreamWriter
 using System.Text;//Encoding
+using UnityEngine.UI;
 
 public class Screenshot : MonoBehaviour {
 
@@ -17,10 +18,14 @@ public class Screenshot : MonoBehaviour {
 	StreamWriter sw;
 	FileInfo fi;
 
+	private bool screenShotFlag = false;
+
+
 	private TextAsset csvFile;//CSVファイル
 
 	void Start()
 	{
+		
 		StreamReader sr = new StreamReader (Application.dataPath+"/Resources/ScreenShotnumber.csv");
 		while (sr.Peek () > -1) {//reader.Peekがー1になるまで
 			string line = sr.ReadLine ();//一行ずつ読み込み
@@ -37,23 +42,43 @@ public class Screenshot : MonoBehaviour {
 		 */
 	}
 
+	private void Update(){
+		if (screenShotFlag == true) {
 
+			screenShotFlag = false;
+			StartCoroutine (Screen ());
+		}
 
-    public void Screen()
+	
+	}
+
+	IEnumerator Screen()
     {
 		ScreenCapture.CaptureScreenshot(Application.dataPath+saveFilePath+"/savedata"+save+".PNG");
 
 		save++;
+		int a = save - 1;
 		Debug.Log ("save:"+save);
-		logSave ();
+		yield return StartCoroutine(logSave ());
+		while (File.Exists (Application.dataPath + saveFilePath + "/savedata" + a + ".PNG") == false) {
+			yield return null;
+		}
+		//yield return new WaitForSeconds (10f);
+		SceneManager.LoadScene ("Finish");
+		yield break;
     }
-	public void logSave(){
+	IEnumerator logSave(){
 		fi = new FileInfo (Application.dataPath + "/Resources/ScreenShotnumber.csv");//ScreenShotnumber.csvファイルを読み込む
 		sw = fi.CreateText ();
 		sw.WriteLine (save);
 		sw.Flush ();
 		sw.Close ();
 		Debug.Log("sw:"+sw+"fi"+fi);
+		yield break;
+	}
+
+	public bool ScreenShotFlag {
+		set{ screenShotFlag = value; }
 	}
 
 }

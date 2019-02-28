@@ -72,13 +72,13 @@ public class GameController : MonoBehaviour {
 	void Update() { 
 
 		//if (isLocalPlayer) {
-			this.time -= Time.deltaTime;
+			/*this.time -= Time.deltaTime;
 
 			if (this.time < 0) {
 				Generate ();
 			} else {
 				this.timerText.text = this.time.ToString ("F0");
-			}
+			}*/
 	//	} 
 
 			if (posmanagement == true) {
@@ -101,11 +101,11 @@ public class GameController : MonoBehaviour {
 			parts [num].transform.localScale = new Vector3 (1.5f, 1.5f, 1f);
 			parts [num].transform.localRotation = Quaternion.Euler (0, 0, 0);
 
-			this.time = 10.0f;
+			//this.time = 10.0f;
 		} else {
 			Debug.Log ("###");
-			screenshot.GetComponent<Screenshot> ().Screen ();
-			StartCoroutine ("timestop");
+			screenshot.GetComponent<Screenshot> ().ScreenShotFlag = true;
+			//StartCoroutine ("timestop");
 
 		}
 	}

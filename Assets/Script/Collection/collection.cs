@@ -29,7 +29,7 @@ public class collection : MonoBehaviour {
 
 			Collection.Add (Instantiate (CollectionPrefab)as GameObject);
 			Collection [i].transform.SetParent (canvasObject);
-			Collection [i].GetComponent<Image> ().sprite = Sprite.Create (texture, new Rect (0, 0, 589, 331), Vector2.zero);//200,250,500,300
+			Collection [i].GetComponent<Image> ().sprite = Sprite.Create (texture, new Rect (0, 0, 1906, 1033), Vector2.zero);//200,250,500,300
 		}
 
 

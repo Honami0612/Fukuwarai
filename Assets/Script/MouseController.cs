@@ -41,7 +41,8 @@ public class MouseController : MonoBehaviour {
     {
         this.dragStart = this.GetMousePosition();
         arrowPos.SetActive(true);
-    }
+		Debug.Log ("MouseDown");
+	}
 
     public void OnMouseDrag()
     {
