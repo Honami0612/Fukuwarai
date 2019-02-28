@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+//using UnityEngine.Networking;
 
 [RequireComponent(typeof(Rigidbody))]
 
@@ -22,7 +23,7 @@ public class MouseController : MonoBehaviour {
     {
         this.mainCamera = Camera.main;
         this.mainCameraTransform = this.mainCamera.transform;
-       // arrowPos.SetActive(false);
+        arrowPos.SetActive(false);
     }
 
     private Vector3 GetMousePosition()
@@ -39,7 +40,7 @@ public class MouseController : MonoBehaviour {
     public void OnMouseDown()
     {
         this.dragStart = this.GetMousePosition();
-        //arrowPos.SetActive(true);
+        arrowPos.SetActive(true);
     }
 
     public void OnMouseDrag()
@@ -62,9 +63,10 @@ public class MouseController : MonoBehaviour {
     public void OnMouseUp()
     {
         arrowPos.SetActive(false);
-        moveScript.Flip(this.currentForce * -6f);
+		moveScript.Flip(this.currentForce * -6f);
     }
 
+	//[Command]
     public void ResetData()
     {
         arrowPos.SetActive(true);

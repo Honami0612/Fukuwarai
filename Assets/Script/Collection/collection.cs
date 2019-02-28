@@ -15,6 +15,7 @@ public class collection : MonoBehaviour {
 
 	public Transform canvasObject;
 
+
 	// Use this for initialization
 	void Start () {
 		StreamReader sr = new StreamReader (Application.dataPath+"/Resources/ScreenShotnumber.csv");
@@ -28,10 +29,15 @@ public class collection : MonoBehaviour {
 
 			Collection.Add (Instantiate (CollectionPrefab)as GameObject);
 			Collection [i].transform.SetParent (canvasObject);
-			Collection [i].GetComponent<Image> ().sprite = Sprite.Create (texture, new Rect (0, 0, 512, 256), Vector2.zero);
+			Collection [i].GetComponent<Image> ().sprite = Sprite.Create (texture, new Rect (0, 0, 589, 331), Vector2.zero);//200,250,500,300
 		}
 
 
 	}
-	
+
+	void Update(){
+
+	}
+
+
 }
