@@ -42,6 +42,7 @@ public class Screenshot : MonoBehaviour {
     public void Screen()
     {
 		ScreenCapture.CaptureScreenshot(Application.dataPath+saveFilePath+"/savedata"+save+".PNG");
+
 		save++;
 		Debug.Log ("save:"+save);
 		logSave ();
