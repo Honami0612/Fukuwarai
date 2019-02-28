@@ -8,7 +8,7 @@ using System;
 
 public class MouseController : MonoBehaviour {
 
-    private Camera mainCamera = null;
+	private Camera mainCamera = null;
     private Transform mainCameraTransform = null;
 
     private const float MaxMagnitude = 2f;
@@ -21,7 +21,7 @@ public class MouseController : MonoBehaviour {
 
     private void Awake()
     {
-        this.mainCamera = Camera.main;
+		this.mainCamera = Camera.main;
         this.mainCameraTransform = this.mainCamera.transform;
         arrowPos.SetActive(false);
     }
@@ -41,7 +41,8 @@ public class MouseController : MonoBehaviour {
     {
         this.dragStart = this.GetMousePosition();
         arrowPos.SetActive(true);
-    }
+		Debug.Log ("MouseDown");
+	}
 
     public void OnMouseDrag()
     {
