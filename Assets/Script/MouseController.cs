@@ -67,7 +67,6 @@ public class MouseController : MonoBehaviour {
 		moveScript.Flip(this.currentForce * -6f);
     }
 
-	//[Command]
     public void ResetData()
     {
         arrowPos.SetActive(true);

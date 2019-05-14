@@ -63,8 +63,8 @@ public class Screenshot : MonoBehaviour {
 		while (File.Exists (Application.dataPath + saveFilePath + "/savedata" + a + ".PNG") == false) {
 			yield return null;
 		}
-		//yield return new WaitForSeconds (10f);
-		SceneManager.LoadScene ("Finish");
+		yield return new WaitForSeconds (10f);
+		SceneManager.LoadScene ("Start");
 		yield break;
     }
 	IEnumerator logSave(){
