@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Touch : MonoBehaviour {
+public class TouchScript : MonoBehaviour {
 
 	private GameObject collection;
 	private bool Click = false;
