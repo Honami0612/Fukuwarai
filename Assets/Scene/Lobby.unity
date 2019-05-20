@@ -988,6 +988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 256cae82849324cd79a1464a7f907cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lobbyManager: {fileID: 716374710}
   InputField: {fileID: 1129436258}
   DecisionButton: {fileID: 629615883}
 --- !u!1 &1206295507

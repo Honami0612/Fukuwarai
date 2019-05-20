@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class CreateNewRoom : MonoBehaviour {
 
-    private LobbyManager lobbyManager;
+    [SerializeField]
+    LobbyManager lobbyManager;
 
     public GameObject InputField;
     public Button DecisionButton;
@@ -37,9 +38,11 @@ public class CreateNewRoom : MonoBehaviour {
                 break;
 
 
-            case 1:InputField.SetActive(false);
-                DecisionButton.gameObject.SetActive(false);
+            case 1:
                 lobbyManager.RoomCreate();
+                InputField.SetActive(false);
+                DecisionButton.gameObject.SetActive(false);
+
                 break;
             case 2:
                // lobbyManager.JoinRoom();

@@ -35,7 +35,7 @@ public class LobbyManager : MonoBehaviour {
     // ルーム作成
     public void RoomCreate(){
         //roomNameをTextからとる
-        roomName = GameObject.Find("RoomNameArea").GetComponent<Text>().text;
+        roomName = GameObject.Find("RoomNameArea").GetComponent<InputField>().text;
         Debug.Log(roomName);
    //roomName = roomNameArea.GetComponent<Text>().text;//上で取れる？
     //roomを作成できた時の処理
