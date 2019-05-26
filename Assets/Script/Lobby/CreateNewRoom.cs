@@ -9,6 +9,8 @@ public class CreateNewRoom : MonoBehaviour {
     [SerializeField]
     LobbyManager lobbyManager;
 
+    public bool test = false;
+
     public GameObject InputField;
     public Button DecisionButton;
 
@@ -48,7 +50,9 @@ public class CreateNewRoom : MonoBehaviour {
                 break;
             case 2://GameStartButtom(masteronly)
                 Debug.Log("masterbuttonclick");
-                //SceneManager.LoadScene("Start");
+                PhotonView t =GetComponent<PhotonView>();
+                t.RPC("GoGame",PhotonTargets.All);
+                test = true;
                 break;
             case 3://UpdateButtom
                 lobbyManager.UpDateRoom();
@@ -59,5 +63,13 @@ public class CreateNewRoom : MonoBehaviour {
                 break;
         }
 
+    }
+
+
+    [PunRPC]
+    public void GoGame()
+    {
+
+        SceneManager.LoadScene("Start");
     }
 }

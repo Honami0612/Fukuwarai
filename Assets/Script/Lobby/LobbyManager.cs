@@ -112,9 +112,11 @@ public class LobbyManager : MonoBehaviour
     public void OnJoinedRoom()
     {
         Debug.Log("OnJoinRoom");
-        PhotonPlayer photonPlayer = PhotonNetwork.masterClient;
+       // PhotonPlayer photonPlayer = PhotonNetwork.isNonMasterClientInRoom();
+        bool photonPlayer= PhotonNetwork.isNonMasterClientInRoom;
         Debug.Log("Player" + photonPlayer);
-        if (photonPlayer != null)
+        message.text = "test" + photonPlayer;
+        if (photonPlayer !=true)
         {
             GameStart.gameObject.SetActive(true);
         }
