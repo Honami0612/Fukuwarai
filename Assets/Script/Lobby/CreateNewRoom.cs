@@ -9,10 +9,12 @@ public class CreateNewRoom : MonoBehaviour {
     [SerializeField]
     LobbyManager lobbyManager;
 
-    public bool test = false;
+   
 
     public GameObject InputField;
     public Button DecisionButton;
+
+   
 
 
 
@@ -23,22 +25,16 @@ public class CreateNewRoom : MonoBehaviour {
        
 	}
 	
-	// Update is called once per frame
-	void Update ()
-    {
-   
-    }
-
-
-   
+	
     public void OnClick(int number)
     {
         switch (number)
         {
             case 0://CreateNewRoomButton
-            //InputField.GetComponent<Text>().text = "";
-            InputField.SetActive(true);
+                lobbyManager.SetActive();
+                InputField.SetActive(true);
                 DecisionButton.gameObject.SetActive(true);
+
                 break;
 
 
@@ -52,10 +48,10 @@ public class CreateNewRoom : MonoBehaviour {
                 Debug.Log("masterbuttonclick");
                 PhotonView t =GetComponent<PhotonView>();
                 t.RPC("GoGame",PhotonTargets.All);
-                test = true;
+          
                 break;
             case 3://UpdateButtom
-                lobbyManager.UpDateRoom();
+                //lobbyManager.UpDateRoom();
 
                 break;
             case 4:
@@ -69,7 +65,12 @@ public class CreateNewRoom : MonoBehaviour {
     [PunRPC]
     public void GoGame()
     {
-
+        if (PhotonNetwork.inRoom)
+        {
+            Debug.Log("inRoom");
+            PhotonNetwork.room.IsOpen = false;
+            PhotonNetwork.room.IsVisible = false;
+        }
         SceneManager.LoadScene("Start");
     }
 }

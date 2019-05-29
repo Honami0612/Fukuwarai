@@ -29,16 +29,23 @@ public class LobbyManager : MonoBehaviour
     private string roomName;
 
 
+    [SerializeField]
+    int maxplayer; //最大人数
+
+    [SerializeField]
+
+
     private void Start()
     {
         PhotonNetwork.ConnectUsingSettings("バージョン番号");
         UpDateRoom();
+        roomListArea.SetActive(true);
         GameStart.gameObject.SetActive(false);
     }
 
-    private void Update()
+   void OnReceivedRoomListUpdate()
     {
-
+        UpDateRoom();
     }
 
     public void UpDateRoom()
@@ -78,6 +85,7 @@ public class LobbyManager : MonoBehaviour
     // ルーム作成
     public void RoomCreate()
     {
+
         //roomNameをTextからとる
         roomName = GameObject.Find("InputRoomName").GetComponent<InputField>().text;
         Debug.Log(roomName);
@@ -85,6 +93,7 @@ public class LobbyManager : MonoBehaviour
         if (PhotonNetwork.CreateRoom(roomName))
         {
             message.text = "ルームの作成に成功しました";
+            roomListArea.SetActive(false);
             Debug.Log("ルーム作成に成功しました");
         }
         else
@@ -101,6 +110,7 @@ public class LobbyManager : MonoBehaviour
         if (PhotonNetwork.JoinRoom(roomName))
         {
             message.text = "ルームに入室しました";
+            roomListArea.SetActive(false);
 
         }
         else
@@ -116,7 +126,7 @@ public class LobbyManager : MonoBehaviour
         bool photonPlayer= PhotonNetwork.isNonMasterClientInRoom;
         Debug.Log("Player" + photonPlayer);
         message.text = "test" + photonPlayer;
-        if (photonPlayer !=true)
+        if (photonPlayer !=true)//MasterClientでないときtrueが返ってくる
         {
             GameStart.gameObject.SetActive(true);
         }
@@ -133,7 +143,9 @@ public class LobbyManager : MonoBehaviour
     {
         if (PhotonNetwork.LeaveRoom())
         {
+            GameStart.gameObject.SetActive(false);
             message.text = "ルームから退出しました";
+            roomListArea.SetActive(true);
         }
         else
         {
@@ -141,17 +153,10 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    public void ToGameScene()
+    public void SetActive()
     {
-        SceneManager.LoadScene("Game");
+        roomListArea.gameObject.SetActive(false);
     }
 
+
 }
-//生成するプレハブ、ボタンとテキスト
-//GetRoomList(PhotonNetwork.cs)をUpDateでまわしつづける
-//1回目に呼んだルーム数と2回目に呼んだルーム数が違った場合ルームの数をふやす（常に更新）
-
-//start()でInstanseなどを一度まわして、更新ボタンを押した場合とーやさんの写真（元のサイト）のをまわす
-//oldと現在のを比較して違った場合のみ（元のサイト）をまわす
-
-//PhotonPlayer PhotonNetwork.masterClient //マスターかマスターでないかを判断できる。マスターがスタートボタンを押したらゲームスタート

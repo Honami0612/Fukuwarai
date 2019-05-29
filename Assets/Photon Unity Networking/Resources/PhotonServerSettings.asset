@@ -37,4 +37,7 @@ MonoBehaviour:
   - RequestForPickupItems
   - RequestForPickupTimes
   - GoGame
+  - GoCollection
+  - GoSelect
+  - GoStart
   DisableAutoOpenWizard: 1
