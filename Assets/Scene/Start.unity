@@ -908,7 +908,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 1
           m_BoolArgument: 0
@@ -973,6 +973,7 @@ GameObject:
   - component: {fileID: 1807699341}
   - component: {fileID: 1807699340}
   - component: {fileID: 1807699345}
+  - component: {fileID: 1807699344}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1057,6 +1058,32 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 584, y: 289}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1807699344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1807699339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 1
+  instantiationId: 1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &1807699345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1068,6 +1095,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 412c0093f9599af428d4f60f409b81c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  select: {fileID: 2087159574}
+  collection: {fileID: 1695408138}
 --- !u!1 &1925540534
 GameObject:
   m_ObjectHideFlags: 0

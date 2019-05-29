@@ -401,3 +401,4 @@ ASALocalRun/
 
 
 # End of https://www.gitignore.io/api/unity,windows,monodevelop,visualstudio
+*.app/
