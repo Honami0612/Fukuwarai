@@ -14,15 +14,25 @@ public class MouseController : MonoBehaviour {
     private const float MaxMagnitude = 2f;
     private Vector3 currentForce = Vector3.zero;
     public Vector3 dragStart = Vector3.zero;
+
     public GameObject arrowPos;
+    private Vector3 arrowStartScale;
+    private Quaternion arrowStartRotate;
     private float dist = 0.0f;
 
     private MoveScript moveScript;
+
+    [SerializeField]
+    GameObject nowTouchPos;
+    private bool throwFlag = false;
 
     private void Awake()
     {
 		this.mainCamera = Camera.main;
         this.mainCameraTransform = this.mainCamera.transform;
+        arrowStartScale = arrowPos.transform.localScale;
+        arrowStartRotate = arrowPos.transform.localRotation;
+        nowTouchPos.SetActive(false);
         arrowPos.SetActive(false);
     }
 
@@ -41,12 +51,23 @@ public class MouseController : MonoBehaviour {
     {
         this.dragStart = this.GetMousePosition();
         arrowPos.SetActive(true);
+        nowTouchPos.SetActive(true);
+        throwFlag = true;
 		Debug.Log ("MouseDown");
 	}
 
     public void OnMouseDrag()
     {
         var position = this.GetMousePosition();
+        var touchPos = this.GetMousePosition();
+
+        // クリックしている場所　消すと反転
+        touchPos *= -1;
+        touchPos.y += this.mainCameraTransform.localPosition.y * 2;
+        touchPos.z = this.gameObject.transform.localPosition.z;
+        nowTouchPos.transform.localPosition = touchPos;
+
+
         this.currentForce = position - this.dragStart;
 
         dist = Vector3.Distance(position, this.dragStart); //ここを変えれば大きさの割合が変わる
@@ -63,11 +84,19 @@ public class MouseController : MonoBehaviour {
 
     public void OnMouseUp()
     {
-        arrowPos.SetActive(false);
-		moveScript.Flip(this.currentForce * -6f);
+        if (throwFlag == true)
+        {
+            arrowPos.SetActive(false);
+            nowTouchPos.SetActive(false);
+            moveScript.Flip(this.currentForce * -6f);
+        }
+        else
+        {
+            arrowPos.transform.localScale = arrowStartScale;
+            arrowPos.transform.localRotation = arrowStartRotate;
+        }
     }
 
-	//[Command]
     public void ResetData()
     {
         arrowPos.SetActive(true);
@@ -80,6 +109,23 @@ public class MouseController : MonoBehaviour {
 
     public void SetParts(MoveScript m){
         moveScript = m;
+    }
+
+    private void OnTriggerExit(Collider touchArea)
+    {
+        if (touchArea == nowTouchPos.GetComponent<BoxCollider>())
+        {
+            Debug.Log("投げられる範囲を超えました");
+            throwFlag = false;
+        }
+    }
+    private void OnTriggerStay(Collider touchArea)
+    {
+        if (touchArea == nowTouchPos.GetComponent<BoxCollider>())
+        {
+            Debug.Log("投げられる範囲です");
+            throwFlag = true;
+        }
     }
 }
 
