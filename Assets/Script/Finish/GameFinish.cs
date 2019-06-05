@@ -2,14 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class GameFinish : MonoBehaviour {
 
-    
-    public void OnclickStart()
+    public Button selectstart;
+    public Button finishstart;
+    public Button finishcollection;
+
+    private void Start()
     {
-        //SceneManager.LoadScene("Start");
+        bool phtotonPlayer = PhotonNetwork.isNonMasterClientInRoom;
+        if (phtotonPlayer == true)
+        {
+            selectstart.enabled = false;
+        }
+    }
+
+    public void OnclickStart()
+    { 
+
         PhotonView t = GetComponent<PhotonView>();
         t.RPC("GoStart", PhotonTargets.All);
     }
@@ -17,11 +30,8 @@ public class GameFinish : MonoBehaviour {
     [PunRPC]
     public void GoStart()
     {
-        bool photonPlayer = PhotonNetwork.isNonMasterClientInRoom;
-        if (photonPlayer != true)
-        {
-            SceneManager.LoadScene("Start");
-        }
+
+        SceneManager.LoadScene("Start");
     }
 }
 

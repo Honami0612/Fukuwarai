@@ -40,4 +40,5 @@ MonoBehaviour:
   - GoCollection
   - GoSelect
   - GoStart
+  - GoGameScene
   DisableAutoOpenWizard: 1
