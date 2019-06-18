@@ -5,11 +5,11 @@ using UnityEngine.Networking;
 
 public class PlayerScript : NetworkBehaviour {
 
-	private GameController gameController;
+	private GameMain gameController;
 
 	// Use this for initialization
 	void Start () {
-		gameController = GameObject.Find ("GameController").GetComponent<GameController> ();
+		gameController = GameObject.Find ("GameController").GetComponent<GameMain> ();
 		CmdGenerate ();
 	}
 	

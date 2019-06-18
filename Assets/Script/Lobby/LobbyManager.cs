@@ -10,6 +10,17 @@ public class LobbyManager : MonoBehaviour
     [SerializeField]
     Text message;
 
+    //顔の数分 public in
+    public int[] appleparts;
+    public int[] ojiparts;
+    public int[] moonparts;
+    public int[] rabittoparts;
+
+    //public no
+    private int[][] parts;
+
+
+
     // roomNameを書くとこ
     [SerializeField]
     GameObject roomNameArea;
@@ -32,15 +43,15 @@ public class LobbyManager : MonoBehaviour
     [SerializeField]
     int maxplayer; //最大人数
 
-    [SerializeField]
-
-
     private void Start()
     {
         PhotonNetwork.ConnectUsingSettings("バージョン番号");
         UpDateRoom();
         roomListArea.SetActive(true);
         GameStart.gameObject.SetActive(false);
+
+        parts[0] = appleparts;
+        parts[1] = ojiparts;
     }
 
    void OnReceivedRoomListUpdate()

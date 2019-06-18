@@ -41,4 +41,6 @@ MonoBehaviour:
   - GoSelect
   - GoStart
   - GoGameScene
+  - Generate
+  - StartGenerate
   DisableAutoOpenWizard: 1
