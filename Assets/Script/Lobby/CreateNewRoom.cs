@@ -21,16 +21,16 @@ public class CreateNewRoom : MonoBehaviour {
     public GameObject InputField;
     public Button DecisionButton;
 
-   
-
 
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
    
 
 		InputField.SetActive(false);
         DecisionButton.gameObject.SetActive(false);
+       
        
 	}
 	

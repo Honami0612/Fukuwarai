@@ -9,7 +9,7 @@ public class LobbyManager : MonoBehaviour
 {
     [SerializeField]
     Text message;
-
+    /*
     //顔の数分 public in
     public int[] appleparts;
     public int[] ojiparts;
@@ -18,7 +18,7 @@ public class LobbyManager : MonoBehaviour
 
     //public no
     private int[][] parts;
-
+    */
 
 
     // roomNameを書くとこ
@@ -30,24 +30,25 @@ public class LobbyManager : MonoBehaviour
     [SerializeField]
     GameObject roomListArea;
     public List<GameObject> roomList;
-    [SerializeField]
+   [SerializeField]
     GameObject roomPrefub;
 
-    [SerializeField]
-    Button GameStart;
+    
+    public Button GameStart;
 
     //入る　or 作る　ルーム名
     private string roomName;
 
-    private void Start()
+     void Start()
     {
-        Debug.Log("aaaaaaaa");
+        Debug.Log("呼び出されている");
         PhotonNetwork.ConnectUsingSettings("バージョン番号");
-        UpDateRoom();
+       
         roomListArea.SetActive(true);
         GameStart.gameObject.SetActive(true);
-       // parts[0] = appleparts;
-       // parts[1] = ojiparts;
+        UpDateRoom();
+        // parts[0] = appleparts;
+        // parts[1] = ojiparts;
     }
 
    void OnReceivedRoomListUpdate()
