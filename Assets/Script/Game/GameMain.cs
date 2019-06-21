@@ -121,8 +121,16 @@ public class GameMain : MonoBehaviour {
         partLoad = Resources.LoadAll <GameObject> ("Game/"+folder[faceselectnumber]); //呼び出し一括
 
         int test = PhotonNetwork.player.ID - 1;
-        photonView.RPC("StartGenerate", PhotonTargets.All, test);
-        message.text = PhotonNetwork.player.ID.ToString();
+
+        object[] t = new object[]
+        {
+            test,
+            PhotonNetwork.AllocateViewID()
+
+        };
+
+        photonView.RPC("StartGenerate", PhotonTargets.AllBuffered, t);
+        message.text = PhotonNetwork.countOfPlayers.ToString();
      
                
        // a[PhotonNetwork.player.ID - 1].SetActive(true);
@@ -171,20 +179,22 @@ public class GameMain : MonoBehaviour {
 
 
     [PunRPC]
-    public void StartGenerate(int id)
+    public void StartGenerate(int id,int view)
     {
         GameObject stobj = Instantiate(partLoad[id]);
         stobj.transform.localPosition = new Vector3(0, -11.4f, 0);
         stobj.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         stobj.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        stobj.GetComponent<PhotonView>().viewID = view;
         stobj.SetActive(false);
         bool d = stobj.GetComponent<PhotonView>().isMine;
         Debug.Log(d);
-        if (photonView.isMine)
+        if (d)
         {
             stobj.SetActive(true);
         }
         a.Add(stobj);
+
     }
 
 

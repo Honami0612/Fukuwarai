@@ -33,25 +33,21 @@ public class LobbyManager : MonoBehaviour
     [SerializeField]
     GameObject roomPrefub;
 
-    
-    public Button GameStart;
+    [SerializeField]
+    Button GameStart;
 
     //入る　or 作る　ルーム名
     private string roomName;
 
-
-    [SerializeField]
-    int maxplayer; //最大人数
-
     private void Start()
     {
+        Debug.Log("aaaaaaaa");
         PhotonNetwork.ConnectUsingSettings("バージョン番号");
         UpDateRoom();
         roomListArea.SetActive(true);
-        GameStart.gameObject.SetActive(false);
-
-        parts[0] = appleparts;
-        parts[1] = ojiparts;
+        GameStart.gameObject.SetActive(true);
+       // parts[0] = appleparts;
+       // parts[1] = ojiparts;
     }
 
    void OnReceivedRoomListUpdate()

@@ -5,13 +5,17 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadScenestart : MonoBehaviour {
-
+    //いらない
+    PhotonPlayer[] nowplay = PhotonNetwork.playerList;
+    [SerializeField]
+    Text karitext;
 
     public Button select;
     public Button collection;
 
     private void Start()
     {
+        karitext.text = nowplay.Length.ToString();
         bool photonPlayer = PhotonNetwork.isNonMasterClientInRoom;
         if (photonPlayer == true)
         {

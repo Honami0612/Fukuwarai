@@ -36,7 +36,7 @@ public class MoveScript : MonoBehaviour
     {
         photonview = GetComponent<PhotonView>();
         mine = photonview.isMine;
-        photonview.viewID = PhotonNetwork.AllocateViewID();
+        //photonview.viewID = PhotonNetwork.AllocateViewID();
         Debug.Log(mine);
     }
     void Start()
