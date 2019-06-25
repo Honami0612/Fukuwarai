@@ -1107,8 +1107,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 256cae82849324cd79a1464a7f907cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  a: {fileID: 1832094017522446, guid: 599efc30e745d47d38f06852807c59a8, type: 2}
-  me: {fileID: 158326251}
   lobbyManager: {fileID: 716374710}
   InputField: {fileID: 1129436258}
   DecisionButton: {fileID: 629615883}
@@ -1134,8 +1132,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 1
-  instantiationId: 1
+  viewIdField: 2
+  instantiationId: 2
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!1 &1165915320

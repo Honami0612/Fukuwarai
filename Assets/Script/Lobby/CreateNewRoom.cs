@@ -5,13 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class CreateNewRoom : MonoBehaviour {
-    //いらない
-    PhotonPlayer[] nowp = PhotonNetwork.playerList;
-    public GameObject a;
-    PhotonView photonView;
-    [SerializeField]
-    Text me;
-
+ 
 
     [SerializeField]
     LobbyManager lobbyManager;
@@ -83,7 +77,6 @@ public class CreateNewRoom : MonoBehaviour {
              PhotonNetwork.room.IsOpen = false;
              PhotonNetwork.room.IsVisible = false;
          }
-        Debug.Log("ロビーでのnowplayercount:"+nowp.Length);
          SceneManager.LoadScene("Start");
 
     }

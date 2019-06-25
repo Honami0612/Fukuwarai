@@ -9,20 +9,15 @@ using System.IO;
 
 public class GameMain : MonoBehaviour {
 
-
-    PhotonPlayer[] nowplayer = PhotonNetwork.playerList;
     PhotonView photonView; 
 
     [SerializeField]
     GameObject partsPrefab;
 
-    [SerializeField]
-    Text timerText;
-
 	[PunRPC]
     private int num = 0;
 
-    float time = 10.0f;
+   // float time = 10.0f;
 
     [PunRPC]
 	private bool posmanagement = false;
@@ -31,7 +26,7 @@ public class GameMain : MonoBehaviour {
     GameObject screenshotPrefab;
     GameObject screenshot;
 
-	[SerializeField]
+    [SerializeField]
 	GameObject[] kao;
 
     // name と　ファイル名　同じ
@@ -41,71 +36,73 @@ public class GameMain : MonoBehaviour {
     [SerializeField]
     List<Animation> partsAnimation = new List<Animation>();
 
-	[SerializeField]
+	[SerializeField]//Wakuを超えたパーツ格納
 	List<GameObject> parts = new List<GameObject>();
 
 	string[] folder={"1ojisan","2man","3apple","4moon","5rabbit"};
 
-    int now = 99;
+
 
     [SerializeField]
     MouseController mouse;
 
+    [SerializeField]
+    List<object> id_viewId = new List<object>();
+
     //衝突 - isKinematic ON/OFF parts
-    [PunRPC]
+    [PunRPC]//生成したパーツ格納
     public List<GameObject> a = new List<GameObject>();
 
     [SerializeField]
-    Text message;
+    Text message1;
+    [SerializeField]
+    Text message2;
 
-   /* void test()
-    {
-        // start
-        //a.Add(PhotonNetwork.Instantiate(partsLoad[PhotonNetwork.player.ID - 1].name,new Vector3(0,0,0),Quaternion.identity,0));
-        //mouse.SetParts(a[PhotonNetwork.player.ID - 1].GetComponent<MoveScript>());
-        //now = PhotonNetwork.player.ID - 1;
-
-
-        // awake master
-        num = nowplayer.Length;
-
-
-        // private
-        if (a.Count < partsSprite.Length)
-        {
-            a.Add(PhotonNetwork.Instantiate(partsSprite[num].name, new Vector3(0, 0, 0), Quaternion.identity, 0));
-            //mouse.SetParts(a[num].GetComponent<MoveScript>());
-            //now = num;
-            num++;
-        }
-        else
-        {
-            //待機
-            // text =  "他のプレイヤーを待つ"
-        }
-
-    }p
-    */   
-
-
+ 
 
     private void Awake()
     {
-        num = nowplayer.Length;
-        Debug.Log(num);
+       
         photonView = GetComponent<PhotonView>();
         photonView.ObservedComponents = new List<Component>();
+        PhotonNetwork.OnEventCall += OnRaiseEvent;
 
     }
 
+    private void OnRaiseEvent(byte code,object g,int senderid)
+    {
+        string data = g.ToString();
+        string tmp = null;
+        int id = 0, viewId = 0;
 
+        for(int i = 0; i < data.Length; i++)
+        {
+            if(data[i] == 10)
+            {
+                id = int.Parse(tmp);
+                tmp = null;
+            }
+            else
+            {
+                tmp += data[i];
+            }
+        }
+        viewId = int.Parse(tmp);
+
+        Debug.LogWarning("id =" + id);
+        Debug.LogError("viewId = " + viewId);
+        if (PhotonView.Find(viewId) == null)
+        {
+            StartGenerate(id, viewId);
+        }
+
+
+    }
 
     private void Start()
     {
-
-        //num = 0;
 		int faceselectnumber = FaceSelect.SelectNumber - 1;
-		Debug.Log (faceselectnumber);
+		//Debug.Log (faceselectnumber);
 		Instantiate (kao[faceselectnumber]);//顔生成
 
         if (GameObject.Find("ScreenShot(Clone)")==null)
@@ -124,32 +121,22 @@ public class GameMain : MonoBehaviour {
 
         object[] t = new object[]
         {
-            test,
-            PhotonNetwork.AllocateViewID()
+            test,PhotonNetwork.AllocateViewID()
 
         };
 
-        photonView.RPC("StartGenerate", PhotonTargets.AllBuffered, t);
-        message.text = PhotonNetwork.countOfPlayers.ToString();
      
-               
-       // a[PhotonNetwork.player.ID - 1].SetActive(true);
-        GameObject.Find("arrowArea").GetComponent<MouseController>().SetParts(a[PhotonNetwork.player.ID - 1].GetComponent<MoveScript>());
-        a[PhotonNetwork.player.ID - 1].GetComponent<MoveScript>().Mine=true;
+
+        photonView.RPC("StartGenerate", PhotonTargets.AllBuffered,t);
+
+     
+
+        GameObject.Find("arrowArea").GetComponent<MouseController>().SetParts(a[test].GetComponent<MoveScript>());
+        //a[test].GetComponent<MoveScript>().Mine=true;
 
 
 
-        //for (int i = 0; i < nowplayer.Length; i++)
-        //{
-        //    Debug.Log("パーツ生成");
-        //    a.Add(PhotonNetwork.Instantiate(partsLoad[i].name, new Vector3(0, -11.4f, 0), Quaternion.identity, 0));
-        //    a[i].SetActive(true);
-        //   // parts[i].transform.localPosition = new Vector3(0, -11.4f, 0);
-        //    a[i].transform.localScale = new Vector3(1.5f, 1.5f, 1f);
-        //    a[i].transform.localRotation = Quaternion.Euler(0, 0, 0);
-        //}
-
-
+    
     }
    
 
@@ -157,16 +144,14 @@ public class GameMain : MonoBehaviour {
 
     void Update()
     {
+        if (PhotonNetwork.isNonMasterClientInRoom != true)
+        {
+            for (int i = 0; i < id_viewId.Count; i++)
+            {
+                PhotonNetwork.RaiseEvent(1, id_viewId[i], true, RaiseEventOptions.Default);
+            }
+        }
 
-        //if (isLocalPlayer) {
-        /*this.time -= Time.deltaTime;
-
-        if (this.time < 0) {
-            Generate ();
-        } else {
-            this.timerText.text = this.time.ToString ("F0");
-        }*/
-        //	} 
 
         //master
         if (posmanagement == true)
@@ -174,6 +159,8 @@ public class GameMain : MonoBehaviour {
             posmanagement = false;
             Invoke("PosStop", 1.2f);
         }
+
+     
     }
 
 
@@ -181,20 +168,31 @@ public class GameMain : MonoBehaviour {
     [PunRPC]
     public void StartGenerate(int id,int view)
     {
-        GameObject stobj = Instantiate(partLoad[id]);
-        stobj.transform.localPosition = new Vector3(0, -11.4f, 0);
-        stobj.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-        stobj.transform.localRotation = Quaternion.Euler(0, 0, 0);
-        stobj.GetComponent<PhotonView>().viewID = view;
-        stobj.SetActive(false);
-        bool d = stobj.GetComponent<PhotonView>().isMine;
-        Debug.Log(d);
-        if (d)
+        if (a.Count < partLoad.Length)
         {
-            stobj.SetActive(true);
-        }
-        a.Add(stobj);
 
+            message1.text += "StartGeneのid=" + id.ToString() + "/view=" + view.ToString();
+            GameObject stobj = Instantiate(partLoad[id]);
+            stobj.transform.localPosition = new Vector3(0, -11.4f, 0);
+            stobj.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            stobj.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            stobj.GetComponent<PhotonView>().viewID = view;
+            stobj.SetActive(false);
+            bool d = stobj.GetComponent<PhotonView>().isMine;
+            if (d)
+            {
+                object g = id + "\n" + view;
+                id_viewId.Add(g);
+                stobj.SetActive(true);
+                stobj.GetComponent<MoveScript>().Mine = true;
+            }
+            a.Add(stobj);
+
+        }
+        else
+        {
+            Debug.Log("待つ");
+        }
     }
 
 
@@ -217,28 +215,19 @@ public class GameMain : MonoBehaviour {
             }
             a.Add(obj);
 
-            //以前/parts.Add (Instantiate (partsLoad [num]));　//パーツ生成
-            // a.Add(PhotonNetwork.Instantiate(partsPrefab.name, new Vector3(0, -11.4f, 0), Quaternion.identity, 0));
-            //以前/a[num].GetComponent<SpriteRenderer>().sprite = partsSprite[num];
-            //parts [num].SetActive (true);
-            //以前/parts [num].transform.localPosition = new Vector3 (0, -11.4f, 0);
-            //parts [num].transform.localScale = new Vector3 (1.5f, 1.5f, 1f);
-            //以前/parts [num].transform.localRotation = Quaternion.Euler (0, 0, 0);
 
-            ///this.time = 10.0f;
         } else {
 			Debug.Log ("###");
-            message.text = "他のプレイヤーを待つ";
+           // message.text = "他のプレイヤーを待つ";
 		
             //大事！スクショマスターのみ	//screenshot.GetComponent<Screenshot> ().ScreenShotFlag = true;
 			
 
 		}
 	}
-	
 
-    	
-	IEnumerator timestop()
+
+    IEnumerator timestop()
     {
 		yield return new WaitForSeconds (3);
 		SceneManager.LoadScene ("Finish");
@@ -248,14 +237,19 @@ public class GameMain : MonoBehaviour {
 
     void PosStop()
 	{
+        foreach(var k in parts)
+        {
+            k.GetComponent<Rigidbody>().isKinematic = true;
+        }
+        /*
 		for(int j=0;j<parts.Count;j++)
 		{
 			Debug.Log ("PosStop");
 			parts[j].GetComponent<Rigidbody>().isKinematic = true;
 		}
 		Triggerfalse ();
-
-	}
+        */
+    }
 
 
 	void Triggerfalse()
@@ -278,31 +272,9 @@ public class GameMain : MonoBehaviour {
 }
 
 
-/* RPC 全プレイヤーがInstantiateで生成する。このままだと同期できないはず（要確認）
- *
- * 同期できなかった場合↓
- * 生成した後にPhotonViewつける　https://qiita.com/_karukaru_/items/f90fe4f269a72d2b46d0
- * これをつけることで同期設定をしている
- * これで動くかどうか確認
- * 生成はされるはず
- * 座標が変わるかどうか
- * 
- * 上記がうまくいけば
- * 変数・生成方法は変更しなくていい。
- * Instantiate時に自分のPlayer_Idを引数で送り、
- * RPCの最後で引数のPlayer_idと自分のPlayer_idが一致しているかを識別
- * 一致していない場合、今生成したパーツのSetActiveをfalseにする。
- * 一致していた場合、num++
- * そうすると生成場所は全プレイヤー同じであるが、見えていないため投げた時の影響はない。
- * 
- * 考えられるバグ
- * マウス操作を行った際に全パーツが動く
- * 非表示のものまで動くかもしれない（要確認）isMineでみてるから大丈夫かも？
- * 
- * 確認
- * Instatiateで生成した時のisMineは誰か確認する
- * RPCで呼んだ時も同様に
+/*
+ *生成したパーツはaにリストとして格納
+ *輪郭内に入ったパーツをpartにリストとして格納　MoveScriptのOnTriggerか？
+ *partに格納したものをGameaMainのPosStop()とTriggerfalse()で止める
+ **Wakuが機能してないのを確認
  */
-
-    // isMine: 所有者
-    //　生成者とは違う
