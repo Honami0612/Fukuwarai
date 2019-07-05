@@ -9,41 +9,96 @@ using System.IO;
 
 public class GameMain : MonoBehaviour {
 
-	//public GameObject a;
+    PhotonView photonView; 
 
     [SerializeField]
     GameObject partsPrefab;
 
-    [SerializeField]
-    Sprite[] partsSprite;
+	[PunRPC]
+    public int num = 0;
 
-    [SerializeField]
-    Text timerText;
+   // float time = 10.0f;
 
-	//[SyncVar]
-    private int num;
-
-    float time = 10.0f;
-	private bool posmanagement = false;
+    [PunRPC]
+	private bool posManagement = false;
 
     [SerializeField]
     GameObject screenshotPrefab;
     GameObject screenshot;
 
-	[SerializeField]
+    [SerializeField]
 	GameObject[] kao;
 
-	public GameObject[] partsLoad;
-	[SerializeField]
-	List<GameObject> parts = new List<GameObject>();
+    // name と　ファイル名　同じ
+    [SerializeField]
+    GameObject[] partLoad;
+
+    [SerializeField]
+    List<Animation> partsAnimation = new List<Animation>();
+
+	
 
 	string[] folder={"1ojisan","2man","3apple","4moon","5rabbit"};
 
+
+
+    [SerializeField]
+    MouseController mouse;
+
+    [SerializeField]
+    List<object> id_viewId = new List<object>();
+
+    [PunRPC]//生成したパーツ格納
+    public List<GameObject>  instatiateParts= new List<GameObject>();
+    [PunRPC]
+    public List<GameObject> faceinParts = new List<GameObject>();
+
+    [SerializeField]
+    Text message1;
+    [SerializeField]
+    Text message2;
+
+ 
+
+    private void Awake()
+    {
+        photonView = GetComponent<PhotonView>();
+        PhotonNetwork.OnEventCall += OnRaiseEvent;
+        message2.text = "view" + photonView.viewID;
+    }
+
+
+    private void OnRaiseEvent(byte code,object g,int senderid)
+    {
+        string data = g.ToString();
+        string tmp = null;
+        int id = 0, viewId = 0;
+
+        for(int i = 0; i < data.Length; i++)
+        {
+            if(data[i] == 10)
+            {
+                id = int.Parse(tmp);
+                tmp = null;
+            }
+            else
+            {
+                tmp += data[i];
+            }
+        }
+        viewId = int.Parse(tmp);
+
+        if (PhotonView.Find(viewId) == null)
+        {
+            StartGenerate(id, viewId);
+        }
+
+
+    }
+
     private void Start()
     {
-        num = 0;
 		int faceselectnumber = FaceSelect.SelectNumber - 1;
-		Debug.Log (faceselectnumber);
 		Instantiate (kao[faceselectnumber]);//顔生成
 
         if (GameObject.Find("ScreenShot(Clone)")==null)
@@ -54,91 +109,193 @@ public class GameMain : MonoBehaviour {
         {
             screenshot = GameObject.Find("ScreenShot(Clone)"); 
         }
+
        
-        partsLoad = Resources.LoadAll <GameObject> ("Game/"+folder[faceselectnumber]); //呼び出し一括
+        partLoad = Resources.LoadAll <GameObject> ("Game/"+folder[faceselectnumber]); //呼び出し一括
+
+        int test = PhotonNetwork.player.ID - 1;
+
+        object[] t = new object[]
+        {
+            test,PhotonNetwork.AllocateViewID()
+
+        };
+
+     
+
+        photonView.RPC("StartGenerate", PhotonTargets.AllBuffered,t);
+
+        //num = PhotonNetwork.playerList.Length;
+
+     
+
+        GameObject.Find("arrowArea").GetComponent<MouseController>().SetParts(instatiateParts[test].GetComponent<MoveScript>());
 
 
-		parts.Add(Instantiate(partsLoad[0])); //パーツ生成
-		parts[0].SetActive(true);
-		parts[0].transform.localPosition = new Vector3(0, -11.4f, 0);
-		parts[0].transform.localScale = new Vector3(1.5f, 1.5f, 1f);
-		parts[0].transform.localRotation = Quaternion.Euler(0, 0, 0);
-
-		this.time=10.0f;
 
 
+    
+    }
+  
+
+
+    void Update()
+    {
+        if (PhotonNetwork.isNonMasterClientInRoom != true)
+        {
+            for (int i = 0; i < id_viewId.Count; i++)
+            {
+                PhotonNetwork.RaiseEvent(1, id_viewId[i], true, RaiseEventOptions.Default);
+            }
+        }
+
+
+        //master
+        if (posManagement == true)
+        {
+            posManagement = false;
+            Invoke("PosStop", 1.2f);
+        }
+
+     
     }
 
-	void Update() { 
 
-		//if (isLocalPlayer) {
-			/*this.time -= Time.deltaTime;
 
-			if (this.time < 0) {
-				Generate ();
-			} else {
-				this.timerText.text = this.time.ToString ("F0");
-			}*/
-	//	} 
+    [PunRPC]
+    public void StartGenerate(int id,int view)
+    {
+        if (instatiateParts.Count < partLoad.Length)
+        {
+            GameObject stobj = Instantiate(partLoad[id]);
+            stobj.transform.localPosition = new Vector3(0, -11.4f, 0);
+            stobj.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            stobj.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            stobj.GetComponent<PhotonView>().viewID = view;
+            stobj.SetActive(false);
+            bool d = stobj.GetComponent<PhotonView>().isMine;
+            if (d)
+            {
+                object g = id + "\n" + view;
+                id_viewId.Add(g);
+                stobj.SetActive(true);
+                stobj.GetComponent<MoveScript>().Mine = true;
+                //num++;
+                photonView.RPC("Num", PhotonTargets.AllViaServer);
 
-			if (posmanagement == true) {
-				posmanagement = false;
-				Invoke ("PosStop", 1.2f);
-			}
-		}
-	
+            }
 
-    public void Generate()
-	{
-		Debug.Log ("確認");
+            message1.text = "num"+num.ToString();
+            instatiateParts.Add(stobj);
 
-		num++;
+        }
+        else
+        {
+            Debug.Log("待つ");
+        }
+    }
 
-		if (num < partsLoad.Length) {
-			parts.Add (Instantiate (partsLoad [num]));　//パーツ生成
-			parts [num].SetActive (true);
-			parts [num].transform.localPosition = new Vector3 (0, -11.4f, 0);
-			parts [num].transform.localScale = new Vector3 (1.5f, 1.5f, 1f);
-			parts [num].transform.localRotation = Quaternion.Euler (0, 0, 0);
+    /*
+    void OnPhotonSerializeView(PhotonStream stream,PhotonMessageInfo info)
+    {
+        if (stream.isWriting)//書き込み処理
+        {
+            stream.SendNext(num);
+            Debug.LogError("書き込み");
+        }
+        else//読み込み処理
+        {
+            num = (int)stream.ReceiveNext();
+            Debug.LogError("読み込み");
+        }
+    }
 
-			//this.time = 10.0f;
-		} else {
-			Debug.Log ("###");
-			screenshot.GetComponent<Screenshot> ().ScreenShotFlag = true;
-			//StartCoroutine ("timestop");
+    */
+    [PunRPC]
+    void Num()
+    {
+        num++;
+    }
 
-		}
-	}
-		
-	IEnumerator timestop(){
+
+
+
+
+    IEnumerator timestop()
+    {
 		yield return new WaitForSeconds (3);
 		SceneManager.LoadScene ("Finish");
 	}
 
+
+
     void PosStop()
 	{
+        foreach(var k in faceinParts)
+        {
+            k.GetComponent<Rigidbody>().isKinematic = true;
+            Debug.LogError("PosStopに入りました");
+        }
+        Triggerfalse();
+        /*
 		for(int j=0;j<parts.Count;j++)
 		{
 			Debug.Log ("PosStop");
 			parts[j].GetComponent<Rigidbody>().isKinematic = true;
 		}
 		Triggerfalse ();
+        */
+    }
 
-	}
 
 	void Triggerfalse()
 	{
 		
-		for(int i=0;i<parts.Count;i++){
+		for(int i=0;i < faceinParts.Count;i++)
+        {
 			Debug.Log ("Triggerfalse");
-
-			parts[i].GetComponent<Rigidbody> ().isKinematic = false;
+            faceinParts[i].GetComponent<Rigidbody> ().isKinematic = false;
 		}
 	}
 
 
-	public bool management {
-		get { return posmanagement; }
-		set { posmanagement = value; }
+
+   [PunRPC]
+   public void SetActivechange(int viewId)
+    {
+        foreach(GameObject change in instatiateParts)
+        {
+           if(change.GetComponent<PhotonView>().viewID == viewId) {
+                change.SetActive(true);
+            }
+        }
+    }
+
+    public void FaceinAdd(GameObject gameObject)
+    {
+
+        faceinParts.Add(gameObject);
+    }
+
+
+    public bool management 
+    {
+		get { return posManagement; }
+		set { posManagement = value; }
 	}
+
+    public int nowNum
+    {
+        get { return num; }
+        set { num = value; }
+    }
+
 }
+
+
+/*
+ *生成したパーツはaにリストとして格納
+ *輪郭内に入ったパーツをpartにリストとして格納　MoveScriptのOnTriggerか？
+ *partに格納したものをGameaMainのPosStop()とTriggerfalse()で止める
+ **Wakuが機能してないのを確認
+ */

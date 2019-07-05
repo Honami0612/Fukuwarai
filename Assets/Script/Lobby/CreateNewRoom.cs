@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class CreateNewRoom : MonoBehaviour {
+ 
 
     [SerializeField]
     LobbyManager lobbyManager;
@@ -14,14 +15,16 @@ public class CreateNewRoom : MonoBehaviour {
     public GameObject InputField;
     public Button DecisionButton;
 
-   
-
 
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
+   
+
 		InputField.SetActive(false);
         DecisionButton.gameObject.SetActive(false);
+       
        
 	}
 	
@@ -65,12 +68,16 @@ public class CreateNewRoom : MonoBehaviour {
     [PunRPC]
     public void GoGame()
     {
+        
+       // GameObject b= Instantiate(a);
+        //me.text = a.GetComponent<PhotonView>().isMine.ToString();
         if (PhotonNetwork.inRoom)
-        {
-            Debug.Log("inRoom");
-            PhotonNetwork.room.IsOpen = false;
-            PhotonNetwork.room.IsVisible = false;
-        }
-        SceneManager.LoadScene("Start");
+         {
+             Debug.Log("inRoom");
+             PhotonNetwork.room.IsOpen = false;
+             PhotonNetwork.room.IsVisible = false;
+         }
+         SceneManager.LoadScene("Start");
+
     }
 }

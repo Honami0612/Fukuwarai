@@ -40,4 +40,12 @@ MonoBehaviour:
   - GoCollection
   - GoSelect
   - GoStart
+  - GoGameScene
+  - Generate
+  - StartGenerate
+  - SetActivechange
+  - FaceinAdd
+  - kari
+  - Kari
+  - Num
   DisableAutoOpenWizard: 1

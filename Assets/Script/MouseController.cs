@@ -20,7 +20,7 @@ public class MouseController : MonoBehaviour {
     private Quaternion arrowStartRotate;
     private float dist = 0.0f;
 
-    private MoveScript moveScript;
+    public MoveScript moveScript;
 
     [SerializeField]
     GameObject nowTouchPos;

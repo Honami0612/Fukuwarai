@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-// Canvasにつける
+
 public class LobbyManager : MonoBehaviour
 {
     [SerializeField]
     Text message;
-
+   
     // roomNameを書くとこ
     [SerializeField]
     GameObject roomNameArea;
@@ -19,7 +19,7 @@ public class LobbyManager : MonoBehaviour
     [SerializeField]
     GameObject roomListArea;
     public List<GameObject> roomList;
-    [SerializeField]
+   [SerializeField]
     GameObject roomPrefub;
 
     
@@ -28,19 +28,15 @@ public class LobbyManager : MonoBehaviour
     //入る　or 作る　ルーム名
     private string roomName;
 
-
-    [SerializeField]
-    int maxplayer; //最大人数
-
-    [SerializeField]
-
-
-    private void Start()
+     void Start()
     {
+
         PhotonNetwork.ConnectUsingSettings("バージョン番号");
-        UpDateRoom();
+       
         roomListArea.SetActive(true);
         GameStart.gameObject.SetActive(false);
+        UpDateRoom();
+
     }
 
    void OnReceivedRoomListUpdate()
@@ -119,13 +115,13 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    public void OnJoinedRoom()
+    public void OnJoinedRoom()//ルーム入室に成功すると自動で呼び出される
     {
         Debug.Log("OnJoinRoom");
-       // PhotonPlayer photonPlayer = PhotonNetwork.isNonMasterClientInRoom();
         bool photonPlayer= PhotonNetwork.isNonMasterClientInRoom;
         Debug.Log("Player" + photonPlayer);
         message.text = "test" + photonPlayer;
+       
         if (photonPlayer !=true)//MasterClientでないときtrueが返ってくる
         {
             GameStart.gameObject.SetActive(true);

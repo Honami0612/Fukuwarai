@@ -2890,7 +2890,7 @@ internal class NetworkingPeer : LoadBalancingPeer, IPhotonPeerListener
             otherSidePrefix = (short)rpcData[(byte)1];
         }
 
-
+       
         string inMethodName;
         if (rpcData.ContainsKey((byte)5))
         {
@@ -4345,7 +4345,7 @@ internal class NetworkingPeer : LoadBalancingPeer, IPhotonPeerListener
     /// <summary>
     /// Reads updates created by OnSerializeWrite
     /// </summary>
-    private void OnSerializeRead(object[] data, PhotonPlayer sender, int networkTime, short correctPrefix)
+    public void OnSerializeRead(object[] data, PhotonPlayer sender, int networkTime, short correctPrefix)
     {
         // read view ID from key (byte)0: a int-array (PUN 1.17++)
         int viewID = (int)data[SyncViewId];
