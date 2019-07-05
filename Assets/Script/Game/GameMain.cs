@@ -15,12 +15,12 @@ public class GameMain : MonoBehaviour {
     GameObject partsPrefab;
 
 	[PunRPC]
-    private int num = 0;
+    public int num = 0;
 
    // float time = 10.0f;
 
     [PunRPC]
-	private bool posmanagement = false;
+	private bool posManagement = false;
 
     [SerializeField]
     GameObject screenshotPrefab;
@@ -36,8 +36,7 @@ public class GameMain : MonoBehaviour {
     [SerializeField]
     List<Animation> partsAnimation = new List<Animation>();
 
-	[SerializeField]//Wakuを超えたパーツ格納
-	List<GameObject> parts = new List<GameObject>();
+	
 
 	string[] folder={"1ojisan","2man","3apple","4moon","5rabbit"};
 
@@ -49,9 +48,10 @@ public class GameMain : MonoBehaviour {
     [SerializeField]
     List<object> id_viewId = new List<object>();
 
-    //衝突 - isKinematic ON/OFF parts
     [PunRPC]//生成したパーツ格納
-    public List<GameObject> a = new List<GameObject>();
+    public List<GameObject>  instatiateParts= new List<GameObject>();
+    [PunRPC]
+    public List<GameObject> faceinParts = new List<GameObject>();
 
     [SerializeField]
     Text message1;
@@ -62,12 +62,11 @@ public class GameMain : MonoBehaviour {
 
     private void Awake()
     {
-       
         photonView = GetComponent<PhotonView>();
-        photonView.ObservedComponents = new List<Component>();
         PhotonNetwork.OnEventCall += OnRaiseEvent;
-
+        message2.text = "view" + photonView.viewID;
     }
+
 
     private void OnRaiseEvent(byte code,object g,int senderid)
     {
@@ -89,8 +88,6 @@ public class GameMain : MonoBehaviour {
         }
         viewId = int.Parse(tmp);
 
-        Debug.LogWarning("id =" + id);
-        Debug.LogError("viewId = " + viewId);
         if (PhotonView.Find(viewId) == null)
         {
             StartGenerate(id, viewId);
@@ -102,7 +99,6 @@ public class GameMain : MonoBehaviour {
     private void Start()
     {
 		int faceselectnumber = FaceSelect.SelectNumber - 1;
-		//Debug.Log (faceselectnumber);
 		Instantiate (kao[faceselectnumber]);//顔生成
 
         if (GameObject.Find("ScreenShot(Clone)")==null)
@@ -129,17 +125,18 @@ public class GameMain : MonoBehaviour {
 
         photonView.RPC("StartGenerate", PhotonTargets.AllBuffered,t);
 
+        //num = PhotonNetwork.playerList.Length;
+
      
 
-        GameObject.Find("arrowArea").GetComponent<MouseController>().SetParts(a[test].GetComponent<MoveScript>());
-        //a[test].GetComponent<MoveScript>().Mine=true;
+        GameObject.Find("arrowArea").GetComponent<MouseController>().SetParts(instatiateParts[test].GetComponent<MoveScript>());
+
 
 
 
     
     }
-   
-
+  
 
 
     void Update()
@@ -154,9 +151,9 @@ public class GameMain : MonoBehaviour {
 
 
         //master
-        if (posmanagement == true)
+        if (posManagement == true)
         {
-            posmanagement = false;
+            posManagement = false;
             Invoke("PosStop", 1.2f);
         }
 
@@ -168,10 +165,8 @@ public class GameMain : MonoBehaviour {
     [PunRPC]
     public void StartGenerate(int id,int view)
     {
-        if (a.Count < partLoad.Length)
+        if (instatiateParts.Count < partLoad.Length)
         {
-
-            message1.text += "StartGeneのid=" + id.ToString() + "/view=" + view.ToString();
             GameObject stobj = Instantiate(partLoad[id]);
             stobj.transform.localPosition = new Vector3(0, -11.4f, 0);
             stobj.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
@@ -185,8 +180,13 @@ public class GameMain : MonoBehaviour {
                 id_viewId.Add(g);
                 stobj.SetActive(true);
                 stobj.GetComponent<MoveScript>().Mine = true;
+                //num++;
+                photonView.RPC("Num", PhotonTargets.AllViaServer);
+
             }
-            a.Add(stobj);
+
+            message1.text = "num"+num.ToString();
+            instatiateParts.Add(stobj);
 
         }
         else
@@ -195,36 +195,30 @@ public class GameMain : MonoBehaviour {
         }
     }
 
+    /*
+    void OnPhotonSerializeView(PhotonStream stream,PhotonMessageInfo info)
+    {
+        if (stream.isWriting)//書き込み処理
+        {
+            stream.SendNext(num);
+            Debug.LogError("書き込み");
+        }
+        else//読み込み処理
+        {
+            num = (int)stream.ReceiveNext();
+            Debug.LogError("読み込み");
+        }
+    }
 
+    */
     [PunRPC]
-    public void Generate()
-	{
-		Debug.Log ("確認");
-
-		if (a.Count < partLoad.Length) {
-
-            GameObject obj = Instantiate(partLoad[num]);
-            obj.transform.localPosition = new Vector3(0, -11.4f, 0);
-            obj.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-            obj.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            obj.SetActive(false);
-            if (photonView.isMine)
-            {
-                obj.SetActive(true);
-                num++;
-            }
-            a.Add(obj);
+    void Num()
+    {
+        num++;
+    }
 
 
-        } else {
-			Debug.Log ("###");
-           // message.text = "他のプレイヤーを待つ";
-		
-            //大事！スクショマスターのみ	//screenshot.GetComponent<Screenshot> ().ScreenShotFlag = true;
-			
 
-		}
-	}
 
 
     IEnumerator timestop()
@@ -237,10 +231,12 @@ public class GameMain : MonoBehaviour {
 
     void PosStop()
 	{
-        foreach(var k in parts)
+        foreach(var k in faceinParts)
         {
             k.GetComponent<Rigidbody>().isKinematic = true;
+            Debug.LogError("PosStopに入りました");
         }
+        Triggerfalse();
         /*
 		for(int j=0;j<parts.Count;j++)
 		{
@@ -255,20 +251,45 @@ public class GameMain : MonoBehaviour {
 	void Triggerfalse()
 	{
 		
-		for(int i=0;i<parts.Count;i++)
+		for(int i=0;i < faceinParts.Count;i++)
         {
 			Debug.Log ("Triggerfalse");
-
-			parts[i].GetComponent<Rigidbody> ().isKinematic = false;
+            faceinParts[i].GetComponent<Rigidbody> ().isKinematic = false;
 		}
 	}
 
 
-	public bool management 
+
+   [PunRPC]
+   public void SetActivechange(int viewId)
     {
-		get { return posmanagement; }
-		set { posmanagement = value; }
+        foreach(GameObject change in instatiateParts)
+        {
+           if(change.GetComponent<PhotonView>().viewID == viewId) {
+                change.SetActive(true);
+            }
+        }
+    }
+
+    public void FaceinAdd(GameObject gameObject)
+    {
+
+        faceinParts.Add(gameObject);
+    }
+
+
+    public bool management 
+    {
+		get { return posManagement; }
+		set { posManagement = value; }
 	}
+
+    public int nowNum
+    {
+        get { return num; }
+        set { num = value; }
+    }
+
 }
 
 

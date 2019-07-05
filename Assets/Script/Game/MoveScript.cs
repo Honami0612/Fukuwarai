@@ -16,10 +16,8 @@ public class MoveScript : MonoBehaviour
     public float speedY = 0;
     public Vector2 startPos;
     public bool isMove = true;
-    private GameMain gameController;
+    private GameMain gameMain;
     public bool count = true;
-
-    private int a = 0;
 
 	private Rigidbody rb; 
 
@@ -30,38 +28,39 @@ public class MoveScript : MonoBehaviour
     public Vector3 mouseposition;
 
     private PhotonView photonview;
+    private int thisViewId;
+
 
     // Use this for initialization
     private void Awake()
     {
         photonview = GetComponent<PhotonView>();
-        mine = photonview.isMine;
-        //photonview.viewID = PhotonNetwork.AllocateViewID();
-        Debug.Log(mine);
     }
+
+
     void Start()
     {
-
-       
+        thisViewId = photonview.viewID;
 
         if (mine)
         {
-           
             arrowArea = GameObject.Find("arrowArea");
             arrowArea.GetComponent<MouseController>().ResetData();
             arrowArea.GetComponent<MouseController>().SetParts(this.gameObject.GetComponent<MoveScript>());
             Waku_ObjectCollider = this.gameObject.GetComponent<BoxCollider>();
-            gameController = GameObject.Find("GameController").GetComponent<GameMain>();
+            gameMain = GameObject.Find("GameController").GetComponent<GameMain>();
             rb = gameObject.GetComponent<Rigidbody>();
         }
     }
+
 
     // Update is called once per frame
     void Update()
     {
 		
-
+       
     }
+
 
     public void Flip(Vector3 force)
     {
@@ -76,33 +75,42 @@ public class MoveScript : MonoBehaviour
 
     public void OnTriggerEnter(Collider c)
     {
-        if (photonview.isMine==true)
-        {
+       
             if (c.gameObject.tag == "Waku")
             {
-                Debug.Log("check");
-                if (count)
+                gameMain.FaceinAdd(this.gameObject);
+                gameMain.GetComponent<PhotonView>().RPC("SetActivechange", PhotonTargets.All,thisViewId);//RPC使う必要あり
+
+               if (count)
                 {
-                    gameController.management = true;
+                    gameMain.management = true;
                     count = false;
                     StartCoroutine(Stop());
                 }
 
             }
-        }
     }
-		
+	
+    	
     IEnumerator Stop()
 	{
+        yield return new WaitForSeconds (1.0f);
+        int n = gameMain.nowNum;
+        Debug.LogWarning("N="+n);
+        object[] t = new object[]
+       {
+            n,PhotonNetwork.AllocateViewID()
 
-		yield return new WaitForSeconds (1.0f);
-		isMove = false;
-		gameController.Generate ();
+       };
+       
+        isMove = false;
+        gameMain.GetComponent<PhotonView>().RPC("StartGenerate", PhotonTargets.All, t);
         this.gameObject.tag = "Parts";
 		this.gameObject.GetComponent<MoveScript> ().enabled = false;
 		yield break;
         
     }
+
 
 	void OnTriggerExit(Collider c)
 	{

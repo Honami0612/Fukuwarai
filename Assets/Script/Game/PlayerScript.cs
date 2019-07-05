@@ -10,7 +10,7 @@ public class PlayerScript : NetworkBehaviour {
 	// Use this for initialization
 	void Start () {
 		gameController = GameObject.Find ("GameController").GetComponent<GameMain> ();
-		CmdGenerate ();
+	
 	}
 	
 	// Update is called once per frame
@@ -18,8 +18,5 @@ public class PlayerScript : NetworkBehaviour {
 		
 	}
 
-	[Command]
-	public void CmdGenerate(){
-		gameController.Generate ();
-	}
+	
 }
