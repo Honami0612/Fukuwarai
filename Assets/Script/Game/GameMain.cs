@@ -18,6 +18,9 @@ public class GameMain : MonoBehaviour
     [PunRPC]
     public int num = 0;
 
+    [PunRPC]
+    public string numt = 0;
+
     // float time = 10.0f;
 
     [PunRPC]
@@ -221,17 +224,15 @@ public class GameMain : MonoBehaviour
     private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         Debug.Log("View");
-        string obj;
 
         if (stream.isWriting)
         {
-            obj = num.ToString();
-            stream.SendNext(obj);
+            stream.SendNext(numt);
             Debug.LogError("書き込み");
         }
         else//読み込み処理
         {
-            obj = (string)stream.ReceiveNext();
+            numt = (string)stream.ReceiveNext();
             Debug.LogError("読み込み");
         }
     }
