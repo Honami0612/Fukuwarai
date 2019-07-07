@@ -19,7 +19,7 @@ public class GameMain : MonoBehaviour
     public int num = 0;
 
     [PunRPC]
-    public string numt = 0;
+    public string numt = "0";
 
     // float time = 10.0f;
 
@@ -159,6 +159,11 @@ public class GameMain : MonoBehaviour
         {
             posManagement = false;
             Invoke("PosStop", 1.2f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            numt += 1.ToString(); 
         }
 
 
