@@ -15,15 +15,12 @@ public class GameMain : MonoBehaviour
     [SerializeField]
     GameObject partsPrefab;
 
-    [PunRPC]
     public int num = 0;
 
-    [PunRPC]
-    public string numt = "0";
+    public string num_string = "0";
 
     // float time = 10.0f;
 
-    [PunRPC]
     private bool posManagement = false;
 
     [SerializeField]
@@ -163,7 +160,7 @@ public class GameMain : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            numt += 1.ToString(); 
+            num_string += 1.ToString(); 
         }
 
 
@@ -190,7 +187,7 @@ public class GameMain : MonoBehaviour
                 stobj.SetActive(true);
                 stobj.GetComponent<MoveScript>().Mine = true;
                 //num++;
-                photonView.RPC("Num", PhotonTargets.AllViaServer);
+                photonView.RPC("Num", PhotonTargets.MasterClient);
 
             }
 
@@ -220,6 +217,8 @@ public class GameMain : MonoBehaviour
     }
 
     */
+
+        // Clientがマスターに呼ばせる
     [PunRPC]
     void Num()
     {
@@ -232,12 +231,14 @@ public class GameMain : MonoBehaviour
 
         if (stream.isWriting)
         {
-            stream.SendNext(numt);
+            num_string = num.ToString();
+            stream.SendNext(num_string);
             Debug.LogError("書き込み");
         }
         else//読み込み処理
         {
-            numt = (string)stream.ReceiveNext();
+            num_string = (string)stream.ReceiveNext();
+            num = int.Parse(num_string);
             Debug.LogError("読み込み");
         }
     }
