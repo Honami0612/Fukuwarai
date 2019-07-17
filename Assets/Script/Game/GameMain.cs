@@ -7,27 +7,28 @@ using System;
 using System.IO;
 //using UnityEngine.Networking;
 
-public class GameMain : MonoBehaviour {
+public class GameMain : MonoBehaviour
+{
 
-    PhotonView photonView; 
+    PhotonView photonView;
 
     [SerializeField]
     GameObject partsPrefab;
 
-	[PunRPC]
     public int num = 0;
 
-   // float time = 10.0f;
+    public string num_string = "0";
 
-    [PunRPC]
-	private bool posManagement = false;
+    // float time = 10.0f;
+
+    private bool posManagement = false;
 
     [SerializeField]
     GameObject screenshotPrefab;
     GameObject screenshot;
 
     [SerializeField]
-	GameObject[] kao;
+    GameObject[] kao;
 
     // name と　ファイル名　同じ
     [SerializeField]
@@ -36,9 +37,9 @@ public class GameMain : MonoBehaviour {
     [SerializeField]
     List<Animation> partsAnimation = new List<Animation>();
 
-	
 
-	string[] folder={"1ojisan","2man","3apple","4moon","5rabbit"};
+
+    string[] folder = { "1ojisan", "2man", "3apple", "4moon", "5rabbit" };
 
 
 
@@ -49,7 +50,7 @@ public class GameMain : MonoBehaviour {
     List<object> id_viewId = new List<object>();
 
     [PunRPC]//生成したパーツ格納
-    public List<GameObject>  instatiateParts= new List<GameObject>();
+    public List<GameObject> instatiateParts = new List<GameObject>();
     [PunRPC]
     public List<GameObject> faceinParts = new List<GameObject>();
 
@@ -58,7 +59,7 @@ public class GameMain : MonoBehaviour {
     [SerializeField]
     Text message2;
 
- 
+
 
     private void Awake()
     {
@@ -68,15 +69,15 @@ public class GameMain : MonoBehaviour {
     }
 
 
-    private void OnRaiseEvent(byte code,object g,int senderid)
+    private void OnRaiseEvent(byte code, object g, int senderid)
     {
         string data = g.ToString();
         string tmp = null;
         int id = 0, viewId = 0;
 
-        for(int i = 0; i < data.Length; i++)
+        for (int i = 0; i < data.Length; i++)
         {
-            if(data[i] == 10)
+            if (data[i] == 10)
             {
                 id = int.Parse(tmp);
                 tmp = null;
@@ -98,20 +99,20 @@ public class GameMain : MonoBehaviour {
 
     private void Start()
     {
-		int faceselectnumber = FaceSelect.SelectNumber - 1;
-		Instantiate (kao[faceselectnumber]);//顔生成
+        int faceselectnumber = FaceSelect.SelectNumber - 1;
+        Instantiate(kao[faceselectnumber]);//顔生成
 
-        if (GameObject.Find("ScreenShot(Clone)")==null)
+        if (GameObject.Find("ScreenShot(Clone)") == null)
         {
             screenshot = Instantiate(screenshotPrefab);
         }
         else
         {
-            screenshot = GameObject.Find("ScreenShot(Clone)"); 
+            screenshot = GameObject.Find("ScreenShot(Clone)");
         }
 
-       
-        partLoad = Resources.LoadAll <GameObject> ("Game/"+folder[faceselectnumber]); //呼び出し一括
+
+        partLoad = Resources.LoadAll<GameObject>("Game/" + folder[faceselectnumber]); //呼び出し一括
 
         int test = PhotonNetwork.player.ID - 1;
 
@@ -121,22 +122,22 @@ public class GameMain : MonoBehaviour {
 
         };
 
-     
 
-        photonView.RPC("StartGenerate", PhotonTargets.AllBuffered,t);
+
+        photonView.RPC("StartGenerate", PhotonTargets.AllBuffered, t);
 
         //num = PhotonNetwork.playerList.Length;
 
-     
+
 
         GameObject.Find("arrowArea").GetComponent<MouseController>().SetParts(instatiateParts[test].GetComponent<MoveScript>());
 
 
 
 
-    
+
     }
-  
+
 
 
     void Update()
@@ -157,13 +158,18 @@ public class GameMain : MonoBehaviour {
             Invoke("PosStop", 1.2f);
         }
 
-     
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            num_string += 1.ToString(); 
+        }
+
+
     }
 
 
 
     [PunRPC]
-    public void StartGenerate(int id,int view)
+    public void StartGenerate(int id, int view)
     {
         if (instatiateParts.Count < partLoad.Length)
         {
@@ -181,11 +187,11 @@ public class GameMain : MonoBehaviour {
                 stobj.SetActive(true);
                 stobj.GetComponent<MoveScript>().Mine = true;
                 //num++;
-                photonView.RPC("Num", PhotonTargets.AllViaServer);
+                photonView.RPC("Num", PhotonTargets.MasterClient);
 
             }
 
-            message1.text = "num"+num.ToString();
+            message1.text = "num" + num.ToString();
             instatiateParts.Add(stobj);
 
         }
@@ -211,10 +217,30 @@ public class GameMain : MonoBehaviour {
     }
 
     */
+
+        // Clientがマスターに呼ばせる
     [PunRPC]
     void Num()
     {
         num++;
+    }
+
+    private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        Debug.Log("View");
+
+        if (stream.isWriting)
+        {
+            num_string = num.ToString();
+            stream.SendNext(num_string);
+            Debug.LogError("書き込み");
+        }
+        else//読み込み処理
+        {
+            num_string = (string)stream.ReceiveNext();
+            num = int.Parse(num_string);
+            Debug.LogError("読み込み");
+        }
     }
 
 
@@ -223,15 +249,15 @@ public class GameMain : MonoBehaviour {
 
     IEnumerator timestop()
     {
-		yield return new WaitForSeconds (3);
-		SceneManager.LoadScene ("Finish");
-	}
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("Finish");
+    }
 
 
 
     void PosStop()
-	{
-        foreach(var k in faceinParts)
+    {
+        foreach (var k in faceinParts)
         {
             k.GetComponent<Rigidbody>().isKinematic = true;
             Debug.LogError("PosStopに入りました");
@@ -248,24 +274,25 @@ public class GameMain : MonoBehaviour {
     }
 
 
-	void Triggerfalse()
-	{
-		
-		for(int i=0;i < faceinParts.Count;i++)
-        {
-			Debug.Log ("Triggerfalse");
-            faceinParts[i].GetComponent<Rigidbody> ().isKinematic = false;
-		}
-	}
-
-
-
-   [PunRPC]
-   public void SetActivechange(int viewId)
+    void Triggerfalse()
     {
-        foreach(GameObject change in instatiateParts)
+
+        for (int i = 0; i < faceinParts.Count; i++)
         {
-           if(change.GetComponent<PhotonView>().viewID == viewId) {
+            Debug.Log("Triggerfalse");
+            faceinParts[i].GetComponent<Rigidbody>().isKinematic = false;
+        }
+    }
+
+
+
+    [PunRPC]
+    public void SetActivechange(int viewId)
+    {
+        foreach (GameObject change in instatiateParts)
+        {
+            if (change.GetComponent<PhotonView>().viewID == viewId)
+            {
                 change.SetActive(true);
             }
         }
@@ -278,11 +305,11 @@ public class GameMain : MonoBehaviour {
     }
 
 
-    public bool management 
+    public bool management
     {
-		get { return posManagement; }
-		set { posManagement = value; }
-	}
+        get { return posManagement; }
+        set { posManagement = value; }
+    }
 
     public int nowNum
     {
