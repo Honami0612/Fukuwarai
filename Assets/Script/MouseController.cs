@@ -26,6 +26,8 @@ public class MouseController : MonoBehaviour {
     GameObject nowTouchPos;
     private bool throwFlag = false;
 
+   
+
     private void Awake()
     {
 		this.mainCamera = Camera.main;
@@ -95,6 +97,7 @@ public class MouseController : MonoBehaviour {
             arrowPos.transform.localScale = arrowStartScale;
             arrowPos.transform.localRotation = arrowStartRotate;
         }
+
     }
 
     public void ResetData()
@@ -127,5 +130,7 @@ public class MouseController : MonoBehaviour {
             throwFlag = true;
         }
     }
+
+   
 }
 

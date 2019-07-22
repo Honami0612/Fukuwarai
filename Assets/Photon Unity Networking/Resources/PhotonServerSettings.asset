@@ -48,4 +48,6 @@ MonoBehaviour:
   - kari
   - Kari
   - Num
+  - ID
+  - TurnChange
   DisableAutoOpenWizard: 1

@@ -8,7 +8,9 @@ public class MoveScript : MonoBehaviour
 
     private bool mine = false;
 
-
+    [SerializeField]
+    int playerID = 1;
+    public string playerID_string = "0";
 
     private GameObject arrowArea;
 
@@ -17,6 +19,7 @@ public class MoveScript : MonoBehaviour
     public Vector2 startPos;
     public bool isMove = true;
     private GameMain gameMain;
+    private MouseController mouseController;
     public bool count = true;
 
 	private Rigidbody rb; 
@@ -45,8 +48,8 @@ public class MoveScript : MonoBehaviour
         if (mine)
         {
             arrowArea = GameObject.Find("arrowArea");
-            arrowArea.GetComponent<MouseController>().ResetData();
-            arrowArea.GetComponent<MouseController>().SetParts(this.gameObject.GetComponent<MoveScript>());
+            //arrowArea.GetComponent<MouseController>().ResetData();
+            //arrowArea.GetComponent<MouseController>().SetParts(this.gameObject.GetComponent<MoveScript>());
             Waku_ObjectCollider = this.gameObject.GetComponent<BoxCollider>();
             gameMain = GameObject.Find("GameController").GetComponent<GameMain>();
             rb = gameObject.GetComponent<Rigidbody>();
@@ -57,7 +60,6 @@ public class MoveScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		
        
     }
 
@@ -80,8 +82,8 @@ public class MoveScript : MonoBehaviour
             {
                 gameMain.FaceinAdd(this.gameObject);
                 gameMain.GetComponent<PhotonView>().RPC("SetActivechange", PhotonTargets.All,thisViewId);//RPC使う必要あり
-
-               if (count)
+            gameMain.GetComponent<PhotonView>().RPC("ID", PhotonTargets.MasterClient);
+            if (count)
                 {
                     gameMain.management = true;
                     count = false;
@@ -90,8 +92,35 @@ public class MoveScript : MonoBehaviour
 
             }
     }
-	
-    	
+
+    //[PunRPC]
+    //void ID()
+    //{
+    //    if (playerID - 1 < PhotonNetwork.playerList.Length)
+    //    {
+
+    //    }
+    //    playerID = playerID + 1;
+    //    Debug.Log("IDをmasterが足す:"+playerID);
+    //}
+
+    //private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    //{
+    //    if (stream.isWriting)
+    //    {
+    //        playerID_string = playerID.ToString();
+    //        stream.SendNext(playerID_string);
+    //        Debug.Log("ID書き込み");
+    //    }
+    //    else
+    //    {
+    //        playerID_string = (string)stream.ReceiveNext();
+    //        playerID = int.Parse(playerID_string);
+    //        Debug.Log("ID読み込み");
+    //    }
+    //}
+
+
     IEnumerator Stop()
 	{
         yield return new WaitForSeconds (1.0f);
@@ -128,6 +157,12 @@ public class MoveScript : MonoBehaviour
     {
 
         set { mine = value; }
+    }
+    public int playerId
+    {
+        get { return playerID; }
+        set { playerID = value; }
+
     }
 
 }

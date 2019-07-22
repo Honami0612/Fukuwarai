@@ -9,6 +9,8 @@ public class LobbyManager : MonoBehaviour
 {
     [SerializeField]
     Text message;
+    [SerializeField]
+    Text onlyClient;
    
     // roomNameを書くとこ
     [SerializeField]
@@ -28,18 +30,24 @@ public class LobbyManager : MonoBehaviour
     //入る　or 作る　ルーム名
     private string roomName;
 
+
+
      void Start()
     {
 
+     
         PhotonNetwork.ConnectUsingSettings("バージョン番号");
        
         roomListArea.SetActive(true);
         GameStart.gameObject.SetActive(false);
         UpDateRoom();
+        onlyClient.gameObject.SetActive(false);
 
     }
 
-   void OnReceivedRoomListUpdate()
+   
+
+    void OnReceivedRoomListUpdate()
     {
         UpDateRoom();
     }
@@ -119,12 +127,17 @@ public class LobbyManager : MonoBehaviour
     {
         Debug.Log("OnJoinRoom");
         bool photonPlayer= PhotonNetwork.isNonMasterClientInRoom;
-        Debug.Log("Player" + photonPlayer);
-        message.text = "test" + photonPlayer;
-       
+        //  Debug.Log("Player" + photonPlayer);
+
+
         if (photonPlayer !=true)//MasterClientでないときtrueが返ってくる
         {
             GameStart.gameObject.SetActive(true);
+
+        }
+        else
+        {
+            onlyClient.gameObject.SetActive(true);
         }
     }
 
@@ -142,11 +155,14 @@ public class LobbyManager : MonoBehaviour
             GameStart.gameObject.SetActive(false);
             message.text = "ルームから退出しました";
             roomListArea.SetActive(true);
+            onlyClient.gameObject.SetActive(false);
+            
         }
         else
         {
             message.text = "ルームから退出できませんでした";
         }
+
     }
 
     public void SetActive()
