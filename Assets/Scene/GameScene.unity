@@ -1595,6 +1595,8 @@ MonoBehaviour:
     type: 2}
   num: 0
   num_string: 0
+  count: 0
+  count_string: 0
   screenshotPrefab: {fileID: 1436359888211240, guid: f191d8e19bb834aa8a012ea59f8d08a2,
     type: 2}
   kao:
@@ -2003,7 +2005,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1484774238
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2527,7 +2529,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2061599012
 RectTransform:
   m_ObjectHideFlags: 0
