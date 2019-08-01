@@ -194,7 +194,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 76}
+  m_AnchoredPosition: {x: 0, y: 42}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &468182858
@@ -801,6 +801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lobbyManager: {fileID: 208630763}
+  gameMain: {fileID: 1454974233}
   finishstart: {fileID: 468182858}
   finishcollection: {fileID: 1007168515}
   leaveRoom: {fileID: 1130415738}
@@ -826,8 +827,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 1276014076}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 1
-  instantiationId: 1
+  viewIdField: 4
+  instantiationId: 4
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!1 &1282489477
@@ -905,6 +906,64 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1282489477}
   m_CullTransparentMesh: 0
+--- !u!1 &1454974232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1454974234}
+  - component: {fileID: 1454974233}
+  m_Layer: 0
+  m_Name: FinMain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1454974233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1454974232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aa9e8d4cf192a141b51b560d43df2c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ojisanhair: {fileID: 0}
+  partsPrefab: {fileID: 0}
+  num: 0
+  num_string: 0
+  count: 0
+  count_string: 0
+  screenshotPrefab: {fileID: 0}
+  kao: []
+  partLoad: []
+  partsAnimation: []
+  nowParts: {fileID: 0}
+  mouse: {fileID: 0}
+  instatiateParts: []
+  faceinParts: []
+  playerId: 1
+  message1: {fileID: 0}
+  message2: {fileID: 0}
+  myTurn: {fileID: 0}
+--- !u!4 &1454974234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1454974232}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.629758, z: 90}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1572341321
 GameObject:
   m_ObjectHideFlags: 0

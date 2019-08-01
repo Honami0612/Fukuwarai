@@ -111,7 +111,7 @@ public class GameMain : MonoBehaviour
 
     private void Start()
     {
-
+        count = 0;
         Debug.LogWarning("ID:"+PhotonNetwork.player.ID);//player特定
         Debug.LogWarning("Length:"+PhotonNetwork.playerList.Length);//player人数
 

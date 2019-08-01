@@ -10,6 +10,8 @@ public class GameFinish : MonoBehaviour {
     PhotonView photonView;
     [SerializeField]
     LobbyManager lobbyManager;
+    [SerializeField]
+    GameMain gameMain;
 
     public Button finishstart;
     public Button finishcollection;
@@ -26,6 +28,8 @@ public class GameFinish : MonoBehaviour {
             Destroy(leaveRoom.GetComponent<Button>());
            
         }
+        photonView.RPC("ResetCount", PhotonTargets.All);
+        Debug.Log("Reset:" + gameMain.count);
     }
 
     public void Onclick(int number)
@@ -75,6 +79,11 @@ public class GameFinish : MonoBehaviour {
             Debug.Log("ルーム退出できませんでした");
         }
 
+    }
+    [PunRPC]
+    void ResetCount()
+    {
+        gameMain.count = 0;
     }
 
 }

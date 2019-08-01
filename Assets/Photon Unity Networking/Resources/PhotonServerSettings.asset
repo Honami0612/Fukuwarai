@@ -54,4 +54,5 @@ MonoBehaviour:
   - GoFinish
   - GoLobby
   - LeaveRoom
+  - ResetCount
   DisableAutoOpenWizard: 1

@@ -5,12 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class CreateNewRoom : MonoBehaviour {
- 
 
     [SerializeField]
     LobbyManager lobbyManager;
-
-   
 
     public GameObject InputField;
     public Button DecisionButton;
@@ -25,13 +22,12 @@ public class CreateNewRoom : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-   
-
-		InputField.SetActive(false);
+        InputField.SetActive(false);
         DecisionButton.gameObject.SetActive(false);
         onlyMaster.gameObject.SetActive(false);
        
 	}
+
 
     private void Update()
     {
