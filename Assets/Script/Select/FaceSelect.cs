@@ -8,6 +8,8 @@ using UnityEngine.EventSystems;
 public class FaceSelect : MonoBehaviour {
 
     [SerializeField]
+    GameMain gameMain;
+    [SerializeField]
     GameObject ojisan;
     [SerializeField]
     GameObject man;
@@ -20,7 +22,7 @@ public class FaceSelect : MonoBehaviour {
 
     private void Start()
     {
-      
+        gameMain.count = 0;
 
         bool phtotonPlayer = PhotonNetwork.isNonMasterClientInRoom;
         if (phtotonPlayer == true)
