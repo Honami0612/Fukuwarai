@@ -50,4 +50,8 @@ MonoBehaviour:
   - Num
   - ID
   - TurnChange
+  - Count
+  - GoFinish
+  - GoLobby
+  - LeaveRoom
   DisableAutoOpenWizard: 1

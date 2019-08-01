@@ -9,7 +9,8 @@ using System.IO;
 
 public class GameMain : MonoBehaviour
 {
-
+    [SerializeField]
+    GameObject ojisanhair;
 
     PhotonView photonView;
 
@@ -19,6 +20,9 @@ public class GameMain : MonoBehaviour
     public int num = 0;
 
     public string num_string = "0";
+
+    public int count=0;
+    public string count_string = "0";
 
     // float time = 10.0f;
 
@@ -108,13 +112,22 @@ public class GameMain : MonoBehaviour
     private void Start()
     {
 
-
-            Debug.LogWarning("ID:"+PhotonNetwork.player.ID);//player特定
+        Debug.LogWarning("ID:"+PhotonNetwork.player.ID);//player特定
         Debug.LogWarning("Length:"+PhotonNetwork.playerList.Length);//player人数
 
 
         int faceselectnumber = FaceSelect.SelectNumber - 1;
         Instantiate(kao[faceselectnumber]);//顔生成
+        Debug.Log("faceselectnumber:"+faceselectnumber);
+
+        ojisanhair.gameObject.SetActive(false);
+        if (faceselectnumber == 0)
+        {
+            ojisanhair.gameObject.SetActive(true);
+        }
+
+
+
 
         if (GameObject.Find("ScreenShot(Clone)") == null)
         {
@@ -208,8 +221,26 @@ public class GameMain : MonoBehaviour
         }
         else
         {
+           
             Debug.Log("待つ");
+            if (photonView.isMine)
+            {
+                photonView.RPC("Count", PhotonTargets.MasterClient);
+                Debug.LogError("count:" + count);
+            }
+           
+                if (count == PhotonNetwork.playerList.Length)
+                {
+                    Debug.Log("最後のシーン移動");
+                    photonView.RPC("GoFinish", PhotonTargets.All);
+                }
         }
+    }
+
+    [PunRPC]
+    void GoFinish()
+    {
+        SceneManager.LoadScene("Finish");
     }
 
     /*
@@ -228,8 +259,8 @@ public class GameMain : MonoBehaviour
     }
 
     */
-        
-        public void TurnChange()
+
+    public void TurnChange()
     {
         Debug.LogError("Turn Change");
         if(playerId == PhotonNetwork.player.ID)
@@ -245,9 +276,16 @@ public class GameMain : MonoBehaviour
         }
         else
         {
-            //message2.text = "not my turn";
+
             myTurn.text = "他の人の番です";
         }
+    }
+
+    [PunRPC]
+    void Count()
+    {
+        count++;
+        Debug.Log("count::::::::::::"+count);
     }
 
     // Clientがマスターに呼ばせる
@@ -278,16 +316,20 @@ public class GameMain : MonoBehaviour
         {
             num_string = num.ToString();
             playerId_string = playerId.ToString();
+            count_string = count.ToString();
             stream.SendNext(num_string);
             stream.SendNext(playerId_string);
+            stream.SendNext(count_string);
             Debug.LogError("書き込み");
         }
         else//読み込み処理
         {
             num_string = (string)stream.ReceiveNext();
             playerId_string = (string)stream.ReceiveNext();
+            count_string = (string)stream.ReceiveNext();
             num = int.Parse(num_string);
             playerId = int.Parse(playerId_string);
+            count = int.Parse(count_string);
             Debug.LogError("読み込み");
         }
     }

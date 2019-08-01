@@ -158,11 +158,12 @@ public class MoveScript : MonoBehaviour
 
         set { mine = value; }
     }
-    public int playerId
+
+    /*public int playerId
     {
         get { return playerID; }
         set { playerID = value; }
 
     }
-
+    */
 }
