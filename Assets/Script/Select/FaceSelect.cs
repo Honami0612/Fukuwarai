@@ -20,8 +20,6 @@ public class FaceSelect : MonoBehaviour {
 
     private void Start()
     {
-      
-
         bool phtotonPlayer = PhotonNetwork.isNonMasterClientInRoom;
         if (phtotonPlayer == true)
         {

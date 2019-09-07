@@ -5,30 +5,37 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class CreateNewRoom : MonoBehaviour {
- 
 
     [SerializeField]
     LobbyManager lobbyManager;
 
-   
-
     public GameObject InputField;
     public Button DecisionButton;
 
+    [SerializeField]
+    Text participationPeople;
+
+    [SerializeField]
+    Text onlyMaster;
 
 
 	// Use this for initialization
 	void Start ()
     {
-   
-
-		InputField.SetActive(false);
+        InputField.SetActive(false);
         DecisionButton.gameObject.SetActive(false);
-       
+        onlyMaster.gameObject.SetActive(false);
        
 	}
-	
-	
+
+
+    private void Update()
+    {
+        participationPeople.text = "現在の参加人数:" + PhotonNetwork.playerList.Length.ToString();
+    }
+
+
+
     public void OnClick(int number)
     {
         switch (number)
@@ -45,6 +52,7 @@ public class CreateNewRoom : MonoBehaviour {
                 lobbyManager.RoomCreate();
                 InputField.SetActive(false);
                 DecisionButton.gameObject.SetActive(false);
+                onlyMaster.gameObject.SetActive(true);
 
                 break;
             case 2://GameStartButtom(masteronly)
@@ -59,6 +67,7 @@ public class CreateNewRoom : MonoBehaviour {
                 break;
             case 4:
                 lobbyManager.LeaveRoom();
+                onlyMaster.gameObject.SetActive(false);
                 break;
         }
 

@@ -6,9 +6,14 @@ using UnityEngine.SceneManagement;
 using System;
 using System.IO;
 //using UnityEngine.Networking;
+//no need
 
 public class GameMain : MonoBehaviour
 {
+
+    [SerializeField]
+    GameObject ojisanhair;
+
 
     PhotonView photonView;
 
@@ -18,6 +23,11 @@ public class GameMain : MonoBehaviour
     public int num = 0;
 
     public string num_string = "0";
+
+
+    public int count=0;
+    public string count_string = "0";
+
 
     // float time = 10.0f;
 
@@ -38,7 +48,10 @@ public class GameMain : MonoBehaviour
     List<Animation> partsAnimation = new List<Animation>();
 
 
-
+    // 今投げるパーツ
+    public GameObject nowParts;
+    private bool shootFlag = false;
+    
     string[] folder = { "1ojisan", "2man", "3apple", "4moon", "5rabbit" };
 
 
@@ -54,12 +67,19 @@ public class GameMain : MonoBehaviour
     [PunRPC]
     public List<GameObject> faceinParts = new List<GameObject>();
 
+    public int playerId = 1;
+    private string playerId_string =  "";
+
     [SerializeField]
     Text message1;
     [SerializeField]
     Text message2;
+    [SerializeField]
+    Text myTurn;
 
-
+    [SerializeField]
+    GameObject finish_button;
+    
 
     private void Awake()
     {
@@ -99,8 +119,24 @@ public class GameMain : MonoBehaviour
 
     private void Start()
     {
+
+        count = 0;
+        Debug.LogWarning("ID:"+PhotonNetwork.player.ID);//player特定
+        Debug.LogWarning("Length:"+PhotonNetwork.playerList.Length);//player人数
+
+        finish_button.SetActive(false);
+
+
         int faceselectnumber = FaceSelect.SelectNumber - 1;
         Instantiate(kao[faceselectnumber]);//顔生成
+        Debug.Log("faceselectnumber:"+faceselectnumber);
+
+        ojisanhair.gameObject.SetActive(false);
+        if (faceselectnumber == 0)
+        {
+            ojisanhair.gameObject.SetActive(true);
+        }
+
 
         if (GameObject.Find("ScreenShot(Clone)") == null)
         {
@@ -129,11 +165,7 @@ public class GameMain : MonoBehaviour
         //num = PhotonNetwork.playerList.Length;
 
 
-
-        GameObject.Find("arrowArea").GetComponent<MouseController>().SetParts(instatiateParts[test].GetComponent<MoveScript>());
-
-
-
+        TurnChange();
 
 
     }
@@ -142,6 +174,7 @@ public class GameMain : MonoBehaviour
 
     void Update()
     {
+        TurnChange();
         if (PhotonNetwork.isNonMasterClientInRoom != true)
         {
             for (int i = 0; i < id_viewId.Count; i++)
@@ -182,6 +215,7 @@ public class GameMain : MonoBehaviour
             bool d = stobj.GetComponent<PhotonView>().isMine;
             if (d)
             {
+                nowParts = stobj;
                 object g = id + "\n" + view;
                 id_viewId.Add(g);
                 stobj.SetActive(true);
@@ -193,12 +227,37 @@ public class GameMain : MonoBehaviour
 
             message1.text = "num" + num.ToString();
             instatiateParts.Add(stobj);
-
+            shootFlag = false;
         }
         else
         {
+           
             Debug.Log("待つ");
+            if (photonView.isMine)
+            {
+                photonView.RPC("Count", PhotonTargets.MasterClient);
+                Debug.LogError("count:" + count);
+            }
+           
+                if (count == PhotonNetwork.playerList.Length)
+                {
+                    Debug.Log("最後のシーン移動");
+                finish_button.SetActive(true);
+                   // photonView.RPC("GoFinish", PhotonTargets.All);
+                }
         }
+    }
+
+
+    public void OnClick_finish_button()
+    {
+        photonView.RPC("GoFinish", PhotonTargets.All);
+    }
+
+    [PunRPC]
+    void GoFinish()
+    {
+        SceneManager.LoadScene("Finish");
     }
 
     /*
@@ -218,12 +277,57 @@ public class GameMain : MonoBehaviour
 
     */
 
-        // Clientがマスターに呼ばせる
+
+    public void TurnChange()
+    {
+        Debug.LogError("Turn Change");
+        if(playerId == PhotonNetwork.player.ID)
+        {
+            if (!shootFlag)
+            {
+                shootFlag = true;
+               // message2.text = "my turn";
+                myTurn.text = "あなたの番です";
+                mouse.ResetData();
+                mouse.SetParts(nowParts.GetComponent<MoveScript>());
+            }
+        }
+        else
+        {
+
+            myTurn.text = "他の人の番です";
+        }
+    }
+
+    [PunRPC]
+    void Count()
+    {
+        count++;
+        Debug.Log("count::::::::::::"+count);
+    }
+
+    // Clientがマスターに呼ばせる
+
     [PunRPC]
     void Num()
     {
         num++;
     }
+
+
+    [PunRPC]
+    void ID()
+    {
+        Debug.Log("現在のID:" + playerId);
+        playerId = playerId + 1;
+        if (playerId  > PhotonNetwork.playerList.Length)
+        {
+            Debug.Log("Reset");
+            playerId = 1;
+        }
+        Debug.Log("IDをmasterが足す:" + playerId);
+    }
+
 
     private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -232,13 +336,24 @@ public class GameMain : MonoBehaviour
         if (stream.isWriting)
         {
             num_string = num.ToString();
+
+            playerId_string = playerId.ToString();
+            count_string = count.ToString();
             stream.SendNext(num_string);
+            stream.SendNext(playerId_string);
+            stream.SendNext(count_string);
             Debug.LogError("書き込み");
         }
         else//読み込み処理
         {
             num_string = (string)stream.ReceiveNext();
+
+            playerId_string = (string)stream.ReceiveNext();
+            count_string = (string)stream.ReceiveNext();
             num = int.Parse(num_string);
+            playerId = int.Parse(playerId_string);
+            count = int.Parse(count_string);
+
             Debug.LogError("読み込み");
         }
     }
@@ -262,7 +377,7 @@ public class GameMain : MonoBehaviour
             k.GetComponent<Rigidbody>().isKinematic = true;
             Debug.LogError("PosStopに入りました");
         }
-        Triggerfalse();
+        Triggerfalse();       
         /*
 		for(int j=0;j<parts.Count;j++)
 		{

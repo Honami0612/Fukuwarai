@@ -48,4 +48,11 @@ MonoBehaviour:
   - kari
   - Kari
   - Num
+  - ID
+  - TurnChange
+  - Count
+  - GoFinish
+  - GoLobby
+  - LeaveRoom
+  - ResetCount
   DisableAutoOpenWizard: 1

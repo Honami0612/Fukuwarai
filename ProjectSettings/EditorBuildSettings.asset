@@ -11,13 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/Start.unity
     guid: fd39beb32a931a043b672d151de70191
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scene/Collection.unity
     guid: d8672506c98f5024ea61f1098ec9e014
   - enabled: 1
     path: Assets/Scene/GameScene.unity
     guid: 353c161874388ff4e927cf2c50d717f4
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scene/Finish.unity
     guid: 62e95ffbfce60b04e8261763ae7e0e08
   - enabled: 1

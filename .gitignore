@@ -399,6 +399,12 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 
+# Application File
+*.app/
+*.exe
+
+# Command File
+*.sh
 
 # End of https://www.gitignore.io/api/unity,windows,monodevelop,visualstudio
-*.app/
+
