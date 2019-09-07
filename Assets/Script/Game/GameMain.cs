@@ -10,8 +10,10 @@ using System.IO;
 
 public class GameMain : MonoBehaviour
 {
+
     [SerializeField]
     GameObject ojisanhair;
+
 
     PhotonView photonView;
 
@@ -22,8 +24,10 @@ public class GameMain : MonoBehaviour
 
     public string num_string = "0";
 
+
     public int count=0;
     public string count_string = "0";
+
 
     // float time = 10.0f;
 
@@ -43,10 +47,11 @@ public class GameMain : MonoBehaviour
     [SerializeField]
     List<Animation> partsAnimation = new List<Animation>();
 
+
     // 今投げるパーツ
     public GameObject nowParts;
     private bool shootFlag = false;
-
+    
     string[] folder = { "1ojisan", "2man", "3apple", "4moon", "5rabbit" };
 
 
@@ -74,7 +79,7 @@ public class GameMain : MonoBehaviour
 
     [SerializeField]
     GameObject finish_button;
-
+    
 
     private void Awake()
     {
@@ -114,6 +119,7 @@ public class GameMain : MonoBehaviour
 
     private void Start()
     {
+
         count = 0;
         Debug.LogWarning("ID:"+PhotonNetwork.player.ID);//player特定
         Debug.LogWarning("Length:"+PhotonNetwork.playerList.Length);//player人数
@@ -130,8 +136,6 @@ public class GameMain : MonoBehaviour
         {
             ojisanhair.gameObject.SetActive(true);
         }
-
-
 
 
         if (GameObject.Find("ScreenShot(Clone)") == null)
@@ -162,6 +166,7 @@ public class GameMain : MonoBehaviour
 
 
         TurnChange();
+
 
     }
 
@@ -272,6 +277,7 @@ public class GameMain : MonoBehaviour
 
     */
 
+
     public void TurnChange()
     {
         Debug.LogError("Turn Change");
@@ -301,11 +307,13 @@ public class GameMain : MonoBehaviour
     }
 
     // Clientがマスターに呼ばせる
+
     [PunRPC]
     void Num()
     {
         num++;
     }
+
 
     [PunRPC]
     void ID()
@@ -320,6 +328,7 @@ public class GameMain : MonoBehaviour
         Debug.Log("IDをmasterが足す:" + playerId);
     }
 
+
     private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         Debug.Log("View");
@@ -327,6 +336,7 @@ public class GameMain : MonoBehaviour
         if (stream.isWriting)
         {
             num_string = num.ToString();
+
             playerId_string = playerId.ToString();
             count_string = count.ToString();
             stream.SendNext(num_string);
@@ -337,11 +347,13 @@ public class GameMain : MonoBehaviour
         else//読み込み処理
         {
             num_string = (string)stream.ReceiveNext();
+
             playerId_string = (string)stream.ReceiveNext();
             count_string = (string)stream.ReceiveNext();
             num = int.Parse(num_string);
             playerId = int.Parse(playerId_string);
             count = int.Parse(count_string);
+
             Debug.LogError("読み込み");
         }
     }
