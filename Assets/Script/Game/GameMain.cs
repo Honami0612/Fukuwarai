@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using System;
 using System.IO;
 //using UnityEngine.Networking;
+//no need
 
 public class GameMain : MonoBehaviour
 {
@@ -71,6 +72,8 @@ public class GameMain : MonoBehaviour
     [SerializeField]
     Text myTurn;
 
+    [SerializeField]
+    GameObject finish_button;
 
 
     private void Awake()
@@ -114,6 +117,8 @@ public class GameMain : MonoBehaviour
         count = 0;
         Debug.LogWarning("ID:"+PhotonNetwork.player.ID);//player特定
         Debug.LogWarning("Length:"+PhotonNetwork.playerList.Length);//player人数
+
+        finish_button.SetActive(false);
 
 
         int faceselectnumber = FaceSelect.SelectNumber - 1;
@@ -232,9 +237,16 @@ public class GameMain : MonoBehaviour
                 if (count == PhotonNetwork.playerList.Length)
                 {
                     Debug.Log("最後のシーン移動");
-                    photonView.RPC("GoFinish", PhotonTargets.All);
+                finish_button.SetActive(true);
+                   // photonView.RPC("GoFinish", PhotonTargets.All);
                 }
         }
+    }
+
+
+    public void OnClick_finish_button()
+    {
+        photonView.RPC("GoFinish", PhotonTargets.All);
     }
 
     [PunRPC]

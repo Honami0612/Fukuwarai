@@ -8,3 +8,6 @@ sceneSetups:
 - path: Assets/Scene/Finish.unity
   isLoaded: 0
   isActive: 0
+- path: Assets/Scene/Select.unity
+  isLoaded: 0
+  isActive: 0
