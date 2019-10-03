@@ -136,6 +136,7 @@
     <Compile Include="Assets\Script\Collection\collection.cs" />
     <Compile Include="Assets\Script\Collection\TouchScript.cs" />
     <Compile Include="Assets\Script\Finish\GameFinish.cs" />
+    <Compile Include="Assets\Script\Finish\leaveRoom.cs" />
     <Compile Include="Assets\Script\Finish\sendcollection.cs" />
     <Compile Include="Assets\Script\Game\GameMain.cs" />
     <Compile Include="Assets\Script\Game\MoveScript.cs" />

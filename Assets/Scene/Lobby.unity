@@ -255,7 +255,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u30EB\u30FC\u30E0\u3092\u9000\u51FA\u3059\u308B"
+  m_Text: Reave the room
 --- !u!222 &444716028
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -408,7 +408,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u65B0\u898F\u30EB\u30FC\u30E0\u4F5C\u6210"
+  m_Text: Create new room
 --- !u!222 &534507731
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -606,7 +606,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6C7A\u5B9A\n"
+  m_Text: Decision
 --- !u!222 &689457750
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1409,13 +1409,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: Room name
 --- !u!222 &1206295510
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1490,7 +1490,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u5165\u5BA4\u3059\u308B"
+  m_Text: Enter the room
 --- !u!222 &1352373228
 CanvasRenderer:
   m_ObjectHideFlags: 0
