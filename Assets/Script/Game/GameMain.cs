@@ -14,7 +14,6 @@ public class GameMain : MonoBehaviour
     [SerializeField]
     GameObject ojisanhair;
 
-
     PhotonView photonView;
 
     [SerializeField]
@@ -27,9 +26,6 @@ public class GameMain : MonoBehaviour
 
     public int count=0;
     public string count_string = "0";
-
-
-    // float time = 10.0f;
 
     private bool posManagement = false;
 
@@ -54,8 +50,6 @@ public class GameMain : MonoBehaviour
     
     string[] folder = { "1ojisan", "2man", "3apple", "4moon", "5rabbit" };
 
-
-
     [SerializeField]
     MouseController mouse;
 
@@ -71,10 +65,6 @@ public class GameMain : MonoBehaviour
     private string playerId_string =  "";
 
     [SerializeField]
-    Text message1;
-    [SerializeField]
-    Text message2;
-    [SerializeField]
     Text myTurn;
 
     [SerializeField]
@@ -85,8 +75,10 @@ public class GameMain : MonoBehaviour
     {
         photonView = GetComponent<PhotonView>();
         PhotonNetwork.OnEventCall += OnRaiseEvent;
-        message2.text = "view" + photonView.viewID;
+       
     }
+
+   
 
 
     private void OnRaiseEvent(byte code, object g, int senderid)
@@ -121,11 +113,10 @@ public class GameMain : MonoBehaviour
     {
 
         count = 0;
-        Debug.LogWarning("ID:"+PhotonNetwork.player.ID);//player特定
-        Debug.LogWarning("Length:"+PhotonNetwork.playerList.Length);//player人数
+        //Debug.LogWarning("ID:"+PhotonNetwork.player.ID);//player特定
+        //Debug.LogWarning("Length:"+PhotonNetwork.playerList.Length);//player人数
 
         finish_button.SetActive(false);
-
 
         int faceselectnumber = FaceSelect.SelectNumber - 1;
         Instantiate(kao[faceselectnumber]);//顔生成
@@ -158,12 +149,7 @@ public class GameMain : MonoBehaviour
 
         };
 
-
-
         photonView.RPC("StartGenerate", PhotonTargets.AllBuffered, t);
-
-        //num = PhotonNetwork.playerList.Length;
-
 
         TurnChange();
 
@@ -177,33 +163,36 @@ public class GameMain : MonoBehaviour
         TurnChange();
         if (PhotonNetwork.isNonMasterClientInRoom != true)
         {
-            for (int i = 0; i < id_viewId.Count; i++)
-            {
-                PhotonNetwork.RaiseEvent(1, id_viewId[i], true, RaiseEventOptions.Default);
-            }
+            for (int i = 0; i < id_viewId.Count; i++) PhotonNetwork.RaiseEvent(1, id_viewId[i], true, RaiseEventOptions.Default);
         }
 
-
+        //MoveScript.OnTriggerでWakuに入ったらposManagement
         //master
-        if (posManagement == true)
+        if (posManagement)
         {
             posManagement = false;
             Invoke("PosStop", 1.2f);
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            num_string += 1.ToString(); 
-        }
+        if (Input.GetKeyDown(KeyCode.A)) num_string += 1.ToString();
 
+        //画面からパーツを出さないようにしたい。でもこれでは枠に当たったとき、どれにどのように力加える？
+        //for(int h = 0; h < instatiateParts.Count; h++)
+        //{
+        //    if (instatiateParts[h].transform.position.x < mouse.LeftBottom.x)
+        //    {
 
+        //    }
+        //}
+        
     }
 
 
 
-    [PunRPC]
+    [PunRPC]//同期
     public void StartGenerate(int id, int view)
     {
+        //生成できるパーツが残っているなら
         if (instatiateParts.Count < partLoad.Length)
         {
             GameObject stobj = Instantiate(partLoad[id]);
@@ -220,31 +209,20 @@ public class GameMain : MonoBehaviour
                 id_viewId.Add(g);
                 stobj.SetActive(true);
                 stobj.GetComponent<MoveScript>().Mine = true;
-                //num++;
                 photonView.RPC("Num", PhotonTargets.MasterClient);
 
             }
 
-            message1.text = "num" + num.ToString();
             instatiateParts.Add(stobj);
             shootFlag = false;
         }
+        //残っていないなら
         else
         {
-           
             Debug.Log("待つ");
-            if (photonView.isMine)
-            {
-                photonView.RPC("Count", PhotonTargets.MasterClient);
-                Debug.LogError("count:" + count);
-            }
-           
-                if (count == PhotonNetwork.playerList.Length)
-                {
-                    Debug.Log("最後のシーン移動");
-                finish_button.SetActive(true);
-                   // photonView.RPC("GoFinish", PhotonTargets.All);
-                }
+            if (photonView.isMine) photonView.RPC("Count", PhotonTargets.MasterClient);
+
+            if (count == PhotonNetwork.playerList.Length) finish_button.SetActive(true);
         }
     }
 
@@ -260,33 +238,14 @@ public class GameMain : MonoBehaviour
         SceneManager.LoadScene("Finish");
     }
 
-    /*
-    void OnPhotonSerializeView(PhotonStream stream,PhotonMessageInfo info)
-    {
-        if (stream.isWriting)//書き込み処理
-        {
-            stream.SendNext(num);
-            Debug.LogError("書き込み");
-        }
-        else//読み込み処理
-        {
-            num = (int)stream.ReceiveNext();
-            Debug.LogError("読み込み");
-        }
-    }
-
-    */
-
 
     public void TurnChange()
     {
-        Debug.LogError("Turn Change");
         if(playerId == PhotonNetwork.player.ID)
         {
             if (!shootFlag)
             {
                 shootFlag = true;
-               // message2.text = "my turn";
                 myTurn.text = "あなたの番です";
                 mouse.ResetData();
                 mouse.SetParts(nowParts.GetComponent<MoveScript>());
@@ -294,7 +253,6 @@ public class GameMain : MonoBehaviour
         }
         else
         {
-
             myTurn.text = "他の人の番です";
         }
     }
@@ -303,7 +261,6 @@ public class GameMain : MonoBehaviour
     void Count()
     {
         count++;
-        Debug.Log("count::::::::::::"+count);
     }
 
     // Clientがマスターに呼ばせる
@@ -322,7 +279,6 @@ public class GameMain : MonoBehaviour
         playerId = playerId + 1;
         if (playerId  > PhotonNetwork.playerList.Length)
         {
-            Debug.Log("Reset");
             playerId = 1;
         }
         Debug.Log("IDをmasterが足す:" + playerId);
@@ -331,8 +287,6 @@ public class GameMain : MonoBehaviour
 
     private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        Debug.Log("View");
-
         if (stream.isWriting)
         {
             num_string = num.ToString();
@@ -372,33 +326,9 @@ public class GameMain : MonoBehaviour
 
     void PosStop()
     {
-        foreach (var k in faceinParts)
-        {
-            k.GetComponent<Rigidbody>().isKinematic = true;
-            Debug.LogError("PosStopに入りました");
-        }
-        Triggerfalse();       
-        /*
-		for(int j=0;j<parts.Count;j++)
-		{
-			Debug.Log ("PosStop");
-			parts[j].GetComponent<Rigidbody>().isKinematic = true;
-		}
-		Triggerfalse ();
-        */
+        foreach (var k in faceinParts) k.GetComponent<Rigidbody>().isKinematic = true;
+        for (int i = 0; i < faceinParts.Count; i++) faceinParts[i].GetComponent<Rigidbody>().isKinematic = false;
     }
-
-
-    void Triggerfalse()
-    {
-
-        for (int i = 0; i < faceinParts.Count; i++)
-        {
-            Debug.Log("Triggerfalse");
-            faceinParts[i].GetComponent<Rigidbody>().isKinematic = false;
-        }
-    }
-
 
 
     [PunRPC]
@@ -406,10 +336,7 @@ public class GameMain : MonoBehaviour
     {
         foreach (GameObject change in instatiateParts)
         {
-            if (change.GetComponent<PhotonView>().viewID == viewId)
-            {
-                change.SetActive(true);
-            }
+            if (change.GetComponent<PhotonView>().viewID == viewId) change.SetActive(true);
         }
     }
 

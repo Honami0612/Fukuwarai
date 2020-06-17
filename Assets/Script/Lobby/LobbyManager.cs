@@ -8,14 +8,10 @@ using UnityEngine.SceneManagement;
 public class LobbyManager : MonoBehaviour
 {
     [SerializeField]
-    Text message;
-    [SerializeField]
     Text onlyClient;
    
-    // roomNameを書くとこ
     [SerializeField]
     GameObject roomNameArea;
-
 
     //今あるroom一覧
     [SerializeField]
@@ -31,11 +27,8 @@ public class LobbyManager : MonoBehaviour
     private string roomName;
 
 
-
      void Start()
     {
-
-     
         PhotonNetwork.ConnectUsingSettings("バージョン番号");
        
         roomListArea.SetActive(true);
@@ -52,6 +45,7 @@ public class LobbyManager : MonoBehaviour
         UpDateRoom();
     }
 
+
     public void UpDateRoom()
     {
         int i = 0;
@@ -67,7 +61,7 @@ public class LobbyManager : MonoBehaviour
         RoomInfo[] roomInfos = PhotonNetwork.GetRoomList();
         if (roomInfos.Length == 0)
         {
-            message.text = "ルームがありません";
+            //message.text = "ルームがありません";
         }
         else
         {
@@ -80,10 +74,10 @@ public class LobbyManager : MonoBehaviour
                 int j = i;
                 roomList[i].GetComponent<Button>().onClick.AddListener(() => RoomJoin(j));
                 i++;
-
             }
         }
-        message.text = "ルームを更新しました";
+        Debug.Log("ルーム更新");
+        //message.text = "ルームを更新しました";
     }
 
     // ルーム作成
@@ -96,13 +90,13 @@ public class LobbyManager : MonoBehaviour
         //roomを作成できた時の処理
         if (PhotonNetwork.CreateRoom(roomName))
         {
-            message.text = "ルームの作成に成功しました";
+            //message.text = "ルームの作成に成功しました";
             roomListArea.SetActive(false);
             Debug.Log("ルーム作成に成功しました");
         }
         else
         {
-            message.text = "ルームの作成に失敗しました";
+            //message.text = "ルームの作成に失敗しました";
             Debug.Log("ルーム作成に失敗しました");
         }
     }
@@ -113,13 +107,13 @@ public class LobbyManager : MonoBehaviour
         roomName = roomList[number].GetComponentsInChildren<Text>()[0].text;
         if (PhotonNetwork.JoinRoom(roomName))
         {
-            message.text = "ルームに入室しました";
+            //message.text = "ルームに入室しました";
             roomListArea.SetActive(false);
 
         }
         else
         {
-            message.text = "ルームに入室できませんでした";
+            //message.text = "ルームに入室できませんでした";
         }
     }
 
@@ -143,7 +137,7 @@ public class LobbyManager : MonoBehaviour
 
     public void OnPhotonJoinRoomFailed()
     {
-        message.text = "ルームに入れませんでした";
+        //message.text = "ルームに入れませんでした";
         Debug.Log("ルームに入れませんでした");
     }
 
@@ -153,14 +147,14 @@ public class LobbyManager : MonoBehaviour
         if (PhotonNetwork.LeaveRoom())
         {
             GameStart.gameObject.SetActive(false);
-            message.text = "ルームから退出しました";
+            //message.text = "ルームから退出しました";
             roomListArea.SetActive(true);
             onlyClient.gameObject.SetActive(false);
             
         }
         else
         {
-            message.text = "ルームから退出できませんでした";
+            //message.text = "ルームから退出できませんでした";
         }
 
     }
@@ -170,5 +164,5 @@ public class LobbyManager : MonoBehaviour
         roomListArea.gameObject.SetActive(false);
     }
 
-
+   
 }
