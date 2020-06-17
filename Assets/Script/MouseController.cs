@@ -8,7 +8,7 @@ using System;
 
 public class MouseController : MonoBehaviour {
 
-	private Camera mainCamera = null;
+	public Camera mainCamera1/* = null*/; //PartCamera
     private Transform mainCameraTransform = null;
 
     private const float MaxMagnitude = 2f;
@@ -26,16 +26,30 @@ public class MouseController : MonoBehaviour {
     GameObject nowTouchPos;
     private bool throwFlag = false;
 
-   
+    public Vector3 LeftBottom;
+    public Vector3 RightTop;
 
     private void Awake()
     {
-		this.mainCamera = Camera.main;
-        this.mainCameraTransform = this.mainCamera.transform;
+		
+        this.mainCameraTransform = this.mainCamera1.transform;
+        GetCameraRange();
         arrowStartScale = arrowPos.transform.localScale;
         arrowStartRotate = arrowPos.transform.localRotation;
         nowTouchPos.SetActive(false);
         arrowPos.SetActive(false);
+        
+
+    }
+
+    //カメラの座標取得して移動範囲指定
+    private void GetCameraRange()
+    {
+        LeftBottom = mainCamera1.ScreenToWorldPoint(Vector3.zero);
+        RightTop = mainCamera1.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        Debug.LogError("カメラ座標（左下）：" + LeftBottom.ToString());
+        Debug.LogError("カメラ座標（右上）" + RightTop.ToString());
+
     }
 
     private Vector3 GetMousePosition()
@@ -43,7 +57,7 @@ public class MouseController : MonoBehaviour {
         // マウスから取得できないZ座標を補完する
         var position = Input.mousePosition;
         position.z = this.mainCameraTransform.position.z;
-        position = this.mainCamera.ScreenToWorldPoint(position);
+        position = this.mainCamera1.ScreenToWorldPoint(position);
         position.z = 0;
 
         return position;

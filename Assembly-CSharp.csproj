@@ -53,6 +53,9 @@
     <UnityVersion>2018.2.21f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="/Applications/Visual Studio.app/Contents/Resources/lib/monodevelop/AddIns/MonoDevelop.Unity/Analyzers/Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="UnityEngine">
       <HintPath>/Applications/Unity/Hub/Editor/2018.2.21f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -136,6 +139,7 @@
     <Compile Include="Assets\Script\Collection\collection.cs" />
     <Compile Include="Assets\Script\Collection\TouchScript.cs" />
     <Compile Include="Assets\Script\Finish\GameFinish.cs" />
+    <Compile Include="Assets\Script\Finish\leaveRoom.cs" />
     <Compile Include="Assets\Script\Finish\sendcollection.cs" />
     <Compile Include="Assets\Script\Game\GameMain.cs" />
     <Compile Include="Assets\Script\Game\MoveScript.cs" />

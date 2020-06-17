@@ -64,14 +64,14 @@ public class MoveScript : MonoBehaviour
     }
 
 
-    public void Flip(Vector3 force)
+    public void Flip(Vector3 force)//MouseUp時に呼び出し
     {
          if (mine)
         {
             // 瞬間的に力を加えてはじく
-            this.rb.AddForce(force, ForceMode.Impulse);
+            //this.rb.AddForce(force, ForceMode.Impulse);
+            this.rb.velocity = force;
         }
-       
     }
 		
 
@@ -82,7 +82,7 @@ public class MoveScript : MonoBehaviour
             {
                 gameMain.FaceinAdd(this.gameObject);
                 gameMain.GetComponent<PhotonView>().RPC("SetActivechange", PhotonTargets.All,thisViewId);//RPC使う必要あり
-            gameMain.GetComponent<PhotonView>().RPC("ID", PhotonTargets.MasterClient);
+                gameMain.GetComponent<PhotonView>().RPC("ID", PhotonTargets.MasterClient);
             if (count)
                 {
                     gameMain.management = true;

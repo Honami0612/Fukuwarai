@@ -5,45 +5,40 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadScenestart : MonoBehaviour {
-    //いらない
-    PhotonPlayer[] nowplay = PhotonNetwork.playerList;
-    [SerializeField]
-    Text karitext;
 
-    public Button select;
-    public Button collection;
+    [SerializeField]
+    Button select;
+    [SerializeField]
+    Button collection;
 
     private void Start()
     {
-        karitext.text = nowplay.Length.ToString();
         bool photonPlayer = PhotonNetwork.isNonMasterClientInRoom;
         if (photonPlayer == true)
         {
-           
             select.enabled = false;
             collection.enabled = false;
-        }
-       
+        } 
     }
 
-    public void OnClick(int number){
-		switch (number) {
+    public void OnClick(int number)
+    {
+		switch (number)
+        {
         case 0:
-                //SceneManager.LoadScene ("Select");
+                SceneManager.LoadScene("Select");
                 PhotonView t = GetComponent<PhotonView>();
                 t.RPC("GoSelect", PhotonTargets.All);
-                //Debug.Log ("0");
-                
-			break;
-		case 1:
-                //SceneManager.LoadScene ("Collection");
-                PhotonView s = GetComponent<PhotonView>();
-                s.RPC("GoCollection", PhotonTargets.All);
-                Debug.Log ("1");
 			break;
 
+		case 1: //準備中
+                //SceneManager.LoadScene("Collection");
+                PhotonView s = GetComponent<PhotonView>();
+                s.RPC("GoCollection", PhotonTargets.All);
+			break;
 		}
 	}
+
 
     [PunRPC]
     public void GoSelect()
@@ -54,7 +49,7 @@ public class LoadScenestart : MonoBehaviour {
     [PunRPC]
     public void GoCollection()
     {
-            SceneManager.LoadScene("Collection");
-
+        SceneManager.LoadScene("Collection");
     }
+
 }

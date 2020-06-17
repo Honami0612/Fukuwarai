@@ -14,20 +14,19 @@ public class GameFinish : MonoBehaviour {
     GameMain gameMain;
 
     public Button finishstart;
-    public Button finishcollection;
     public Button leaveRoom;
 
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
+
+        //Clientのボタンコンポーネント削除
         if (PhotonNetwork.isNonMasterClientInRoom)
         {
-           
             Destroy(finishstart.GetComponent<Button>());
-            Destroy(finishcollection.GetComponent<Button>());
-            Destroy(leaveRoom.GetComponent<Button>());
-           
+            Destroy(leaveRoom.GetComponent<Button>());  
         }
+
         photonView.RPC("ResetCount", PhotonTargets.All);
         Debug.Log("Reset:" + gameMain.count);
     }
@@ -39,14 +38,13 @@ public class GameFinish : MonoBehaviour {
             case 0://スタートシーンへ移動
                    photonView.RPC("GoStart", PhotonTargets.All);
             　　　　break;
-            case 1://コレクションシーンへ移動
-                   photonView.RPC("GoCollection", PhotonTargets.All);
-            　　　　break;
+            
             case 2://ルーム退出
-                photonView.RPC("GoLobby", PhotonTargets.All);
-                photonView.RPC("LeaveRoom",PhotonTargets.All);
-                   
-                   break;
+                photonView.RPC("LeaveRoom", PhotonTargets.All);
+                //photonView.RPC("GoLobby", PhotonTargets.All);
+
+
+                break;
         }
     }
 
@@ -56,23 +54,28 @@ public class GameFinish : MonoBehaviour {
         SceneManager.LoadScene("Start");
     }
 
+
+    //[PunRPC]
+    //void GoLobby()
+    //{
+    //    SceneManager.LoadScene("Lobby");
+    //}
+
     [PunRPC]
-    void GoCollection()
+    void Quit()
     {
-        SceneManager.LoadScene("Select");
+        UnityEditor.EditorApplication.isPlaying = false;//Unityエディタ用
+        Application.Quit();//build用
     }
-    [PunRPC]
-    void GoLobby()
-    {
-        SceneManager.LoadScene("Lobby");
-    }
+
     [PunRPC]
     public void LeaveRoom()
     {
+        photonView.RPC("Quit", PhotonTargets.All);
+        //photonView.RPC("GoLobby", PhotonTargets.All);
         if (PhotonNetwork.LeaveRoom())
         {
             Debug.Log("ルームを退出しました");
-
         }
         else
         {
@@ -80,10 +83,16 @@ public class GameFinish : MonoBehaviour {
         }
 
     }
+
     [PunRPC]
     void ResetCount()
     {
         gameMain.count = 0;
+    }
+
+    void CloseConnection()
+    {
+        Debug.Log("Master");
     }
 
 }
