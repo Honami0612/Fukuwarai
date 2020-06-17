@@ -6,37 +6,27 @@ using UnityEngine;
 public class MoveScript : MonoBehaviour
 {
 
-    private bool mine = false;
+    private PhotonView photonview;
+
+    bool mine = false;
+    bool count = true;
+    bool isMove = true;
 
     [SerializeField]
     int playerID = 1;
     [SerializeField]
     string playerID_string = "0";
+    private int thisViewId;
 
     private GameObject arrowArea;
 
-    private float speedX = 0;
-    private float speedY = 0;
-    private Vector2 startPos;
-    
-    private GameMain gameMain;
-    private MouseController mouseController;
-    bool count = true;
-    bool isMove = true;
-
     private Rigidbody rb; 
-
 	Collider Waku_ObjectCollider; 
 
-    bool position = true;
-
-    public Vector3 mouseposition;
-
-    private PhotonView photonview;
-    private int thisViewId;
+    private GameMain gameMain;
+    private MouseController mouseController;
 
 
-    // Use this for initialization
     private void Awake()
     {
         photonview = GetComponent<PhotonView>();
@@ -50,11 +40,30 @@ public class MoveScript : MonoBehaviour
         if (mine)
         {
             arrowArea = GameObject.Find("arrowArea");
-            //arrowArea.GetComponent<MouseController>().ResetData();
-            //arrowArea.GetComponent<MouseController>().SetParts(this.gameObject.GetComponent<MoveScript>());
             Waku_ObjectCollider = this.gameObject.GetComponent<BoxCollider>();
             gameMain = GameObject.Find("GameController").GetComponent<GameMain>();
+            mouseController = GameObject.Find("arrowArea").GetComponent<MouseController>();
             rb = gameObject.GetComponent<Rigidbody>();
+        }
+    }
+
+
+    private void Update()
+    {
+        if (mine)
+        {
+            Vector2 nowPart_velocity = this.rb.velocity;
+            if ((gameMain.SetnowPartTransform.position.x < mouseController.SetleftleftBottom.x) && (nowPart_velocity.x < 0))
+                nowPart_velocity.x *= -1;
+            if ((gameMain.SetnowPartTransform.position.x > mouseController.SetrightTop.x) && (nowPart_velocity.x >0))
+                nowPart_velocity.x *= -1;
+            if ((gameMain.SetnowPartTransform.position.y < mouseController.SetleftleftBottom.y) && (nowPart_velocity.y < 0))
+                nowPart_velocity.y *= -1;
+            if ((gameMain.SetnowPartTransform.position.y > mouseController.SetrightTop.y) && (nowPart_velocity.y > 0))
+                nowPart_velocity.y *= -1;
+
+            this.rb.velocity = nowPart_velocity;
+
         }
     }
 
@@ -67,7 +76,6 @@ public class MoveScript : MonoBehaviour
 
     public void OnTriggerEnter(Collider c)
     {
-       
             if (c.gameObject.tag == "Waku")
             {
                 gameMain.FaceinAdd(this.gameObject);
@@ -79,7 +87,6 @@ public class MoveScript : MonoBehaviour
                     count = false;
                     StartCoroutine(Stop());
                 }
-
             }
     }
 
@@ -108,17 +115,13 @@ public class MoveScript : MonoBehaviour
 	{
         if (photonview.isMine == true)
         {
-
-
-            if (c.tag == "Waku")
-            {
-                Waku_ObjectCollider.isTrigger = false;
-            }
+            if (c.tag == "Waku") Waku_ObjectCollider.isTrigger = false;
         }
 	}
+
+
     public bool Mine
     {
-
         set { mine = value; }
     }
 

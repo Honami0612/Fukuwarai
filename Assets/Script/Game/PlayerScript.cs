@@ -2,21 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+//このスクリプト自体いらないw
 
 public class PlayerScript : NetworkBehaviour {
 
 	private GameMain gameController;
 
-	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		gameController = GameObject.Find ("GameController").GetComponent<GameMain> ();
-	
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 	
 }

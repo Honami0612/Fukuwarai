@@ -29,10 +29,8 @@ public class MouseController : MonoBehaviour {
     GameObject nowTouchPos;
     private bool throwFlag = false;
 
-    [SerializeField]
-    Vector3 LeftBottom;
-    [SerializeField]
-    Vector3 RightTop;
+    private Vector3 leftBottom;
+    private Vector3 rightTop;
 
     private void Awake()
     {
@@ -48,10 +46,10 @@ public class MouseController : MonoBehaviour {
     //カメラの座標取得して移動範囲指定
     private void GetCameraRange()
     {
-        LeftBottom = mainCamera.ScreenToWorldPoint(Vector3.zero);
-        RightTop = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
-        Debug.LogError("カメラ座標（左下）：" + LeftBottom.ToString());
-        Debug.LogError("カメラ座標（右上）" + RightTop.ToString());
+        leftBottom = mainCamera.ScreenToWorldPoint(Vector3.zero);
+        rightTop = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        Debug.LogError("カメラ座標（左下）：" + leftBottom.ToString()); 
+        Debug.LogError("カメラ座標（右上）" + rightTop.ToString());
     }
 
 
@@ -140,6 +138,18 @@ public class MouseController : MonoBehaviour {
     private void OnTriggerStay(Collider touchArea)//投げられる範囲内
     {
         if (touchArea == nowTouchPos.GetComponent<BoxCollider>()) throwFlag = true;
+    }
+
+
+
+    public Vector3 SetleftleftBottom
+    {
+        get { return leftBottom; }
+    }
+
+    public Vector3 SetrightTop
+    {
+        get { return rightTop; }
     }
 
 

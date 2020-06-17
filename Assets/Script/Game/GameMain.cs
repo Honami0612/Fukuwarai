@@ -55,6 +55,8 @@ public class GameMain : MonoBehaviour
     GameObject screenshotPrefab;
     GameObject screenshot;
 
+    private Transform nowPartTransform;
+
     private void Awake()
     {
         photonView = GetComponent<PhotonView>();
@@ -194,6 +196,7 @@ public class GameMain : MonoBehaviour
                 myTurn.text = "あなたの番です";
                 mouse.ResetData();
                 mouse.SetParts(nowParts.GetComponent<MoveScript>());
+                nowPartTransform = nowParts.GetComponent<Transform>();
             }
         }
         else
@@ -284,20 +287,23 @@ public class GameMain : MonoBehaviour
 
     public bool management
     {
-        get { return posManagement; }
         set { posManagement = value; }
     }
 
     public int nowNum
     {
         get { return num; }
-        set { num = value; }
     }
 
     public int nowCount
     {
         get { return count; }
         set { count = value; }
+    }
+
+    public Transform SetnowPartTransform
+    {
+        get { return nowPartTransform; }
     }
 
 }

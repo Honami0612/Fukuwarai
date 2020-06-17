@@ -146,7 +146,6 @@
     <Compile Include="Assets\Script\Game\MoveScript.cs" />
     <Compile Include="Assets\Script\Game\PlayerScript.cs" />
     <Compile Include="Assets\Script\Game\Screenshot.cs" />
-    <Compile Include="Assets\Script\Game\SoundScript.cs" />
     <Compile Include="Assets\Script\Lobby\CreateNewRoom.cs" />
     <Compile Include="Assets\Script\Lobby\LobbyManager.cs" />
     <Compile Include="Assets\Script\Player.cs" />
