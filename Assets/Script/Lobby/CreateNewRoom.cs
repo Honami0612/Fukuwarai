@@ -9,9 +9,12 @@ public class CreateNewRoom : MonoBehaviour {
     [SerializeField]
     LobbyManager lobbyManager;
 
-    public GameObject InputField;
-    public Button DecisionButton;
-    public Button ExitButton;
+    [SerializeField]
+    GameObject InputField;
+    [SerializeField]
+    Button DecisionButton;
+    [SerializeField]
+    Button ExitButton;
 
     [SerializeField]
     Text participationPeople;
@@ -19,10 +22,8 @@ public class CreateNewRoom : MonoBehaviour {
     [SerializeField]
     Text onlyMaster;
 
-   
 
-	// Use this for initialization
-	void Start ()
+	private void Start ()
     {
         InputField.SetActive(false);
         DecisionButton.gameObject.SetActive(false);
@@ -35,9 +36,9 @@ public class CreateNewRoom : MonoBehaviour {
     private void Update()
     {
         participationPeople.text = "The number of participants:" + PhotonNetwork.playerList.Length.ToString();
+
         if (PhotonNetwork.inRoom)
         {
-            Debug.Log("部屋に入った");
             ExitButton.gameObject.SetActive(true);
         }
         else
@@ -66,7 +67,6 @@ public class CreateNewRoom : MonoBehaviour {
                 break;
 
             case 2://GameStartButtom(masteronly)
-                Debug.Log("masterbuttonclick");
                 PhotonView t =GetComponent<PhotonView>();
                 t.RPC("GoGame",PhotonTargets.All);
                 break;
@@ -89,11 +89,10 @@ public class CreateNewRoom : MonoBehaviour {
     {
         if (PhotonNetwork.inRoom)
          {
-            
-             Debug.Log("inRoom");
              PhotonNetwork.room.IsOpen = false;
              PhotonNetwork.room.IsVisible = false;
          }
+
          SceneManager.LoadScene("Start");
     }
 }

@@ -9,23 +9,20 @@ public class LobbyManager : MonoBehaviour
 {
     [SerializeField]
     Text onlyClient;
-   
-    [SerializeField]
-    GameObject roomNameArea;
 
     //今あるroom一覧
     [SerializeField]
     GameObject roomListArea;
-    public List<GameObject> roomList;
-   [SerializeField]
+    [SerializeField]
+    List<GameObject> roomList;
+    [SerializeField]
     GameObject roomPrefub;
 
-    
-    public Button GameStart;
+    [SerializeField]
+    Button GameStart;
 
     //入る　or 作る　ルーム名
     private string roomName;
-
 
      void Start()
     {
@@ -33,9 +30,9 @@ public class LobbyManager : MonoBehaviour
        
         roomListArea.SetActive(true);
         GameStart.gameObject.SetActive(false);
-        UpDateRoom();
         onlyClient.gameObject.SetActive(false);
 
+        UpDateRoom();
     }
 
    
@@ -61,7 +58,7 @@ public class LobbyManager : MonoBehaviour
         RoomInfo[] roomInfos = PhotonNetwork.GetRoomList();
         if (roomInfos.Length == 0)
         {
-            //message.text = "ルームがありません";
+            //ルームなし
         }
         else
         {
@@ -69,65 +66,39 @@ public class LobbyManager : MonoBehaviour
             {
                 roomList.Add(Instantiate(roomPrefub,transform));
                 roomList[i].transform.parent = roomListArea.transform;
-                //roomList[i].transform.SetParent(roomListArea.transform);
                 roomList[i].GetComponentsInChildren<Text>()[0].text = room.Name;
                 int j = i;
                 roomList[i].GetComponent<Button>().onClick.AddListener(() => RoomJoin(j));
                 i++;
             }
         }
-        Debug.Log("ルーム更新");
-        //message.text = "ルームを更新しました";
     }
 
     // ルーム作成
     public void RoomCreate()
     {
-
-        //roomNameをTextからとる
         roomName = GameObject.Find("InputRoomName").GetComponent<InputField>().text;
-        Debug.Log(roomName);
-        //roomを作成できた時の処理
-        if (PhotonNetwork.CreateRoom(roomName))
-        {
-            //message.text = "ルームの作成に成功しました";
-            roomListArea.SetActive(false);
-            Debug.Log("ルーム作成に成功しました");
-        }
-        else
-        {
-            //message.text = "ルームの作成に失敗しました";
-            Debug.Log("ルーム作成に失敗しました");
-        }
+        if (PhotonNetwork.CreateRoom(roomName)) roomListArea.SetActive(false);//ルーム作成に成功
+       
     }
+
 
     // ルームに入室する
     public void RoomJoin(int number)
     {
         roomName = roomList[number].GetComponentsInChildren<Text>()[0].text;
-        if (PhotonNetwork.JoinRoom(roomName))
-        {
-            //message.text = "ルームに入室しました";
-            roomListArea.SetActive(false);
-
-        }
-        else
-        {
-            //message.text = "ルームに入室できませんでした";
-        }
+        if (PhotonNetwork.JoinRoom(roomName)) roomListArea.SetActive(false);//ルームに入室
     }
 
-    public void OnJoinedRoom()//ルーム入室に成功すると自動で呼び出される
+
+    //ルーム入室に成功すると自動で呼び出される
+    public void OnJoinedRoom()
     {
-        Debug.Log("OnJoinRoom");
         bool photonPlayer= PhotonNetwork.isNonMasterClientInRoom;
-        //  Debug.Log("Player" + photonPlayer);
 
-
-        if (photonPlayer !=true)//MasterClientでないときtrueが返ってくる
+        if (photonPlayer !=true)
         {
             GameStart.gameObject.SetActive(true);
-
         }
         else
         {
@@ -135,30 +106,27 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
+
+    //ルームに入れなかった際
     public void OnPhotonJoinRoomFailed()
     {
-        //message.text = "ルームに入れませんでした";
         Debug.Log("ルームに入れませんでした");
     }
 
-    //ルームから退出する時使って
+
+    //ルーム退出
     public void LeaveRoom()
     {
         if (PhotonNetwork.LeaveRoom())
         {
             GameStart.gameObject.SetActive(false);
-            //message.text = "ルームから退出しました";
             roomListArea.SetActive(true);
-            onlyClient.gameObject.SetActive(false);
-            
+            onlyClient.gameObject.SetActive(false); 
         }
-        else
-        {
-            //message.text = "ルームから退出できませんでした";
-        }
-
     }
 
+
+    //ルーム新規作成
     public void SetActive()
     {
         roomListArea.gameObject.SetActive(false);

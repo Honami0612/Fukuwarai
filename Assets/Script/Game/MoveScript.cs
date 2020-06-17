@@ -10,23 +10,25 @@ public class MoveScript : MonoBehaviour
 
     [SerializeField]
     int playerID = 1;
-    public string playerID_string = "0";
+    [SerializeField]
+    string playerID_string = "0";
 
     private GameObject arrowArea;
 
-    public float speedX = 0;
-    public float speedY = 0;
-    public Vector2 startPos;
-    public bool isMove = true;
+    private float speedX = 0;
+    private float speedY = 0;
+    private Vector2 startPos;
+    
     private GameMain gameMain;
     private MouseController mouseController;
-    public bool count = true;
+    bool count = true;
+    bool isMove = true;
 
-	private Rigidbody rb; 
+    private Rigidbody rb; 
 
 	Collider Waku_ObjectCollider; 
 
-    public  bool position = true;
+    bool position = true;
 
     public Vector3 mouseposition;
 
@@ -41,7 +43,7 @@ public class MoveScript : MonoBehaviour
     }
 
 
-    void Start()
+    private void Start()
     {
         thisViewId = photonview.viewID;
 
@@ -57,21 +59,9 @@ public class MoveScript : MonoBehaviour
     }
 
 
-    // Update is called once per frame
-    void Update()
+    public void Flip(Vector3 force)//MouseCountroller.MouseUp
     {
-       
-    }
-
-
-    public void Flip(Vector3 force)//MouseUp時に呼び出し
-    {
-         if (mine)
-        {
-            // 瞬間的に力を加えてはじく
-            //this.rb.AddForce(force, ForceMode.Impulse);
-            this.rb.velocity = force;
-        }
+         if (mine) this.rb.velocity = force;
     }
 		
 
@@ -93,43 +83,16 @@ public class MoveScript : MonoBehaviour
             }
     }
 
-    //[PunRPC]
-    //void ID()
-    //{
-    //    if (playerID - 1 < PhotonNetwork.playerList.Length)
-    //    {
-
-    //    }
-    //    playerID = playerID + 1;
-    //    Debug.Log("IDをmasterが足す:"+playerID);
-    //}
-
-    //private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    //{
-    //    if (stream.isWriting)
-    //    {
-    //        playerID_string = playerID.ToString();
-    //        stream.SendNext(playerID_string);
-    //        Debug.Log("ID書き込み");
-    //    }
-    //    else
-    //    {
-    //        playerID_string = (string)stream.ReceiveNext();
-    //        playerID = int.Parse(playerID_string);
-    //        Debug.Log("ID読み込み");
-    //    }
-    //}
+    
 
 
     IEnumerator Stop()
 	{
         yield return new WaitForSeconds (1.0f);
         int n = gameMain.nowNum;
-        Debug.LogWarning("N="+n);
         object[] t = new object[]
        {
             n,PhotonNetwork.AllocateViewID()
-
        };
        
         isMove = false;
@@ -159,11 +122,5 @@ public class MoveScript : MonoBehaviour
         set { mine = value; }
     }
 
-    /*public int playerId
-    {
-        get { return playerID; }
-        set { playerID = value; }
-
-    }
-    */
+    
 }

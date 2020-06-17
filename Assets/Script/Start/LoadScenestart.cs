@@ -21,6 +21,7 @@ public class LoadScenestart : MonoBehaviour {
         } 
     }
 
+
     public void OnClick(int number)
     {
 		switch (number)

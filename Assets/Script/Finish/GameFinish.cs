@@ -28,7 +28,7 @@ public class GameFinish : MonoBehaviour {
         }
 
         photonView.RPC("ResetCount", PhotonTargets.All);
-        Debug.Log("Reset:" + gameMain.count);
+        Debug.Log("Reset:" + gameMain.nowCount);
     }
 
     public void Onclick(int number)
@@ -64,7 +64,7 @@ public class GameFinish : MonoBehaviour {
     [PunRPC]
     void Quit()
     {
-        UnityEditor.EditorApplication.isPlaying = false;//Unityエディタ用
+        //UnityEditor.EditorApplication.isPlaying = false;//Unityエディタ用
         Application.Quit();//build用
     }
 
@@ -87,7 +87,7 @@ public class GameFinish : MonoBehaviour {
     [PunRPC]
     void ResetCount()
     {
-        gameMain.count = 0;
+        gameMain.nowCount = 0;
     }
 
     void CloseConnection()

@@ -1594,12 +1594,6 @@ MonoBehaviour:
   ojisanhair: {fileID: 351586944}
   partsPrefab: {fileID: 1355904873136626, guid: 172550fb52d00488a85e57c25b92aded,
     type: 2}
-  num: 0
-  num_string: 0
-  count: 0
-  count_string: 0
-  screenshotPrefab: {fileID: 1436359888211240, guid: f191d8e19bb834aa8a012ea59f8d08a2,
-    type: 2}
   kao:
   - {fileID: 1106260647383108, guid: 2493ae073b62d21479b8511cf02f1e0d, type: 2}
   - {fileID: 1492538904828044, guid: b3e8962b7cf5768419077242d40c47bd, type: 2}
@@ -1607,14 +1601,16 @@ MonoBehaviour:
   - {fileID: 1281686707973258, guid: da9c497bcb24c2642ab76f4efb7b04fc, type: 2}
   - {fileID: 1181409421091192, guid: f025722cbb1929546abd33504f81d95d, type: 2}
   partLoad: []
-  partsAnimation: []
-  nowParts: {fileID: 0}
-  mouse: {fileID: 1675356217}
   instatiateParts: []
   faceinParts: []
+  partsAnimation: []
+  nowParts: {fileID: 0}
   playerId: 1
   myTurn: {fileID: 113007004}
   finish_button: {fileID: 2077553731}
+  mouse: {fileID: 1675356217}
+  screenshotPrefab: {fileID: 1436359888211240, guid: f191d8e19bb834aa8a012ea59f8d08a2,
+    type: 2}
 --- !u!4 &1039522530
 Transform:
   m_ObjectHideFlags: 0
@@ -1651,8 +1647,8 @@ MonoBehaviour:
   - {fileID: 1039522530}
   - {fileID: 1039522529}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 1
-  instantiationId: 1
+  viewIdField: 3
+  instantiationId: 3
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!54 &1039522532
@@ -2249,11 +2245,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d0516bf6362c41d1b81d2cbaa37106d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera1: {fileID: 519420031}
-  dragStart: {x: 0, y: 0, z: 0}
-  arrowPos: {fileID: 1819491290}
+  mainCamera: {fileID: 519420031}
+  arrowObject: {fileID: 1819491290}
   moveScript: {fileID: 0}
   nowTouchPos: {fileID: 1437535519}
+  LeftBottom: {x: 0, y: 0, z: 0}
+  RightTop: {x: 0, y: 0, z: 0}
 --- !u!65 &1675356218
 BoxCollider:
   m_ObjectHideFlags: 0
