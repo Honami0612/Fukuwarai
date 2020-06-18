@@ -6,78 +6,77 @@ using UnityEngine;
 public class MoveScript : MonoBehaviour
 {
 
-    private bool mine = false;
+    private PhotonView photonview;
+
+    bool mine = false;
+    bool count = true;
+    bool isMove = true;
 
     [SerializeField]
     int playerID = 1;
-    public string playerID_string = "0";
+    [SerializeField]
+    string playerID_string = "0";
+    private int thisViewId;
 
     private GameObject arrowArea;
 
-    public float speedX = 0;
-    public float speedY = 0;
-    public Vector2 startPos;
-    public bool isMove = true;
-    private GameMain gameMain;
-    private MouseController mouseController;
-    public bool count = true;
-
-	private Rigidbody rb; 
-
+    private Rigidbody rb; 
 	Collider Waku_ObjectCollider; 
 
-    public  bool position = true;
-
-    public Vector3 mouseposition;
-
-    private PhotonView photonview;
-    private int thisViewId;
+    private GameMain gameMain;
+    private MouseController mouseController;
 
 
-    // Use this for initialization
     private void Awake()
     {
         photonview = GetComponent<PhotonView>();
     }
 
 
-    void Start()
+    private void Start()
     {
         thisViewId = photonview.viewID;
 
         if (mine)
         {
             arrowArea = GameObject.Find("arrowArea");
-            //arrowArea.GetComponent<MouseController>().ResetData();
-            //arrowArea.GetComponent<MouseController>().SetParts(this.gameObject.GetComponent<MoveScript>());
             Waku_ObjectCollider = this.gameObject.GetComponent<BoxCollider>();
             gameMain = GameObject.Find("GameController").GetComponent<GameMain>();
+            mouseController = GameObject.Find("arrowArea").GetComponent<MouseController>();
             rb = gameObject.GetComponent<Rigidbody>();
         }
+        
     }
 
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-       
-    }
-
-
-    public void Flip(Vector3 force)//MouseUp時に呼び出し
-    {
-         if (mine)
+        if (mine)
         {
-            // 瞬間的に力を加えてはじく
-            //this.rb.AddForce(force, ForceMode.Impulse);
-            this.rb.velocity = force;
+            Vector2 nowPart_velocity = this.rb.velocity;
+            if ((gameMain.SetnowPartTransform.position.x < mouseController.SetleftleftBottom.x) && (nowPart_velocity.x < 0))
+                nowPart_velocity.x *= -1;
+            if ((gameMain.SetnowPartTransform.position.x > mouseController.SetrightTop.x) && (nowPart_velocity.x >0))
+                nowPart_velocity.x *= -1;
+            if ((gameMain.SetnowPartTransform.position.y < mouseController.SetleftleftBottom.y) && (nowPart_velocity.y < 0))
+                nowPart_velocity.y *= -1;
+            if ((gameMain.SetnowPartTransform.position.y > mouseController.SetrightTop.y) && (nowPart_velocity.y > 0))
+                nowPart_velocity.y *= -1;
+
+            this.rb.velocity = nowPart_velocity;
+
         }
+    }
+
+
+    public void Flip(Vector3 force)//MouseCountroller.MouseUp
+    {
+         if (mine) this.rb.velocity = force;
     }
 		
 
     public void OnTriggerEnter(Collider c)
     {
-       
             if (c.gameObject.tag == "Waku")
             {
                 gameMain.FaceinAdd(this.gameObject);
@@ -89,47 +88,20 @@ public class MoveScript : MonoBehaviour
                     count = false;
                     StartCoroutine(Stop());
                 }
-
+           
             }
     }
 
-    //[PunRPC]
-    //void ID()
-    //{
-    //    if (playerID - 1 < PhotonNetwork.playerList.Length)
-    //    {
-
-    //    }
-    //    playerID = playerID + 1;
-    //    Debug.Log("IDをmasterが足す:"+playerID);
-    //}
-
-    //private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    //{
-    //    if (stream.isWriting)
-    //    {
-    //        playerID_string = playerID.ToString();
-    //        stream.SendNext(playerID_string);
-    //        Debug.Log("ID書き込み");
-    //    }
-    //    else
-    //    {
-    //        playerID_string = (string)stream.ReceiveNext();
-    //        playerID = int.Parse(playerID_string);
-    //        Debug.Log("ID読み込み");
-    //    }
-    //}
+    
 
 
     IEnumerator Stop()
 	{
         yield return new WaitForSeconds (1.0f);
         int n = gameMain.nowNum;
-        Debug.LogWarning("N="+n);
         object[] t = new object[]
        {
             n,PhotonNetwork.AllocateViewID()
-
        };
        
         isMove = false;
@@ -145,25 +117,15 @@ public class MoveScript : MonoBehaviour
 	{
         if (photonview.isMine == true)
         {
-
-
-            if (c.tag == "Waku")
-            {
-                Waku_ObjectCollider.isTrigger = false;
-            }
+            if (c.tag == "Waku") Waku_ObjectCollider.isTrigger = false;
         }
 	}
+
+
     public bool Mine
     {
-
         set { mine = value; }
     }
 
-    /*public int playerId
-    {
-        get { return playerID; }
-        set { playerID = value; }
-
-    }
-    */
+    
 }

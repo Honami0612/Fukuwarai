@@ -5,80 +5,66 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 using System.IO;
-//using UnityEngine.Networking;
-//no need
+
 
 public class GameMain : MonoBehaviour
 {
-
-    [SerializeField]
-    GameObject ojisanhair;
-
     PhotonView photonView;
 
     [SerializeField]
-    GameObject partsPrefab;
-
-    public int num = 0;
-
-    public string num_string = "0";
-
-
-    public int count=0;
-    public string count_string = "0";
-
-    private bool posManagement = false;
-
+    GameObject ojisanhair;
     [SerializeField]
-    GameObject screenshotPrefab;
-    GameObject screenshot;
-
+    GameObject partsPrefab;
     [SerializeField]
     GameObject[] kao;
-
-    // name と　ファイル名　同じ
     [SerializeField]
     GameObject[] partLoad;
-
-    [SerializeField]
-    List<Animation> partsAnimation = new List<Animation>();
-
-
-    // 今投げるパーツ
-    public GameObject nowParts;
-    private bool shootFlag = false;
-    
     string[] folder = { "1ojisan", "2man", "3apple", "4moon", "5rabbit" };
-
-    [SerializeField]
-    MouseController mouse;
-
-    [SerializeField]
-    List<object> id_viewId = new List<object>();
-
     [PunRPC]//生成したパーツ格納
     public List<GameObject> instatiateParts = new List<GameObject>();
     [PunRPC]
     public List<GameObject> faceinParts = new List<GameObject>();
+    [SerializeField]
+    List<Animation> partsAnimation = new List<Animation>();
+    [SerializeField]
+    GameObject nowParts;
+    private bool shootFlag = false;
 
+    private int num = 0;
+    private string num_string = "0";
+    private int count=0;
+    private string count_string = "0";
+    private bool posManagement = false;
+
+    [SerializeField]
+    List<object> id_viewId = new List<object>();
     public int playerId = 1;
     private string playerId_string =  "";
 
     [SerializeField]
     Text myTurn;
+    [SerializeField]
+    Text operationTexrt;
 
     [SerializeField]
     GameObject finish_button;
-    
+
+    [SerializeField]
+    MouseController mouse;
+
+    //修正中
+    [SerializeField]
+    GameObject screenshotPrefab;
+    GameObject screenshot;
+
+    private Transform nowPartTransform;
 
     private void Awake()
     {
         photonView = GetComponent<PhotonView>();
         PhotonNetwork.OnEventCall += OnRaiseEvent;
-       
     }
 
-   
 
 
     private void OnRaiseEvent(byte code, object g, int senderid)
@@ -99,36 +85,24 @@ public class GameMain : MonoBehaviour
                 tmp += data[i];
             }
         }
+
         viewId = int.Parse(tmp);
-
-        if (PhotonView.Find(viewId) == null)
-        {
-            StartGenerate(id, viewId);
-        }
-
-
+        if (PhotonView.Find(viewId) == null) StartGenerate(id, viewId);
+       
     }
+
+
 
     private void Start()
     {
 
         count = 0;
-        //Debug.LogWarning("ID:"+PhotonNetwork.player.ID);//player特定
-        //Debug.LogWarning("Length:"+PhotonNetwork.playerList.Length);//player人数
-
         finish_button.SetActive(false);
-
         int faceselectnumber = FaceSelect.SelectNumber - 1;
-        Instantiate(kao[faceselectnumber]);//顔生成
-        Debug.Log("faceselectnumber:"+faceselectnumber);
-
+        Instantiate(kao[faceselectnumber]);
         ojisanhair.gameObject.SetActive(false);
-        if (faceselectnumber == 0)
-        {
-            ojisanhair.gameObject.SetActive(true);
-        }
 
-
+        if (faceselectnumber == 0) ojisanhair.gameObject.SetActive(true);
         if (GameObject.Find("ScreenShot(Clone)") == null)
         {
             screenshot = Instantiate(screenshotPrefab);
@@ -138,22 +112,16 @@ public class GameMain : MonoBehaviour
             screenshot = GameObject.Find("ScreenShot(Clone)");
         }
 
-
-        partLoad = Resources.LoadAll<GameObject>("Game/" + folder[faceselectnumber]); //呼び出し一括
-
+        partLoad = Resources.LoadAll<GameObject>("Game/" + folder[faceselectnumber]); 
         int test = PhotonNetwork.player.ID - 1;
 
         object[] t = new object[]
         {
             test,PhotonNetwork.AllocateViewID()
-
         };
 
         photonView.RPC("StartGenerate", PhotonTargets.AllBuffered, t);
-
         TurnChange();
-
-
     }
 
 
@@ -166,34 +134,19 @@ public class GameMain : MonoBehaviour
             for (int i = 0; i < id_viewId.Count; i++) PhotonNetwork.RaiseEvent(1, id_viewId[i], true, RaiseEventOptions.Default);
         }
 
-        //MoveScript.OnTriggerでWakuに入ったらposManagement
-        //master
-        if (posManagement)
+        if (posManagement) //MoveScript.OnTrigger
         {
             posManagement = false;
             Invoke("PosStop", 1.2f);
         }
-
-        if (Input.GetKeyDown(KeyCode.A)) num_string += 1.ToString();
-
-        //画面からパーツを出さないようにしたい。でもこれでは枠に当たったとき、どれにどのように力加える？
-        //for(int h = 0; h < instatiateParts.Count; h++)
-        //{
-        //    if (instatiateParts[h].transform.position.x < mouse.LeftBottom.x)
-        //    {
-
-        //    }
-        //}
-        
     }
 
 
 
-    [PunRPC]//同期
+    [PunRPC]
     public void StartGenerate(int id, int view)
-    {
-        //生成できるパーツが残っているなら
-        if (instatiateParts.Count < partLoad.Length)
+    { 
+        if (instatiateParts.Count < partLoad.Length)//生成できるパーツが残っているなら
         {
             GameObject stobj = Instantiate(partLoad[id]);
             stobj.transform.localPosition = new Vector3(0, -11.4f, 0);
@@ -210,19 +163,16 @@ public class GameMain : MonoBehaviour
                 stobj.SetActive(true);
                 stobj.GetComponent<MoveScript>().Mine = true;
                 photonView.RPC("Num", PhotonTargets.MasterClient);
-
             }
-
             instatiateParts.Add(stobj);
             shootFlag = false;
         }
-        //残っていないなら
-        else
+        else //残っていないなら待機
         {
-            Debug.Log("待つ");
             if (photonView.isMine) photonView.RPC("Count", PhotonTargets.MasterClient);
-
             if (count == PhotonNetwork.playerList.Length) finish_button.SetActive(true);
+            operationTexrt.gameObject.SetActive(false);
+            myTurn.gameObject.SetActive(false);
         }
     }
 
@@ -231,6 +181,7 @@ public class GameMain : MonoBehaviour
     {
         photonView.RPC("GoFinish", PhotonTargets.All);
     }
+
 
     [PunRPC]
     void GoFinish()
@@ -249,6 +200,7 @@ public class GameMain : MonoBehaviour
                 myTurn.text = "あなたの番です";
                 mouse.ResetData();
                 mouse.SetParts(nowParts.GetComponent<MoveScript>());
+                nowPartTransform = nowParts.GetComponent<Transform>();
             }
         }
         else
@@ -257,14 +209,14 @@ public class GameMain : MonoBehaviour
         }
     }
 
+
     [PunRPC]
     void Count()
     {
         count++;
     }
 
-    // Clientがマスターに呼ばせる
-
+   
     [PunRPC]
     void Num()
     {
@@ -275,19 +227,17 @@ public class GameMain : MonoBehaviour
     [PunRPC]
     void ID()
     {
-        Debug.Log("現在のID:" + playerId);
         playerId = playerId + 1;
         if (playerId  > PhotonNetwork.playerList.Length)
         {
             playerId = 1;
         }
-        Debug.Log("IDをmasterが足す:" + playerId);
     }
 
 
     private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.isWriting)
+        if (stream.isWriting)//書き込み処理
         {
             num_string = num.ToString();
 
@@ -296,7 +246,6 @@ public class GameMain : MonoBehaviour
             stream.SendNext(num_string);
             stream.SendNext(playerId_string);
             stream.SendNext(count_string);
-            Debug.LogError("書き込み");
         }
         else//読み込み処理
         {
@@ -307,13 +256,8 @@ public class GameMain : MonoBehaviour
             num = int.Parse(num_string);
             playerId = int.Parse(playerId_string);
             count = int.Parse(count_string);
-
-            Debug.LogError("読み込み");
         }
     }
-
-
-
 
 
     IEnumerator timestop()
@@ -321,7 +265,6 @@ public class GameMain : MonoBehaviour
         yield return new WaitForSeconds(3);
         SceneManager.LoadScene("Finish");
     }
-
 
 
     void PosStop()
@@ -342,29 +285,30 @@ public class GameMain : MonoBehaviour
 
     public void FaceinAdd(GameObject gameObject)
     {
-
         faceinParts.Add(gameObject);
     }
 
 
     public bool management
     {
-        get { return posManagement; }
         set { posManagement = value; }
     }
 
     public int nowNum
     {
         get { return num; }
-        set { num = value; }
+    }
+
+    public int nowCount
+    {
+        get { return count; }
+        set { count = value; }
+    }
+
+    public Transform SetnowPartTransform
+    {
+        get { return nowPartTransform; }
     }
 
 }
 
-
-/*
- *生成したパーツはaにリストとして格納
- *輪郭内に入ったパーツをpartにリストとして格納　MoveScriptのOnTriggerか？
- *partに格納したものをGameaMainのPosStop()とTriggerfalse()で止める
- **Wakuが機能してないのを確認
- */

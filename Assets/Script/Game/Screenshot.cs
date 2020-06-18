@@ -12,16 +12,14 @@ public class Screenshot : MonoBehaviour {
 	private string saveFilePath="/Resources/Sprite/ScreenShot";//データの保存先ファイルパス
 	private string saveFileName="/screenshot.PNG";//保存ファイル名
 
-
     int save=0;
     private int num;
 	StreamWriter sw;
 	FileInfo fi;
 
 	private bool screenShotFlag = false;
-
-
 	private TextAsset csvFile;//CSVファイル
+
 
 	void Start()
 	{

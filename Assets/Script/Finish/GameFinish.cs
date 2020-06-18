@@ -13,14 +13,15 @@ public class GameFinish : MonoBehaviour {
     [SerializeField]
     GameMain gameMain;
 
-    public Button finishstart;
-    public Button leaveRoom;
+    [SerializeField]
+    Button finishstart;
+    [SerializeField]
+    Button leaveRoom;
 
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
 
-        //Clientのボタンコンポーネント削除
         if (PhotonNetwork.isNonMasterClientInRoom)
         {
             Destroy(finishstart.GetComponent<Button>());
@@ -28,8 +29,9 @@ public class GameFinish : MonoBehaviour {
         }
 
         photonView.RPC("ResetCount", PhotonTargets.All);
-        Debug.Log("Reset:" + gameMain.count);
+        Debug.Log("Reset:" + gameMain.nowCount);
     }
+
 
     public void Onclick(int number)
     {
@@ -40,13 +42,11 @@ public class GameFinish : MonoBehaviour {
             　　　　break;
             
             case 2://ルーム退出
-                photonView.RPC("LeaveRoom", PhotonTargets.All);
-                //photonView.RPC("GoLobby", PhotonTargets.All);
-
-
-                break;
+                   photonView.RPC("LeaveRoom", PhotonTargets.All);
+                   break;
         }
     }
+
 
     [PunRPC]
     public void GoStart()
@@ -55,16 +55,10 @@ public class GameFinish : MonoBehaviour {
     }
 
 
-    //[PunRPC]
-    //void GoLobby()
-    //{
-    //    SceneManager.LoadScene("Lobby");
-    //}
-
     [PunRPC]
     void Quit()
     {
-        UnityEditor.EditorApplication.isPlaying = false;//Unityエディタ用
+        //UnityEditor.EditorApplication.isPlaying = false;//Unityエディタ用
         Application.Quit();//build用
     }
 
@@ -72,27 +66,13 @@ public class GameFinish : MonoBehaviour {
     public void LeaveRoom()
     {
         photonView.RPC("Quit", PhotonTargets.All);
-        //photonView.RPC("GoLobby", PhotonTargets.All);
-        if (PhotonNetwork.LeaveRoom())
-        {
-            Debug.Log("ルームを退出しました");
-        }
-        else
-        {
-            Debug.Log("ルーム退出できませんでした");
-        }
-
     }
+
 
     [PunRPC]
     void ResetCount()
     {
-        gameMain.count = 0;
-    }
-
-    void CloseConnection()
-    {
-        Debug.Log("Master");
+        gameMain.nowCount = 0;
     }
 
 }

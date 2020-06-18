@@ -142,13 +142,12 @@
     <Compile Include="Assets\Script\Finish\leaveRoom.cs" />
     <Compile Include="Assets\Script\Finish\sendcollection.cs" />
     <Compile Include="Assets\Script\Game\GameMain.cs" />
+    <Compile Include="Assets\Script\Game\MouseController.cs" />
     <Compile Include="Assets\Script\Game\MoveScript.cs" />
     <Compile Include="Assets\Script\Game\PlayerScript.cs" />
     <Compile Include="Assets\Script\Game\Screenshot.cs" />
-    <Compile Include="Assets\Script\Game\SoundScript.cs" />
     <Compile Include="Assets\Script\Lobby\CreateNewRoom.cs" />
     <Compile Include="Assets\Script\Lobby\LobbyManager.cs" />
-    <Compile Include="Assets\Script\MouseController.cs" />
     <Compile Include="Assets\Script\Player.cs" />
     <Compile Include="Assets\Script\Select\FaceSelect.cs" />
     <Compile Include="Assets\Script\Start\LoadScenestart.cs" />
