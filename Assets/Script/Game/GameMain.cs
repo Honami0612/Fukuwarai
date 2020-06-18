@@ -43,6 +43,8 @@ public class GameMain : MonoBehaviour
 
     [SerializeField]
     Text myTurn;
+    [SerializeField]
+    Text operationTexrt;
 
     [SerializeField]
     GameObject finish_button;
@@ -169,6 +171,8 @@ public class GameMain : MonoBehaviour
         {
             if (photonView.isMine) photonView.RPC("Count", PhotonTargets.MasterClient);
             if (count == PhotonNetwork.playerList.Length) finish_button.SetActive(true);
+            operationTexrt.gameObject.SetActive(false);
+            myTurn.gameObject.SetActive(false);
         }
     }
 

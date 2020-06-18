@@ -45,6 +45,7 @@ public class MoveScript : MonoBehaviour
             mouseController = GameObject.Find("arrowArea").GetComponent<MouseController>();
             rb = gameObject.GetComponent<Rigidbody>();
         }
+        
     }
 
 
@@ -87,6 +88,7 @@ public class MoveScript : MonoBehaviour
                     count = false;
                     StartCoroutine(Stop());
                 }
+           
             }
     }
 

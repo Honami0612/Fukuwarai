@@ -245,7 +245,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
-    m_FontStyle: 1
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
@@ -255,7 +255,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Reave the room
+  m_Text: "\u30EB\u30FC\u30E0\u3092\u9000\u51FA\u3059\u308B"
 --- !u!222 &444716028
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -397,7 +397,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
-    m_FontStyle: 1
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
@@ -407,7 +407,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Create new room
+  m_Text: "\u30EB\u30FC\u30E0\u65B0\u898F\u4F5C\u6210"
 --- !u!222 &534507731
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -595,7 +595,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
-    m_FontStyle: 1
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
@@ -605,7 +605,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Decision
+  m_Text: "\u6C7A\u5B9A"
 --- !u!222 &689457750
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -697,7 +697,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
-    m_FontStyle: 0
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
@@ -772,7 +772,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 20
-    m_FontStyle: 0
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
@@ -1338,7 +1338,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Room name
+  m_Text: "\u30EB\u30FC\u30E0\u540D(\u30ED\u30FC\u30DE\u5B57)"
 --- !u!222 &1206295510
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1403,7 +1403,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
-    m_FontStyle: 1
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
@@ -1413,7 +1413,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter the room
+  m_Text: "\u30B2\u30FC\u30E0\u30B9\u30BF\u30FC\u30C8\n(\u4EBA\u6570\u304C\u63C3\u3063\u305F\u3089\u62BC\u3057\u3066\u304F\u3060\u3055\u3044)"
 --- !u!222 &1352373228
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1553,7 +1553,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
-    m_FontStyle: 1
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
@@ -1628,7 +1628,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
-    m_FontStyle: 0
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
@@ -1803,8 +1803,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -25.9, y: 9}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -25.9, y: -0.0000061989}
+  m_SizeDelta: {x: 217.7, y: 58.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1776550544
 MonoBehaviour:

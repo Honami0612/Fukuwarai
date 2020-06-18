@@ -35,7 +35,7 @@ public class CreateNewRoom : MonoBehaviour {
 
     private void Update()
     {
-        participationPeople.text = "The number of participants:" + PhotonNetwork.playerList.Length.ToString();
+        participationPeople.text = "現在の参加人数:" + PhotonNetwork.playerList.Length.ToString();
 
         if (PhotonNetwork.inRoom)
         {
