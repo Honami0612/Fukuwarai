@@ -141,11 +141,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onlyClient: {fileID: 0}
-  roomNameArea: {fileID: 0}
   roomListArea: {fileID: 0}
   roomList: []
   roomPrefub: {fileID: 0}
-  GameStart: {fileID: 0}
+  gameStart: {fileID: 0}
 --- !u!4 &208630764
 Transform:
   m_ObjectHideFlags: 0
@@ -236,7 +235,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1276014077}
-        m_MethodName: Onclick
+        m_MethodName: onClick
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -509,12 +508,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1276014077}
-        m_MethodName: Onclick
+        m_MethodName: onClick
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -665,8 +664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lobbyManager: {fileID: 208630763}
   gameMain: {fileID: 1454974233}
-  finishstart: {fileID: 468182858}
-  finishcollection: {fileID: 0}
+  finishStart: {fileID: 0}
   leaveRoom: {fileID: 1130415738}
 --- !u!114 &1276014078
 MonoBehaviour:
@@ -723,21 +721,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ojisanhair: {fileID: 0}
   partsPrefab: {fileID: 0}
-  num: 0
-  num_string: 0
-  count: 0
-  count_string: 0
-  screenshotPrefab: {fileID: 0}
   kao: []
-  partLoad: []
+  instatiateParts: []
   partsAnimation: []
   nowParts: {fileID: 0}
-  mouse: {fileID: 0}
-  instatiateParts: []
-  faceinParts: []
   playerId: 1
   myTurn: {fileID: 0}
-  finish_button: {fileID: 0}
+  operationTexrt: {fileID: 0}
+  finishButton: {fileID: 0}
+  mouseController: {fileID: 0}
+  screenshotPrefab: {fileID: 0}
 --- !u!4 &1454974234
 Transform:
   m_ObjectHideFlags: 0
@@ -784,7 +777,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}

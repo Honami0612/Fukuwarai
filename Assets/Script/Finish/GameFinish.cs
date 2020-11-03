@@ -14,7 +14,7 @@ public class GameFinish : MonoBehaviour {
     GameMain gameMain;
 
     [SerializeField]
-    Button finishstart;
+    Button finishStart;
     [SerializeField]
     Button leaveRoom;
 
@@ -24,7 +24,7 @@ public class GameFinish : MonoBehaviour {
 
         if (PhotonNetwork.isNonMasterClientInRoom)
         {
-            Destroy(finishstart.GetComponent<Button>());
+            Destroy(finishStart.GetComponent<Button>());
             Destroy(leaveRoom.GetComponent<Button>());  
         }
 
@@ -33,7 +33,7 @@ public class GameFinish : MonoBehaviour {
     }
 
 
-    public void Onclick(int number)
+    public void onClick(int number)
     {
         switch (number)
         {
@@ -41,7 +41,7 @@ public class GameFinish : MonoBehaviour {
                    photonView.RPC("GoStart", PhotonTargets.All);
             　　　　break;
             
-            case 2://ルーム退出
+            case 1://ルーム退出
                    photonView.RPC("LeaveRoom", PhotonTargets.All);
                    break;
         }

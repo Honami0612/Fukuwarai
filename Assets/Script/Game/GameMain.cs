@@ -11,19 +11,19 @@ public class GameMain : MonoBehaviour
 {
     PhotonView photonView;
 
+    private int faceselectnumber;
     [SerializeField]
     GameObject ojisanhair;
     [SerializeField]
     GameObject partsPrefab;
     [SerializeField]
     GameObject[] kao;
-    [SerializeField]
-    GameObject[] partLoad;
+    private  GameObject[] partLoad;
     string[] folder = { "1ojisan", "2man", "3apple", "4moon", "5rabbit" };
     [PunRPC]//生成したパーツ格納
     public List<GameObject> instatiateParts = new List<GameObject>();
     [PunRPC]
-    public List<GameObject> faceinParts = new List<GameObject>();
+    private List<GameObject> faceinParts = new List<GameObject>();
     [SerializeField]
     List<Animation> partsAnimation = new List<Animation>();
     [SerializeField]
@@ -31,33 +31,35 @@ public class GameMain : MonoBehaviour
     private bool shootFlag = false;
 
     private int num = 0;
-    private string num_string = "0";
+    private string numString = "0";
     private int count=0;
-    private string count_string = "0";
+    private string countString = "0";
     private bool posManagement = false;
 
     [SerializeField]
-    List<object> id_viewId = new List<object>();
+    List<object> idViewId = new List<object>();
     public int playerId = 1;
-    private string playerId_string =  "";
+    private string playerIdString =  "";
 
     [SerializeField]
     Text myTurn;
     [SerializeField]
-    Text operationTexrt;
+    Text operationText;
 
     [SerializeField]
-    GameObject finish_button;
+    GameObject finishButton;
 
     [SerializeField]
-    MouseController mouse;
+    MouseController mouseController;
 
     //修正中
     [SerializeField]
     GameObject screenshotPrefab;
-    GameObject screenshot;
+    private GameObject screenshot;
 
     private Transform nowPartTransform;
+
+
 
     private void Awake()
     {
@@ -97,8 +99,9 @@ public class GameMain : MonoBehaviour
     {
 
         count = 0;
-        finish_button.SetActive(false);
-        int faceselectnumber = FaceSelect.SelectNumber - 1;
+
+        finishButton.SetActive(false);
+        faceselectnumber = FaceSelect.SelectNumber - 1;
         Instantiate(kao[faceselectnumber]);
         ojisanhair.gameObject.SetActive(false);
 
@@ -131,7 +134,7 @@ public class GameMain : MonoBehaviour
         TurnChange();
         if (PhotonNetwork.isNonMasterClientInRoom != true)
         {
-            for (int i = 0; i < id_viewId.Count; i++) PhotonNetwork.RaiseEvent(1, id_viewId[i], true, RaiseEventOptions.Default);
+            for (int i = 0; i < idViewId.Count; i++) PhotonNetwork.RaiseEvent(1, idViewId[i], true, RaiseEventOptions.Default);
         }
 
         if (posManagement) //MoveScript.OnTrigger
@@ -159,7 +162,7 @@ public class GameMain : MonoBehaviour
             {
                 nowParts = stobj;
                 object g = id + "\n" + view;
-                id_viewId.Add(g);
+                idViewId.Add(g);
                 stobj.SetActive(true);
                 stobj.GetComponent<MoveScript>().Mine = true;
                 photonView.RPC("Num", PhotonTargets.MasterClient);
@@ -170,9 +173,13 @@ public class GameMain : MonoBehaviour
         else //残っていないなら待機
         {
             if (photonView.isMine) photonView.RPC("Count", PhotonTargets.MasterClient);
-            if (count == PhotonNetwork.playerList.Length) finish_button.SetActive(true);
-            operationTexrt.gameObject.SetActive(false);
-            myTurn.gameObject.SetActive(false);
+            if (count == PhotonNetwork.playerList.Length)
+			{
+				finishButton.SetActive(true);
+                photonView.RPC("CommentOut", PhotonTargets.All);
+            }
+
+
         }
     }
 
@@ -198,8 +205,8 @@ public class GameMain : MonoBehaviour
             {
                 shootFlag = true;
                 myTurn.text = "あなたの番です";
-                mouse.ResetData();
-                mouse.SetParts(nowParts.GetComponent<MoveScript>());
+                mouseController.ResetData();
+                mouseController.SetParts(nowParts.GetComponent<MoveScript>());
                 nowPartTransform = nowParts.GetComponent<Transform>();
             }
         }
@@ -207,6 +214,14 @@ public class GameMain : MonoBehaviour
         {
             myTurn.text = "他の人の番です";
         }
+    }
+
+    [PunRPC]
+    void CommentOut()
+    {
+        Debug.Log("CommentOUtに入りました");
+        operationText.gameObject.SetActive(false);
+        myTurn.gameObject.SetActive(false);
     }
 
 
@@ -239,23 +254,23 @@ public class GameMain : MonoBehaviour
     {
         if (stream.isWriting)//書き込み処理
         {
-            num_string = num.ToString();
+            numString = num.ToString();
 
-            playerId_string = playerId.ToString();
-            count_string = count.ToString();
-            stream.SendNext(num_string);
-            stream.SendNext(playerId_string);
-            stream.SendNext(count_string);
+            playerIdString = playerId.ToString();
+            countString = count.ToString();
+            stream.SendNext(numString);
+            stream.SendNext(playerIdString);
+            stream.SendNext(countString);
         }
         else//読み込み処理
         {
-            num_string = (string)stream.ReceiveNext();
+            numString = (string)stream.ReceiveNext();
 
-            playerId_string = (string)stream.ReceiveNext();
-            count_string = (string)stream.ReceiveNext();
-            num = int.Parse(num_string);
-            playerId = int.Parse(playerId_string);
-            count = int.Parse(count_string);
+            playerIdString = (string)stream.ReceiveNext();
+            countString = (string)stream.ReceiveNext();
+            num = int.Parse(numString);
+            playerId = int.Parse(playerIdString);
+            count = int.Parse(countString);
         }
     }
 

@@ -56,4 +56,5 @@ MonoBehaviour:
   - LeaveRoom
   - ResetCount
   - Quit
+  - CommentOut
   DisableAutoOpenWizard: 1

@@ -312,7 +312,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 1, g: 0.4937744, b: 0, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -1076,8 +1076,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 1
-  instantiationId: 1
+  viewIdField: 4
+  instantiationId: 4
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &1807699345
@@ -1091,7 +1091,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 412c0093f9599af428d4f60f409b81c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  karitext: {fileID: 265569572}
   select: {fileID: 2087159574}
   collection: {fileID: 1695408138}
 --- !u!1 &1925540534

@@ -15,7 +15,7 @@ public class MoveScript : MonoBehaviour
     [SerializeField]
     int playerID = 1;
     [SerializeField]
-    string playerID_string = "0";
+    string playerIdString = "0";
     private int thisViewId;
 
     private GameObject arrowArea;
@@ -54,13 +54,13 @@ public class MoveScript : MonoBehaviour
         if (mine)
         {
             Vector2 nowPart_velocity = this.rb.velocity;
-            if ((gameMain.SetnowPartTransform.position.x < mouseController.SetleftleftBottom.x) && (nowPart_velocity.x < 0))
+            if ((gameMain.SetnowPartTransform.position.x < mouseController.SetLeftBottom.x) && (nowPart_velocity.x < 0))
                 nowPart_velocity.x *= -1;
-            if ((gameMain.SetnowPartTransform.position.x > mouseController.SetrightTop.x) && (nowPart_velocity.x >0))
+            if ((gameMain.SetnowPartTransform.position.x > mouseController.SetRightTop.x) && (nowPart_velocity.x >0))
                 nowPart_velocity.x *= -1;
-            if ((gameMain.SetnowPartTransform.position.y < mouseController.SetleftleftBottom.y) && (nowPart_velocity.y < 0))
+            if ((gameMain.SetnowPartTransform.position.y < mouseController.SetLeftBottom.y) && (nowPart_velocity.y < 0))
                 nowPart_velocity.y *= -1;
-            if ((gameMain.SetnowPartTransform.position.y > mouseController.SetrightTop.y) && (nowPart_velocity.y > 0))
+            if ((gameMain.SetnowPartTransform.position.y > mouseController.SetRightTop.y) && (nowPart_velocity.y > 0))
                 nowPart_velocity.y *= -1;
 
             this.rb.velocity = nowPart_velocity;
@@ -72,8 +72,9 @@ public class MoveScript : MonoBehaviour
     public void Flip(Vector3 force)//MouseCountroller.MouseUp
     {
          if (mine) this.rb.velocity = force;
+
     }
-		
+
 
     public void OnTriggerEnter(Collider c)
     {

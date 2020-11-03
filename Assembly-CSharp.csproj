@@ -148,6 +148,7 @@
     <Compile Include="Assets\Script\Game\Screenshot.cs" />
     <Compile Include="Assets\Script\Lobby\CreateNewRoom.cs" />
     <Compile Include="Assets\Script\Lobby\LobbyManager.cs" />
+    <Compile Include="Assets\Script\Lobby\ScreenSize.cs" />
     <Compile Include="Assets\Script\Player.cs" />
     <Compile Include="Assets\Script\Select\FaceSelect.cs" />
     <Compile Include="Assets\Script\Start\LoadScenestart.cs" />

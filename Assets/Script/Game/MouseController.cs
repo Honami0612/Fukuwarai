@@ -12,7 +12,7 @@ public class MouseController : MonoBehaviour {
 	Camera mainCamera;
     private Transform mainCameraTransform = null;
 
-    private const float MaxMagnitude = 2f;
+    private const float maxMagnitude = 2f;
     private Vector3 currentForce = Vector3.zero;
     private Vector3 dragStart = Vector3.zero;
 
@@ -22,8 +22,7 @@ public class MouseController : MonoBehaviour {
     private Quaternion arrowStartRotate;
     private float dist = 0.0f;
 
-    [SerializeField]
-    MoveScript moveScript;
+    private MoveScript moveScript;
 
     [SerializeField]
     GameObject nowTouchPos;
@@ -34,6 +33,7 @@ public class MouseController : MonoBehaviour {
 
     private void Awake()
     {
+        moveScript = GameObject.Find("GameController").GetComponent<MoveScript>();
         this.mainCameraTransform = this.mainCamera.transform;
         GetCameraRange();
         arrowStartScale = arrowObject.transform.localScale;
@@ -41,6 +41,8 @@ public class MouseController : MonoBehaviour {
         nowTouchPos.SetActive(false);
         arrowObject.SetActive(false);
     }
+
+   
 
 
     //カメラの座標取得して移動範囲指定
@@ -90,9 +92,9 @@ public class MouseController : MonoBehaviour {
         arrowObject.transform.rotation = Quaternion.FromToRotation(Vector3.down, this.currentForce);
         arrowObject.transform.localScale = new Vector3(0.1f, dist, 0.1f);
 
-        if (this.currentForce.magnitude > MaxMagnitude * MaxMagnitude)
+        if (this.currentForce.magnitude > maxMagnitude * maxMagnitude)
         {
-            this.currentForce *= MaxMagnitude / this.currentForce.magnitude;
+            this.currentForce *= maxMagnitude / this.currentForce.magnitude;
         }
     }
 
@@ -103,6 +105,7 @@ public class MouseController : MonoBehaviour {
             arrowObject.SetActive(false);
             nowTouchPos.SetActive(false);
             moveScript.Flip(this.currentForce * -6f);
+
         }
         else
         {
@@ -142,12 +145,12 @@ public class MouseController : MonoBehaviour {
 
 
 
-    public Vector3 SetleftleftBottom
+    public Vector3 SetLeftBottom
     {
         get { return leftBottom; }
     }
 
-    public Vector3 SetrightTop
+    public Vector3 SetRightTop
     {
         get { return rightTop; }
     }

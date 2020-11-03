@@ -19,17 +19,22 @@ public class LobbyManager : MonoBehaviour
     GameObject roomPrefub;
 
     [SerializeField]
-    Button GameStart;
+    Button gameStart;
 
     //入る　or 作る　ルーム名
     private string roomName;
 
-     void Start()
+    private bool photonPlayer;
+    private RoomInfo[] roomInfos;
+
+
+
+    void Start()
     {
         PhotonNetwork.ConnectUsingSettings("バージョン番号");
-       
+
         roomListArea.SetActive(true);
-        GameStart.gameObject.SetActive(false);
+        gameStart.gameObject.SetActive(false);
         onlyClient.gameObject.SetActive(false);
 
         UpDateRoom();
@@ -45,7 +50,9 @@ public class LobbyManager : MonoBehaviour
 
     public void UpDateRoom()
     {
-        int i = 0;
+          roomInfos = PhotonNetwork.GetRoomList();
+
+         int i = 0;
         foreach(GameObject obj in roomList)
         {
             Destroy(roomList[i].gameObject);
@@ -55,7 +62,6 @@ public class LobbyManager : MonoBehaviour
         roomList.Clear();
 
         i = 0;
-        RoomInfo[] roomInfos = PhotonNetwork.GetRoomList();
         if (roomInfos.Length == 0)
         {
             //ルームなし
@@ -94,11 +100,10 @@ public class LobbyManager : MonoBehaviour
     //ルーム入室に成功すると自動で呼び出される
     public void OnJoinedRoom()
     {
-        bool photonPlayer= PhotonNetwork.isNonMasterClientInRoom;
-
+        photonPlayer = PhotonNetwork.isNonMasterClientInRoom;
         if (photonPlayer !=true)
         {
-            GameStart.gameObject.SetActive(true);
+            gameStart.gameObject.SetActive(true);
         }
         else
         {
@@ -119,7 +124,7 @@ public class LobbyManager : MonoBehaviour
     {
         if (PhotonNetwork.LeaveRoom())
         {
-            GameStart.gameObject.SetActive(false);
+            gameStart.gameObject.SetActive(false);
             roomListArea.SetActive(true);
             onlyClient.gameObject.SetActive(false); 
         }

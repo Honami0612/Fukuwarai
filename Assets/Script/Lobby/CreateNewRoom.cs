@@ -12,9 +12,9 @@ public class CreateNewRoom : MonoBehaviour {
     [SerializeField]
     GameObject InputField;
     [SerializeField]
-    Button DecisionButton;
+    Button decisionButton;
     [SerializeField]
-    Button ExitButton;
+    Button exitButton;
 
     [SerializeField]
     Text participationPeople;
@@ -26,9 +26,9 @@ public class CreateNewRoom : MonoBehaviour {
 	private void Start ()
     {
         InputField.SetActive(false);
-        DecisionButton.gameObject.SetActive(false);
+        decisionButton.gameObject.SetActive(false);
         onlyMaster.gameObject.SetActive(false);
-        ExitButton.gameObject.SetActive(false);
+        exitButton.gameObject.SetActive(false);
        
 	}
 
@@ -39,11 +39,11 @@ public class CreateNewRoom : MonoBehaviour {
 
         if (PhotonNetwork.inRoom)
         {
-            ExitButton.gameObject.SetActive(true);
+            exitButton.gameObject.SetActive(true);
         }
         else
         {
-            ExitButton.gameObject.SetActive(false);
+            exitButton.gameObject.SetActive(false);
         }
     }
 
@@ -56,13 +56,13 @@ public class CreateNewRoom : MonoBehaviour {
             case 0://CreateNewRoomButton
                 lobbyManager.SetActive();
                 InputField.SetActive(true);
-                DecisionButton.gameObject.SetActive(true);
+                decisionButton.gameObject.SetActive(true);
                 break;
 
             case 1://DecisionButton
                 lobbyManager.RoomCreate();
                 InputField.SetActive(false);
-                DecisionButton.gameObject.SetActive(false);
+                decisionButton.gameObject.SetActive(false);
                 onlyMaster.gameObject.SetActive(true);
                 break;
 
